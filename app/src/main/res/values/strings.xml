@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">NeighboorHoods App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="logoAllScreens">The Logo Of NeighborHoods</string>
+
+    <string name="loginEnterEmail">Please Enter Email-Address</string>
+    <string name="loginEnterEmailHeading">EmailId</string>
+
+    <string name="loginEnterPassword">Please Enter Password</string>
+    <string name="loginEnterPasswordHeading">Password</string>
+
+    <string name="loginText">Log In</string>
+    <string name="forgotPassword">Forgot Password?</string>
+
+    <string name="orLoginMethod">Or</string>
+
+    <string name="notMemberYet">Not A Member Yet?</string>
+    <string name="signUpText">Sign Up</string>
+
+    <string name="forgotPasswordToolbar">Forgot Password</string>
+
+    <string name="forgotPasswordText">Enter Your Registered Email Address. Password Reset Link Will Be Sent to You.</string>
+
+    <string name="sendResetLink">Send Reset Link</string>
+</resources>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SignUpFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="50dp"
+        android:paddingTop="50dp"
+        android:paddingEnd="50dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/signUpHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/signUpText"
+                android:textAlignment="center"
+                android:textColor="@color/logoScreen"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterEmailSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:hint="@string/loginEnterEmailHeading"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/signUpHeading"
+                app:layout_constraintStart_toStartOf="@id/signUpHeading"
+                app:layout_constraintTop_toBottomOf="@id/signUpHeading">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enterEmailSignUpInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/loginEnterEmail" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterPhoneNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/signUpEnterPhoneNumberHeading"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="8"
+                app:layout_constraintStart_toEndOf="@+id/countryCodesSpinner"
+                app:layout_constraintTop_toBottomOf="@id/enterEmailSignUp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enterPhoneNumberInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/signUpEnterPhoneNumber" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/countryCodesSpinner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/enterPhoneNumber"
+                app:layout_constraintEnd_toStartOf="@+id/enterPhoneNumber"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/enterPhoneNumber" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterPasswordSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/loginEnterPasswordHeading"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/enterPhoneNumber"
+                app:layout_constraintStart_toStartOf="@id/countryCodesSpinner"
+                app:layout_constraintTop_toBottomOf="@id/enterPhoneNumber">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enterPasswordSignUpInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/loginEnterPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/signUpConfirmPasswordHeading"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/enterPasswordSignUp"
+                app:layout_constraintStart_toStartOf="@id/enterPasswordSignUp"
+                app:layout_constraintTop_toBottomOf="@id/enterPasswordSignUp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enterConfirmPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/signUpConfirmPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/termsAndPrivacyPolicy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/termsAndPrivacyPolicy"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/enterConfirmPassword"
+                app:layout_constraintStart_toStartOf="@id/enterConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@id/enterConfirmPassword" />
+
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/logoScreen"
+                android:text="@string/signUpText"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/termsAndPrivacyPolicy"
+                app:layout_constraintStart_toStartOf="@id/termsAndPrivacyPolicy"
+                app:layout_constraintTop_toBottomOf="@id/termsAndPrivacyPolicy" />
+
+            <TextView
+                android:id="@+id/orSignUp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/orLoginMethod"
+                app:layout_constraintEnd_toEndOf="@id/signUpButton"
+                app:layout_constraintStart_toStartOf="@id/signUpButton"
+                app:layout_constraintTop_toBottomOf="@id/signUpButton" />
+
+            <Button
+                android:id="@+id/googleLogin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="Google"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/facebookLoginButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orSignUp" />
+
+            <Button
+                android:id="@+id/facebookLoginButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/facebookButtonColor"
+                android:text="Facebook"
+                android:textAlignment="center"
+                app:icon="@drawable/facebook_logo"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/googleLogin"
+                app:layout_constraintTop_toTopOf="@id/googleLogin" />
+
+            <TextView
+                android:id="@+id/alreadyMember"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/alreadyMember"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/signInText"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/facebookLoginButton" />
+
+            <TextView
+                android:id="@+id/signInText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/signInText"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/alreadyMember"
+                app:layout_constraintTop_toTopOf="@id/alreadyMember" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

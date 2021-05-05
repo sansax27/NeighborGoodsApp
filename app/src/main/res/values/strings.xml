@@ -25,4 +25,16 @@
     <string name="forgotPasswordText">Enter Your Registered Email Address. Password Reset Link Will Be Sent to You.</string>
 
     <string name="sendResetLink">Send Reset Link</string>
+    
+    <string name="signUpEnterPhoneNumber">Please Enter Phone Number</string>
+    <string name="signUpEnterPhoneNumberHeading">Phone Number</string>
+
+    <string name="signUpConfirmPassword">Please Confirm Password!</string>
+    <string name="signUpConfirmPasswordHeading">Confirm Password</string>
+    
+    <string name="termsAndPrivacyPolicy">By signing up, I agree with Terms &amp; Privacy Policy</string>
+
+    <string name="alreadyMember">Already a member,</string>
+    <string name="signInText">SignIn</string>
+
 </resources>

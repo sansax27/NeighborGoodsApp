@@ -13,4 +13,6 @@
 
     <color name="signUpTextColor">#5a56a3</color>
     <color name="facebookButtonColor">#3B5998</color>
+
+    <color name="selectButtonColor">#49d3cc</color>
 </resources>

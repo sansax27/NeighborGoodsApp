@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CreateProfileFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="50dp"
+            android:paddingTop="50dp"
+            android:paddingEnd="50dp">
+
+            <TextView
+                android:id="@+id/profileSignUpHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/profile"
+                android:textAlignment="center"
+                android:textColor="@color/logoScreen"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/vendorCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:clickable="false"
+                android:text="@string/iAmVendor"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/profileSignUpHeading"
+                app:layout_constraintStart_toStartOf="@id/profileSignUpHeading"
+                app:layout_constraintTop_toBottomOf="@id/profileSignUpHeading" />
+
+            <TextView
+                android:id="@+id/basicProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/basicProfile"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/vendorCheckBox"
+                app:layout_constraintStart_toStartOf="@id/vendorCheckBox"
+                app:layout_constraintTop_toBottomOf="@id/vendorCheckBox" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="15dp"
+                android:hint="@string/profileEnterNameHeading"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/basicProfile"
+                app:layout_constraintStart_toStartOf="@id/basicProfile"
+                app:layout_constraintTop_toBottomOf="@id/basicProfile">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profileEnterName"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profileAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="15dp"
+                android:hint="@string/profileAddressHeading"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/userName"
+                app:layout_constraintStart_toStartOf="@id/userName"
+                app:layout_constraintTop_toBottomOf="@id/userName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profileAddressInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_address"
+                    android:hint="@string/profileAddress"
+                    android:inputType="textPostalAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profileCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="15dp"
+                android:hint="@string/profileCityHeading"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/profileAddress"
+                app:layout_constraintStart_toStartOf="@id/profileAddress"
+                app:layout_constraintTop_toBottomOf="@id/profileAddress">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profileCityInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profileCity"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profileState"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="15dp"
+                android:hint="@string/profileStateHeading"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/profileCity"
+                app:layout_constraintStart_toStartOf="@id/profileCity"
+                app:layout_constraintTop_toBottomOf="@id/profileCity">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profileStateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profileState"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profileCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:elevation="15dp"
+                android:hint="@string/profileCountryHeading"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/profileState"
+                app:layout_constraintStart_toStartOf="@id/profileState"
+                app:layout_constraintTop_toBottomOf="@id/profileState">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profileCountryInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/profileCountry"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/profilePicture"
+                app:layout_constraintEnd_toStartOf="@+id/uploadProfilePicture"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileCountry" />
+
+            <TextView
+                android:id="@+id/uploadProfilePicture"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:padding="15dp"
+                android:text="@string/uploadProfilePicture"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toEndOf="@+id/profilePicture"
+                app:layout_constraintTop_toTopOf="@id/profilePicture" />
+
+            <Button
+                android:id="@+id/selectProfilePicture"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:backgroundTint="@color/selectButtonColor"
+                android:text="@string/select"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toStartOf="@+id/removeProfilePicture"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/profilePicture"
+                app:layout_constraintStart_toStartOf="@id/uploadProfilePicture"
+                app:layout_constraintTop_toBottomOf="@id/uploadProfilePicture" />
+
+            <Button
+                android:id="@+id/removeProfilePicture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/white"
+                android:text="@string/remove"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/loginForgotPassword"
+                app:layout_constraintEnd_toEndOf="@id/uploadProfilePicture"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/selectProfilePicture"
+                app:layout_constraintTop_toTopOf="@id/selectProfilePicture" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150dp"
+                android:backgroundTint="@color/logoScreen"
+                android:text="@string/proceed"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/uploadProfilePicture"
+                app:layout_constraintStart_toStartOf="@id/profilePicture"
+                app:layout_constraintTop_toBottomOf="@id/profilePicture" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

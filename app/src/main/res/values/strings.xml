@@ -25,16 +25,45 @@
     <string name="forgotPasswordText">Enter Your Registered Email Address. Password Reset Link Will Be Sent to You.</string>
 
     <string name="sendResetLink">Send Reset Link</string>
-    
+
     <string name="signUpEnterPhoneNumber">Please Enter Phone Number</string>
     <string name="signUpEnterPhoneNumberHeading">Phone Number</string>
 
     <string name="signUpConfirmPassword">Please Confirm Password!</string>
     <string name="signUpConfirmPasswordHeading">Confirm Password</string>
-    
+
     <string name="termsAndPrivacyPolicy">By signing up, I agree with Terms &amp; Privacy Policy</string>
 
     <string name="alreadyMember">Already a member,</string>
     <string name="signInText">SignIn</string>
+    
+    <string name="iAmVendor">I am a vendor</string>
+
+    <string name="basicProfile">Basic Profile</string>
+
+    <string name="profileEnterName">Please Enter Your Name</string>
+    <string name="profileEnterNameHeading">Name</string>
+    
+    <string name="profileAddress">Please Enter Your Address</string>
+    <string name="profileAddressHeading">Address</string>
+
+    <string name="profileCity">Please Enter Your City</string>
+    <string name="profileCityHeading">City</string>
+
+    <string name="profileState">Please Enter Your State</string>
+    <string name="profileStateHeading">State</string>
+
+    <string name="profile">Profile</string>
+
+    <string name="profileCountry">Please Enter Your Country</string>
+    <string name="profileCountryHeading">Country</string>
+
+    <string name="profilePicture">Profile Picture</string>
+
+    <string name="uploadProfilePicture">Upload A Profile Picture</string>
+
+    <string name="select">Select</string>
+    <string name="remove">Remove</string>
+    <string name="proceed">Proceed</string>
 
 </resources>

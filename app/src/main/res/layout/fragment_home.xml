@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="50dp">
+
+            <ImageView
+                android:id="@+id/locationImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/locationLogo"
+                android:elevation="15dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="15dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="10dp"
+                android:text="@string/locationDummy"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/locationImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/locationImage"
+                app:layout_constraintTop_toTopOf="@id/locationImage" />
+
+            <TextView
+                android:id="@+id/topCategories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/topCategories"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/location"
+                app:layout_constraintStart_toStartOf="@id/locationImage"
+                app:layout_constraintTop_toBottomOf="@id/locationImage" />
+
+            <HorizontalScrollView
+                android:id="@+id/categoryScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@id/topCategories"
+                app:layout_constraintStart_toStartOf="@id/topCategories"
+                app:layout_constraintTop_toBottomOf="@id/topCategories">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categoriesRV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="horizontal" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/nearbyStores"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center|start"
+                android:text="@string/nearbyStores"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/viewAllNearbyStores"
+                app:layout_constraintStart_toStartOf="@id/categoryScrollView"
+                app:layout_constraintTop_toBottomOf="@id/categoryScrollView" />
+
+            <TextView
+                android:id="@+id/viewAllNearbyStores"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center|end"
+                android:text="@string/viewAll"
+                android:textAlignment="gravity"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toBottomOf="@id/nearbyStores"
+                app:layout_constraintEnd_toEndOf="@id/categoryScrollView"
+                app:layout_constraintStart_toEndOf="@id/nearbyStores"
+                app:layout_constraintTop_toTopOf="@id/nearbyStores" />
+
+            <HorizontalScrollView
+                android:id="@+id/nearbyStoresScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@id/viewAllNearbyStores"
+                app:layout_constraintStart_toStartOf="@id/nearbyStores"
+                app:layout_constraintTop_toBottomOf="@id/nearbyStores">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nearbyStoresRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/viewOnMapButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/logoScreen"
+                android:padding="10dp"
+                android:text="@string/viewOnMap"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:icon="@drawable/ic_map_black_24dp"
+                app:iconGravity="textStart"
+                app:iconTint="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/nearbyStoresScrollView"
+                app:layout_constraintStart_toStartOf="@id/nearbyStoresScrollView"
+                app:layout_constraintTop_toBottomOf="@id/nearbyStoresScrollView" />
+
+            <TextView
+                android:id="@+id/popularItems"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center|start"
+                android:text="@string/popularItems"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/viewAllPopularItems"
+                app:layout_constraintStart_toStartOf="@id/viewOnMapButton"
+                app:layout_constraintTop_toBottomOf="@id/viewOnMapButton" />
+
+            <TextView
+                android:id="@+id/viewAllPopularItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|end"
+                android:text="@string/viewAll"
+                android:textAlignment="gravity"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="@id/viewOnMapButton"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@id/popularItems"
+                app:layout_constraintTop_toTopOf="@id/popularItems" />
+
+            <HorizontalScrollView
+                android:id="@+id/popularItemsScrollView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/viewAllPopularItems"
+                app:layout_constraintStart_toStartOf="@id/popularItems"
+                app:layout_constraintTop_toBottomOf="@id/popularItems">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularItemsRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

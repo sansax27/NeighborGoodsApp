@@ -73,5 +73,25 @@
     <string name="notReceivedOtp">Did Not Received Otp Yet?</string>
     <string name="resend">Resend</string>
 
+    <string name="notificationIcon">Notification Icon</string>
+    <string name="homeLogo">Home Screen Logo</string>
+
+    <string name="locationLogo">Location Logo</string>
+
+    <string name="locationDummy">Helsinki, Finland</string>
+
+    <string name="topCategories">Top Categories</string>
+
+    <string name="categoryImage">Category Image</string>
+
+    <string name="nearbyStores">Nearby Stores</string>
+
+    <string name="viewAll">View All</string>
+
+    <string name="viewOnMap">View On Map</string>
+    
+    <string name="popularItems">Popular Items</string>
+
+    <string name="popularItemPicture">Popular item Picture</string>
 
 </resources>

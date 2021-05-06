@@ -36,14 +36,14 @@
 
     <string name="alreadyMember">Already a member,</string>
     <string name="signInText">SignIn</string>
-    
+
     <string name="iAmVendor">I am a vendor</string>
 
     <string name="basicProfile">Basic Profile</string>
 
     <string name="profileEnterName">Please Enter Your Name</string>
     <string name="profileEnterNameHeading">Name</string>
-    
+
     <string name="profileAddress">Please Enter Your Address</string>
     <string name="profileAddressHeading">Address</string>
 
@@ -64,6 +64,14 @@
 
     <string name="select">Select</string>
     <string name="remove">Remove</string>
+
     <string name="proceed">Proceed</string>
+    <string name="verify">Verify</string>
+
+    <string name="enterOtpHeading">Enter OTP(One Time Password) sent to your registered email address and phone.</string>
+
+    <string name="notReceivedOtp">Did Not Received Otp Yet?</string>
+    <string name="resend">Resend</string>
+
 
 </resources>

@@ -6,11 +6,9 @@
 
     <string name="logoAllScreens">The Logo Of NeighborHoods</string>
 
-    <string name="loginEnterEmail">Please Enter Email-Address</string>
-    <string name="loginEnterEmailHeading">EmailId</string>
+    <string name="loginEnterEmail">Enter Email-Address</string>
 
-    <string name="loginEnterPassword">Please Enter Password</string>
-    <string name="loginEnterPasswordHeading">Password</string>
+    <string name="loginEnterPassword">Enter Password</string>
 
     <string name="loginText">Log In</string>
     <string name="forgotPassword">Forgot Password?</string>
@@ -22,15 +20,13 @@
 
     <string name="forgotPasswordToolbar">Forgot Password</string>
 
-    <string name="forgotPasswordText">Enter Your Registered Email Address. Password Reset Link Will Be Sent to You.</string>
+    <string name="forgotPasswordText">Enter Your Registered Email Address or Phone Number to reset your password. Password Reset Link Will Be Sent to You.</string>
 
     <string name="sendResetLink">Send Reset Link</string>
 
-    <string name="signUpEnterPhoneNumber">Please Enter Phone Number</string>
-    <string name="signUpEnterPhoneNumberHeading">Phone Number</string>
+    <string name="signUpEnterPhoneNumber">Enter Phone Number</string>
 
-    <string name="signUpConfirmPassword">Please Confirm Password!</string>
-    <string name="signUpConfirmPasswordHeading">Confirm Password</string>
+    <string name="signUpConfirmPassword">Confirm Password!</string>
 
     <string name="termsAndPrivacyPolicy">By signing up, I agree with Terms &amp; Privacy Policy</string>
 
@@ -41,22 +37,17 @@
 
     <string name="basicProfile">Basic Profile</string>
 
-    <string name="profileEnterName">Please Enter Your Name</string>
-    <string name="profileEnterNameHeading">Name</string>
+    <string name="profileEnterName">Enter Name</string>
 
-    <string name="profileAddress">Please Enter Your Address</string>
-    <string name="profileAddressHeading">Address</string>
+    <string name="profileAddress">Enter Address</string>
 
-    <string name="profileCity">Please Enter Your City</string>
-    <string name="profileCityHeading">City</string>
+    <string name="profileCity">Enter Your City</string>g>
 
-    <string name="profileState">Please Enter Your State</string>
-    <string name="profileStateHeading">State</string>
+    <string name="profileState">Enter Your State</string>
 
     <string name="profile">Profile</string>
 
-    <string name="profileCountry">Please Enter Your Country</string>
-    <string name="profileCountryHeading">Country</string>
+    <string name="profileCountry">Enter Your Country</string>
 
     <string name="profilePicture">Profile Picture</string>
 
@@ -70,7 +61,7 @@
 
     <string name="enterOtpHeading">Enter OTP(One Time Password) sent to your registered email address and phone.</string>
 
-    <string name="notReceivedOtp">Did Not Received Otp Yet?</string>
+    <string name="notReceivedOtp">No Otp Yet?</string>
     <string name="resend">Resend</string>
 
     <string name="notificationIcon">Notification Icon</string>

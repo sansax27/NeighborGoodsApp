@@ -10,9 +10,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="50dp"
-            android:paddingTop="50dp"
-            android:paddingEnd="50dp">
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/profileSignUpHeading"
@@ -32,7 +30,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:clickable="false"
                 android:text="@string/iAmVendor"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@id/profileSignUpHeading"
@@ -57,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elevation="15dp"
-                android:hint="@string/profileEnterNameHeading"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/purple_200"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -85,8 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elevation="15dp"
-                android:hint="@string/profileAddressHeading"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/purple_200"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -114,8 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elevation="15dp"
-                android:hint="@string/profileCityHeading"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/purple_200"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -142,8 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elevation="15dp"
-                android:hint="@string/profileStateHeading"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/purple_200"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -170,8 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elevation="15dp"
-                android:hint="@string/profileCountryHeading"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/purple_200"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -250,7 +242,7 @@
                 app:layout_constraintTop_toTopOf="@id/selectProfilePicture" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/proceedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="150dp"

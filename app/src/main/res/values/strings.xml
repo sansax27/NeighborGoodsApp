@@ -80,9 +80,26 @@
     <string name="viewAll">View All</string>
 
     <string name="viewOnMap">View On Map</string>
-    
+
     <string name="popularItems">Popular Items</string>
 
     <string name="popularItemPicture">Popular item Picture</string>
 
+    <string name="navMenuHome">Home</string>
+    <string name="navMenuCart">Cart</string>
+
+    <string name="shopMenu">Menu</string>
+
+    <string name="sortByFilter">Sort By</string>
+
+    <string name="sortMostPopular">Most Popular</string>
+    <string name="sortNearby">Near By</string>
+    <string name="priceSort">Price Low To High</string>
+
+    <string name="filterType">Type</string>
+    <string name="filterOther">Other</string>
+    <string name="filterDelivery">Delivery</string>
+    <string name="filterPickUp">Pickup</string>
+
+    <string name="applyFilter">Apply</string>
 </resources>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CartFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cartRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="2"
+                tools:listitem="@layout/cart_rv_item" />
+
+            <View
+                android:id="@+id/listCouponDivider"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/cartRV"
+                app:layout_constraintStart_toStartOf="@id/cartRV"
+                app:layout_constraintTop_toBottomOf="@id/cartRV" />
+
+            <ImageView
+                android:id="@+id/applyCoupon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@id/listCouponDivider"
+                app:layout_constraintTop_toBottomOf="@id/listCouponDivider"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/applyCouponText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/applyCoupon"
+                android:textColor="@color/selectButtonColor"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/applyCoupon"
+                app:layout_constraintStart_toEndOf="@id/applyCoupon"
+                app:layout_constraintTop_toTopOf="@id/applyCoupon" />
+
+            <View
+                android:id="@+id/couponSummaryDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="30dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/listCouponDivider"
+                app:layout_constraintStart_toStartOf="@id/listCouponDivider"
+                app:layout_constraintTop_toBottomOf="@id/applyCoupon" />
+
+            <TextView
+                android:id="@+id/itemTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="@string/itemTotal"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@id/itemTotalAmount"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/couponSummaryDivider"
+                app:layout_constraintTop_toBottomOf="@id/couponSummaryDivider" />
+
+            <TextView
+                android:id="@+id/itemTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="@id/couponSummaryDivider"
+                app:layout_constraintTop_toTopOf="@id/itemTotal" />
+
+            <TextView
+                android:id="@+id/restaurantCharges"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/restaurantCharges"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@id/restaurantChargesAmount"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/itemTotal"
+                app:layout_constraintTop_toBottomOf="@id/itemTotal" />
+
+            <TextView
+                android:id="@+id/restaurantChargesAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantCharges"
+                app:layout_constraintEnd_toEndOf="@id/itemTotalAmount"
+                app:layout_constraintTop_toTopOf="@id/restaurantCharges" />
+
+            <TextView
+                android:id="@+id/deliveryFee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/deliveryFee"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@id/deliveryFeeAmount"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/restaurantCharges"
+                app:layout_constraintTop_toBottomOf="@id/restaurantCharges" />
+
+            <TextView
+                android:id="@+id/deliveryFeeAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="@id/restaurantChargesAmount"
+                app:layout_constraintTop_toBottomOf="@id/restaurantChargesAmount" />
+
+            <TextView
+                android:id="@+id/offer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/offer"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@id/offerAmount"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/deliveryFee"
+                app:layout_constraintTop_toBottomOf="@id/deliveryFee" />
+
+            <TextView
+                android:id="@+id/offerAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="@id/deliveryFeeAmount"
+                app:layout_constraintTop_toBottomOf="@id/deliveryFeeAmount" />
+
+            <TextView
+                android:id="@+id/toPay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/toPay"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/toPayAmount"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/offer"
+                app:layout_constraintTop_toBottomOf="@id/offer" />
+
+            <TextView
+                android:id="@+id/toPayAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="TextView"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="@id/offerAmount"
+                app:layout_constraintTop_toBottomOf="@id/offerAmount" />
+
+            <View
+                android:id="@+id/summaryDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/toPayAmount"
+                app:layout_constraintStart_toStartOf="@id/toPay"
+                app:layout_constraintTop_toBottomOf="@id/toPay" />
+
+            <Button
+                android:id="@+id/checkoutButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/logoScreen"
+                android:text="@string/checkout"
+                android:textColor="@color/black"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="@id/summaryDivider"
+                app:layout_constraintStart_toStartOf="@id/summaryDivider"
+                app:layout_constraintTop_toBottomOf="@id/summaryDivider" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

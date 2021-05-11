@@ -102,4 +102,15 @@
     <string name="filterPickUp">Pickup</string>
 
     <string name="applyFilter">Apply</string>
+
+    <string name="applyCoupon">Apply Coupon Code</string>
+    
+    <string name="itemTotal">Item Total</string>
+    <string name="restaurantCharges">Restaurant Charges</string>
+    <string name="deliveryFee">Delivery Fee</string>
+    <string name="offer">Offer</string>
+
+    <string name="toPay">To Pay</string>
+
+    <string name="checkout">Proceed To Checkout</string>
 </resources>

@@ -75,14 +75,15 @@
                 app:layout_constraintStart_toStartOf="@id/sortRadioGroup"
                 app:layout_constraintTop_toBottomOf="@id/sortRadioGroup" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/typeRV"
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/typeChipGroup"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="@id/filterByType"
-                app:layout_constraintTop_toBottomOf="@id/filterByType" />
+                app:layout_constraintTop_toBottomOf="@id/filterByType">
+
+            </com.google.android.material.chip.ChipGroup>
 
             <TextView
                 android:id="@+id/filterByOther"
@@ -94,8 +95,8 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/typeRV"
-                app:layout_constraintTop_toBottomOf="@id/typeRV" />
+                app:layout_constraintStart_toStartOf="@id/typeChipGroup"
+                app:layout_constraintTop_toBottomOf="@id/typeChipGroup" />
 
             <CheckBox
                 android:id="@+id/filterByDeliveryCheckBox"

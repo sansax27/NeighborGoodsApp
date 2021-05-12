@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/settingsNotifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/notifications"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/turnOffPushNotifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/turnOffPushNotifications"
+                app:layout_constraintEnd_toEndOf="@id/settingsNotifications"
+                app:layout_constraintStart_toStartOf="@id/settingsNotifications"
+                app:layout_constraintTop_toBottomOf="@id/settingsNotifications" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/turnOffEmailNotifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/turnOffEmailNotifications"
+                app:layout_constraintEnd_toEndOf="@id/turnOffPushNotifications"
+                app:layout_constraintStart_toStartOf="@id/turnOffPushNotifications"
+                app:layout_constraintTop_toBottomOf="@id/turnOffPushNotifications" />
+
+            <TextView
+                android:id="@+id/settingsChangePassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/changePassword"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/turnOffEmailNotifications"
+                app:layout_constraintStart_toStartOf="@id/turnOffEmailNotifications"
+                app:layout_constraintTop_toBottomOf="@id/turnOffEmailNotifications" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/settingsCurrentPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/settingsChangePassword"
+                app:layout_constraintStart_toStartOf="@id/settingsChangePassword"
+                app:layout_constraintTop_toBottomOf="@id/settingsChangePassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/settingsCurrentPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enterCurrentPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/settingsNewPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/settingsCurrentPassword"
+                app:layout_constraintStart_toStartOf="@id/settingsCurrentPassword"
+                app:layout_constraintTop_toBottomOf="@id/settingsCurrentPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/settingsNewPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:hint="@string/enterNewPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/settingsConfirmNewPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@id/settingsNewPassword"
+                app:layout_constraintStart_toStartOf="@id/settingsNewPassword"
+                app:layout_constraintTop_toBottomOf="@id/settingsNewPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/settingsConfirmNewPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:hint="@string/confirmNewPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/settingsSaveChanges"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/logoScreen"
+                android:text="@string/saveChanges"
+                android:textColor="@color/black"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="@id/settingsConfirmNewPassword"
+                app:layout_constraintStart_toStartOf="@id/settingsConfirmNewPassword"
+                app:layout_constraintTop_toBottomOf="@id/settingsConfirmNewPassword" />
+
+            <Button
+                android:id="@+id/settingsEditProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/white"
+                android:text="@string/editProfile"
+                android:textColor="@color/logoScreen"
+                app:layout_constraintEnd_toEndOf="@id/settingsSaveChanges"
+                app:layout_constraintStart_toStartOf="@id/settingsSaveChanges"
+                app:layout_constraintTop_toBottomOf="@id/settingsSaveChanges"
+                app:strokeColor="@color/logoScreen"
+                app:strokeWidth="2dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

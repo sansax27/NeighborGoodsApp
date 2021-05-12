@@ -104,7 +104,7 @@
     <string name="applyFilter">Apply</string>
 
     <string name="applyCoupon">Apply Coupon Code</string>
-    
+
     <string name="itemTotal">Item Total</string>
     <string name="restaurantCharges">Restaurant Charges</string>
     <string name="deliveryFee">Delivery Fee</string>
@@ -113,4 +113,38 @@
     <string name="toPay">To Pay</string>
 
     <string name="checkout">Proceed To Checkout</string>
+
+    <string name="myOrders">My Orders</string>
+    <string name="manageAddresses">Manage Addresses</string>
+    <string name="payments">Payments</string>
+    <string name="favourites">Favourites</string>
+    <string name="help">Help</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+
+
+    <string name="defaultWord">Default</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="addNew">Add New</string>
+
+    <string name="saveChanges">Save Changes</string>
+
+    <string name="orderStatus">Status:</string>
+
+    <string name="viewDetails">View Details</string>
+
+    <string name="notifications">Notifications</string>
+
+    <string name="turnOffPushNotifications">Turn Off Push Notifications</string>
+    <string name="turnOffEmailNotifications">Turn Off Email Notifications</string>
+
+    <string name="changePassword">Change Password</string>
+
+    <string name="enterCurrentPassword">Enter Current Password</string>
+
+    <string name="enterNewPassword">Enter New Password</string>
+    <string name="confirmNewPassword">Confirm New Password</string>
+
+    <string name="editProfile">Edit Profile</string>
 </resources>

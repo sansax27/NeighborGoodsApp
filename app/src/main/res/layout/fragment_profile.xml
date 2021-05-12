@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ProfileFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/myOrders"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/myOrders"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/myOrders"
+                app:layout_constraintStart_toStartOf="@id/myOrders"
+                app:layout_constraintTop_toBottomOf="@id/myOrders" />
+
+            <TextView
+                android:id="@+id/manageAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/manageAddresses"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/divider1"
+                app:layout_constraintStart_toStartOf="@id/divider1"
+                app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/manageAddress"
+                app:layout_constraintStart_toStartOf="@id/manageAddress"
+                app:layout_constraintTop_toBottomOf="@id/manageAddress" />
+
+            <TextView
+                android:id="@+id/payments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/payments"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/divider2"
+                app:layout_constraintStart_toStartOf="@id/divider2"
+                app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/payments"
+                app:layout_constraintStart_toStartOf="@id/payments"
+                app:layout_constraintTop_toBottomOf="@id/payments" />
+
+            <TextView
+                android:id="@+id/favourites"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/favourites"
+                android:textSize="24sp"
+                app:drawableStartCompat="@drawable/ic_favorite"
+                app:layout_constraintEnd_toEndOf="@id/divider3"
+                app:layout_constraintStart_toStartOf="@id/divider3"
+                app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/favourites"
+                app:layout_constraintStart_toStartOf="@id/favourites"
+                app:layout_constraintTop_toBottomOf="@id/favourites" />
+
+            <TextView
+                android:id="@+id/help"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/help"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/divider4"
+                app:layout_constraintStart_toStartOf="@id/divider4"
+                app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/help"
+                app:layout_constraintStart_toStartOf="@id/help"
+                app:layout_constraintTop_toBottomOf="@id/help" />
+
+            <TextView
+                android:id="@+id/settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/settings"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/divider5"
+                app:layout_constraintStart_toStartOf="@id/divider5"
+                app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/settings"
+                app:layout_constraintStart_toStartOf="@id/settings"
+                app:layout_constraintTop_toBottomOf="@id/settings" />
+
+            <TextView
+                android:id="@+id/logout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/logout"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/divider6"
+                app:layout_constraintStart_toStartOf="@id/divider6"
+                app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/logout"
+                app:layout_constraintStart_toStartOf="@id/logout"
+                app:layout_constraintTop_toBottomOf="@id/logout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

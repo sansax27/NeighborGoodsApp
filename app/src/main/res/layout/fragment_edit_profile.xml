@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EditProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editprofileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxStrokeWidth="0dp"
+            app:errorEnabled="true"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofileNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/profileEnterName"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editProfileNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeWidth="0dp"
+            app:errorEnabled="true"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="@id/editprofileName"
+            app:layout_constraintStart_toEndOf="@id/editProfileCountryCode"
+            app:layout_constraintTop_toBottomOf="@id/editprofileName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editprofileNumberInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/signUpEnterPhoneNumber" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/editProfileCountryCode"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:entries="@array/countryCodes"
+            app:layout_constraintBottom_toBottomOf="@id/editProfileNumber"
+            app:layout_constraintEnd_toStartOf="@id/editProfileNumber"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/editprofileName"
+            app:layout_constraintTop_toTopOf="@id/editProfileNumber" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editProfileEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeWidth="0dp"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="@id/editProfileNumber"
+            app:layout_constraintStart_toStartOf="@id/editProfileCountryCode"
+            app:layout_constraintTop_toBottomOf="@id/editProfileNumber">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editProfileEmailAddressInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/loginEnterEmail" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/logoScreen"
+            android:text="@string/saveChanges"
+            android:textColor="@color/black"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="@id/editProfileEmailAddress"
+            app:layout_constraintStart_toStartOf="@id/editProfileEmailAddress"
+            app:layout_constraintTop_toBottomOf="@id/editProfileEmailAddress" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

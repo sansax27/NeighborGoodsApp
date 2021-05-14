@@ -86,9 +86,9 @@
                 android:text="(100+)"
                 android:textAlignment="gravity"
                 android:textSize="24sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/shopRatings"
                 app:layout_constraintEnd_toEndOf="@id/shopCategories"
-                app:layout_constraintStart_toEndOf="@id/shopRatings"
-                app:layout_constraintTop_toTopOf="@id/shopRatings" />
+                app:layout_constraintStart_toEndOf="@id/shopRatings" />
 
             <TextView
                 android:id="@+id/specialityOne"
@@ -96,13 +96,14 @@
                 android:layout_height="0dp"
                 android:background="@android:color/darker_gray"
                 android:gravity="center"
-                android:text="TextView"
+                android:maxLength="14"
                 android:textAlignment="gravity"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/specialityTwo"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/shopRatings" />
 
@@ -110,14 +111,16 @@
                 android:id="@+id/specialityTwo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="10dp"
                 android:background="@android:color/darker_gray"
                 android:gravity="center"
-                android:text="TextView"
+                android:maxLength="14"
                 android:textAlignment="gravity"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/specialityThree"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/specialityOne"
                 app:layout_constraintTop_toTopOf="@id/specialityOne" />
 
@@ -125,14 +128,17 @@
                 android:id="@+id/specialityThree"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@android:color/darker_gray"
                 android:gravity="center"
-                android:text="TextView"
+                android:maxLength="14"
                 android:textAlignment="gravity"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/shopRatingsCount"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/specialityTwo"
                 app:layout_constraintTop_toTopOf="@id/specialityTwo" />
         </androidx.constraintlayout.widget.ConstraintLayout>

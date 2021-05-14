@@ -147,4 +147,8 @@
     <string name="confirmNewPassword">Confirm New Password</string>
 
     <string name="editProfile">Edit Profile</string>
+    
+    <string name="inStock">In Stock</string>
+
+    <string name="variants">Variants</string>
 </resources>

@@ -1,13 +1,13 @@
-package com.example.neighboorhoodsapp
+package com.example.neighboorhoodsapp.authentication.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.neighboorhoodsapp.R
+import com.example.neighboorhoodsapp.authentication.ui.LogoFragmentDirections
 import com.example.neighboorhoodsapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

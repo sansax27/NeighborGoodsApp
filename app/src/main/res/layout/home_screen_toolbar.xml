@@ -11,8 +11,9 @@
 
             <TextView
                 android:id="@+id/profileThumbnail"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_nav_bar_4_profile"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,7 @@
             <ImageView
                 android:id="@+id/homeLogo"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/homeLogo"
                 app:layout_constraintBottom_toBottomOf="@id/profileThumbnail"
                 app:layout_constraintEnd_toStartOf="@id/notificationIcon"
@@ -31,8 +32,8 @@
 
             <ImageView
                 android:id="@+id/notificationIcon"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/notificationIcon"
                 app:layout_constraintBottom_toBottomOf="@id/profileThumbnail"
                 app:layout_constraintEnd_toEndOf="parent"

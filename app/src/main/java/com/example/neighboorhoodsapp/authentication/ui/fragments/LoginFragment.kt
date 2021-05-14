@@ -1,4 +1,4 @@
-package com.example.neighboorhoodsapp
+package com.example.neighboorhoodsapp.authentication.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.neighboorhoodsapp.Utils.isValidEmail
-import com.example.neighboorhoodsapp.Utils.isValidPassword
+import com.example.neighboorhoodsapp.userActivity.activity.UserActivity
 import com.example.neighboorhoodsapp.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 

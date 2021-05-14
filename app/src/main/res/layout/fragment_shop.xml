@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ShopFragment">
+    tools:context=".userActivity.fragments.ShopFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -115,9 +115,8 @@
                 android:text="TextView"
                 android:textAlignment="gravity"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@id/shopRating"
-                app:layout_constraintStart_toEndOf="@id/shopRating"
-                app:layout_constraintTop_toTopOf="@id/shopRating" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/shopRating"
+                app:layout_constraintStart_toEndOf="@id/shopRating" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopCoreFeaturesRV"

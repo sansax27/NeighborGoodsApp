@@ -56,6 +56,6 @@
         android:text="ADD"
         android:textColor="@color/purple_700"
         app:cornerRadius="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/shopItemPrice"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,8 @@
-package com.example.neighboorhoodsapp
+package com.example.neighboorhoodsapp.userActivity.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.neighboorhoodsapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
 

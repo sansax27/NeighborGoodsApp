@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".HomeFragment">
+    tools:context=".userActivity.fragments.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -98,7 +98,8 @@
                 android:gravity="center|end"
                 android:text="@string/viewAll"
                 android:textAlignment="gravity"
-                android:textSize="36sp"
+                android:textSize="24sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/nearbyStores"
                 app:layout_constraintBottom_toBottomOf="@id/nearbyStores"
                 app:layout_constraintEnd_toEndOf="@id/categoryScrollView"
                 app:layout_constraintStart_toEndOf="@id/nearbyStores"
@@ -167,11 +168,11 @@
                 android:gravity="center|end"
                 android:text="@string/viewAll"
                 android:textAlignment="gravity"
-                android:textSize="36sp"
+                android:textSize="24sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/popularItems"
                 app:layout_constraintEnd_toEndOf="@id/viewOnMapButton"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@id/popularItems"
-                app:layout_constraintTop_toTopOf="@id/popularItems" />
+                app:layout_constraintStart_toEndOf="@id/popularItems" />
 
             <HorizontalScrollView
                 android:id="@+id/popularItemsScrollView"

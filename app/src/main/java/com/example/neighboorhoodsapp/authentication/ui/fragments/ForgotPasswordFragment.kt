@@ -1,4 +1,4 @@
-package com.example.neighboorhoodsapp
+package com.example.neighboorhoodsapp.authentication.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.neighboorhoodsapp.Utils.isValidEmail
-import com.example.neighboorhoodsapp.databinding.ForgotPasswordToolbarBinding
 import com.example.neighboorhoodsapp.databinding.FragmentForgotPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,12 +24,6 @@ class ForgotPasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentForgotPasswordBinding.inflate(layoutInflater, container, false)
-        val toolbar = ForgotPasswordToolbarBinding.inflate(layoutInflater)
-        requireActivity().setActionBar(toolbar.forgotToolbar)
-
-        toolbar.forgotBackButton.setOnClickListener {
-            findNavController().navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToLoginFragment())
-        }
         val email = binding.resetEmailInput
         val emailLayer = binding.resetEmail
         binding.sendResetLink.setOnClickListener {

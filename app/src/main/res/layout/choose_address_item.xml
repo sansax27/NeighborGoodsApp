@@ -26,9 +26,8 @@
         android:layout_height="0dp"
         android:text="@string/defaultWord"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/chooseAddressType"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/chooseAddressType" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/chooseAddressType"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/chooseAddress"

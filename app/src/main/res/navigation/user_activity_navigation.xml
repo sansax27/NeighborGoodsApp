@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.neighboorhoodsapp.HomeFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
-        android:name="com.example.neighboorhoodsapp.FilterFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.FilterFragment"
         android:label="fragment_filter"
         tools:layout="@layout/fragment_filter" />
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.example.neighboorhoodsapp.SearchResultFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.SearchResultFragment"
         android:label="fragment_search_result"
         tools:layout="@layout/fragment_search_result" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.neighboorhoodsapp.MapsFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -54,12 +54,12 @@
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.neighboorhoodsapp.ShopFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.neighboorhoodsapp.CartFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action
@@ -68,12 +68,12 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.neighboorhoodsapp.SearchFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.neighboorhoodsapp.ProfileFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -91,27 +91,27 @@
     </fragment>
     <fragment
         android:id="@+id/myOrdersFragment"
-        android:name="com.example.neighboorhoodsapp.MyOrdersFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.MyOrdersFragment"
         android:label="fragment_my_orders"
         tools:layout="@layout/fragment_my_orders" />
     <fragment
         android:id="@+id/itemCustomizationFragment"
-        android:name="com.example.neighboorhoodsapp.ItemCustomizationFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.ItemCustomizationFragment"
         android:label="fragment_item_customization"
         tools:layout="@layout/fragment_item_customization" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.neighboorhoodsapp.FavoritesFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.neighboorhoodsapp.SettingsFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.example.neighboorhoodsapp.AddressFragment"
+        android:name="com.example.neighboorhoodsapp.userActivity.fragments.AddressFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" />
 </navigation>

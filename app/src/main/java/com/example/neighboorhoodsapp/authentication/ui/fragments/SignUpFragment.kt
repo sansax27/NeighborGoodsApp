@@ -1,4 +1,4 @@
-package com.example.neighboorhoodsapp
+package com.example.neighboorhoodsapp.authentication.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

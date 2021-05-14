@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginFragment">
+    tools:context=".authentication.ui.fragments.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,15 +56,14 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/loginEnterEmail"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="5dp"
                     app:boxCornerRadiusBottomStart="5dp"
                     app:boxCornerRadiusTopEnd="5dp"
                     app:boxCornerRadiusTopStart="5dp"
-                    app:boxStrokeWidth="0dp"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
@@ -82,15 +81,13 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/loginEnterPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="5dp"
                     app:boxCornerRadiusBottomStart="5dp"
                     app:boxCornerRadiusTopEnd="5dp"
                     app:boxCornerRadiusTopStart="5dp"
-                    app:boxStrokeWidth="0dp"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"

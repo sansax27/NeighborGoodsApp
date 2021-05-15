@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.neighboorhoodsapp">
+    package="com.example.neighborGoodsApp">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".authentication.ui.fragments.NeighborGoods"
+        android:name="com.example.neighborGoodsApp.application.NeighborGoods"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,8 +30,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".userActivity.activity.UserActivity" />
-        <activity android:name=".authentication.ui.activity.MainActivity">
+        <activity android:name="com.example.neighborGoodsApp.userActivity.activity.UserActivity" />
+        <activity android:name="com.example.neighborGoodsApp.authentication.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

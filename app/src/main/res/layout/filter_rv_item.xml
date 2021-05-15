@@ -15,7 +15,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/itemPicture"
+                android:id="@+id/itemShopPicture"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +28,8 @@
                 android:layout_width="150dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@id/itemPicture"
-                app:layout_constraintTop_toBottomOf="@id/itemPicture"
+                app:layout_constraintStart_toStartOf="@id/itemShopPicture"
+                app:layout_constraintTop_toBottomOf="@id/itemShopPicture"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:id="@+id/likeShop"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:layout_constraintEnd_toEndOf="@id/itemPicture"
+                app:layout_constraintEnd_toEndOf="@id/itemShopPicture"
                 app:layout_constraintStart_toEndOf="@id/shopName"
                 app:layout_constraintTop_toTopOf="@id/shopLogo"
                 tools:srcCompat="@tools:sample/avatars" />

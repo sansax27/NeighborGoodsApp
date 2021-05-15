@@ -6,28 +6,21 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/locationImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/locationLogo"
-                android:elevation="15dp"
-                android:src="@drawable/ic_location"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/location"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:elevation="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/popular_item_border"
+                android:drawablePadding="8dp"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="0dp"
@@ -35,23 +28,23 @@
                 android:text="@string/locationDummy"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@id/locationImage"
+                app:drawableStartCompat="@drawable/ic_location"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/locationImage"
-                app:layout_constraintTop_toTopOf="@id/locationImage" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/topCategories"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/topCategories"
                 android:textColor="@color/black"
-                android:textSize="36sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/location"
-                app:layout_constraintStart_toStartOf="@id/locationImage"
-                app:layout_constraintTop_toBottomOf="@id/locationImage" />
+                app:layout_constraintStart_toStartOf="@id/location"
+                app:layout_constraintTop_toBottomOf="@id/location" />
 
             <HorizontalScrollView
                 android:id="@+id/categoryScrollView"
@@ -62,18 +55,15 @@
                 app:layout_constraintStart_toStartOf="@id/topCategories"
                 app:layout_constraintTop_toBottomOf="@id/topCategories">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/categoriesRV"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:scrollbars="horizontal" />
-                </LinearLayout>
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
             </HorizontalScrollView>
 
             <TextView
@@ -85,7 +75,7 @@
                 android:text="@string/nearbyStores"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
-                android:textSize="36sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/viewAllNearbyStores"
                 app:layout_constraintStart_toStartOf="@id/categoryScrollView"
@@ -98,7 +88,7 @@
                 android:gravity="center|end"
                 android:text="@string/viewAll"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/nearbyStores"
                 app:layout_constraintBottom_toBottomOf="@id/nearbyStores"
                 app:layout_constraintEnd_toEndOf="@id/categoryScrollView"
@@ -114,17 +104,15 @@
                 app:layout_constraintStart_toStartOf="@id/nearbyStores"
                 app:layout_constraintTop_toBottomOf="@id/nearbyStores">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/nearbyStoresRV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
             </HorizontalScrollView>
 
             <Button
@@ -139,6 +127,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="24sp"
+                app:cornerRadius="30dp"
                 app:icon="@drawable/ic_map_black_24dp"
                 app:iconGravity="textStart"
                 app:iconTint="@color/black"
@@ -155,7 +144,7 @@
                 android:text="@string/popularItems"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
-                android:textSize="36sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/viewAllPopularItems"
                 app:layout_constraintStart_toStartOf="@id/viewOnMapButton"
@@ -168,7 +157,7 @@
                 android:gravity="center|end"
                 android:text="@string/viewAll"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/popularItems"
                 app:layout_constraintEnd_toEndOf="@id/viewOnMapButton"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -184,16 +173,15 @@
                 app:layout_constraintStart_toStartOf="@id/popularItems"
                 app:layout_constraintTop_toBottomOf="@id/popularItems">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/popularItemsRV"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

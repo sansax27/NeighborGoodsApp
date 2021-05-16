@@ -4,187 +4,287 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".userActivity.fragments.ShopFragment">
 
-    <ScrollView
+        <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/shopPhoto"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/shopFragmentName"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="15dp"
-                android:gravity="center|start"
-                android:padding="10dp"
-                android:text="Burger King"
-                android:textAlignment="gravity"
-                android:textColor="@color/black"
-                android:textSize="34sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/shareShop"
-                app:layout_constraintStart_toEndOf="@id/shopPhoto"
-                app:layout_constraintTop_toTopOf="@id/shopPhoto" />
-
-            <ImageView
-                android:id="@+id/shareShop"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/shopFragmentName"
-                app:layout_constraintTop_toTopOf="@id/shopPhoto"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/shopLocation"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginEnd="15dp"
-                android:gravity="center|start"
-                android:padding="10dp"
-                android:text="Kampii, Helsinki"
-                android:textAlignment="gravity"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@id/shopFavorite"
-                app:layout_constraintStart_toEndOf="@id/shopPhoto"
-                app:layout_constraintTop_toBottomOf="@id/shopFragmentName" />
-
-            <ImageView
-                android:id="@+id/shopFavorite"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@id/shareShop"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@id/shopLocation"
-                app:layout_constraintTop_toBottomOf="@id/shareShop"
-                tools:src="@tools:sample/avatars" />
-
-            <View
-                android:id="@+id/shopTitleDivider"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/shopRoot"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/shopFavorite"
-                app:layout_constraintStart_toStartOf="@id/shopPhoto"
-                app:layout_constraintTop_toBottomOf="@id/shopPhoto" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/shopRatingImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/ic_rating"
-                app:layout_constraintStart_toStartOf="@id/shopPhoto"
-                app:layout_constraintTop_toBottomOf="@id/shopTitleDivider" />
+                <FrameLayout
+                    android:id="@+id/shopCartTop"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="1.33"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/shopRating"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="15dp"
-                android:gravity="center|start"
-                android:text="4.2"
-                android:textAlignment="gravity"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@id/shopRatingImage"
-                app:layout_constraintStart_toEndOf="@id/shopRatingImage"
-                app:layout_constraintTop_toTopOf="@id/shopRatingImage" />
+                    <ImageView
+                        android:id="@+id/shopFragmentPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/noOfShopReviews"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:gravity="center|start"
-                android:paddingStart="10dp"
-                android:paddingEnd="5dp"
-                android:text="TextView"
-                android:textAlignment="gravity"
-                android:textSize="24sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/shopRating"
-                app:layout_constraintStart_toEndOf="@id/shopRating" />
+                    <ImageView
+                        android:id="@+id/shopFragmentBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|left"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/back_button_drawable" />
+                </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopCoreFeaturesRV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/shopRatingImage"
-                app:layout_constraintTop_toBottomOf="@id/shopRating" />
+                <ImageView
+                    android:id="@+id/shopCartLogo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shopCartTop"
+                    tools:src="@tools:sample/avatars" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopFeaturesRV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="@id/shopCoreFeaturesRV"
-                app:layout_constraintStart_toStartOf="@id/shopCoreFeaturesRV"
-                app:layout_constraintTop_toBottomOf="@id/shopCoreFeaturesRV" />
+                <TextView
+                    android:id="@+id/shopFragmentName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center|start"
+                    android:padding="10dp"
+                    android:text="Burger King"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/shareShop"
+                    app:layout_constraintStart_toEndOf="@id/shopCartLogo"
+                    app:layout_constraintTop_toTopOf="@id/shopCartLogo" />
 
-            <TextView
-                android:id="@+id/shopMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:padding="10dp"
-                android:text="@string/shopMenu"
-                android:textColor="@color/logoScreen"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/shopFeaturesRV"
-                app:layout_constraintTop_toBottomOf="@id/shopFeaturesRV" />
+                <ImageView
+                    android:id="@+id/shareShop"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/shopFragmentName"
+                    app:layout_constraintTop_toTopOf="@id/shopCartLogo"
+                    tools:src="@tools:sample/avatars" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/menuCategoriesTab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/shopMenu"
-                app:layout_constraintTop_toBottomOf="@id/shopMenu"
-                app:tabGravity="fill"
-                app:tabMaxWidth="500dp">
+                <TextView
+                    android:id="@+id/shopLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center|start"
+                    android:padding="10dp"
+                    android:text="Kampii, Helsinki"
+                    android:textAlignment="gravity"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toStartOf="@id/shopFavorite"
+                    app:layout_constraintStart_toEndOf="@id/shopCartLogo"
+                    app:layout_constraintTop_toBottomOf="@id/shopFragmentName" />
 
-                <com.google.android.material.tabs.TabItem
+                <ImageView
+                    android:id="@+id/shopFavorite"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="@id/shareShop"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/shopLocation"
+                    app:layout_constraintTop_toBottomOf="@id/shareShop"
+                    tools:src="@tools:sample/avatars" />
+
+                <View
+                    android:id="@+id/shopTitleDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/shopFavorite"
+                    app:layout_constraintStart_toStartOf="@id/shopCartLogo"
+                    app:layout_constraintTop_toBottomOf="@id/shopLocation" />
+
+                <ImageView
+                    android:id="@+id/shopRatingImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_rating"
+                    app:layout_constraintStart_toStartOf="@id/shopCartLogo"
+                    app:layout_constraintTop_toBottomOf="@id/shopTitleDivider" />
+
+                <TextView
+                    android:id="@+id/shopRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center|start"
+                    android:text="4.2"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@id/shopRatingImage"
+                    app:layout_constraintStart_toEndOf="@id/shopRatingImage"
+                    app:layout_constraintTop_toTopOf="@id/shopRatingImage" />
+
+                <TextView
+                    android:id="@+id/noOfShopReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="5dp"
+                    android:text="TextView"
+                    android:textAlignment="gravity"
+                    android:textSize="24sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/shopRating"
+                    app:layout_constraintStart_toEndOf="@id/shopRating" />
+
+                <TextView
+                    android:id="@+id/deliveryEligible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:padding="10dp"
+                    android:text="@string/delivery"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="24sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@id/eligibilityBarrier"
+                    app:layout_constraintEnd_toStartOf="@+id/takeAwayEligible"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shopRatingImage" />
+
+                <TextView
+                    android:id="@+id/takeAwayEligible"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:padding="10dp"
+                    android:text="@string/takeAway"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="24sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@id/eligibilityBarrier"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/deliveryEligible"
+                    app:layout_constraintTop_toTopOf="@id/deliveryEligible" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/eligibilityBarrier"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Monday" />
+                    app:barrierDirection="top"
+                    tools:layout_editor_absoluteY="441dp" />
 
-                <com.google.android.material.tabs.TabItem
+                <TextView
+                    android:id="@+id/shopFeatures1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/darker_gray"
+                    android:padding="10dp"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/featuresBarrier"
+                    app:layout_constraintEnd_toStartOf="@+id/shopFeatures2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/eligibilityBarrier" />
+
+                <TextView
+                    android:id="@+id/shopFeatures2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/darker_gray"
+                    android:padding="10dp"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/featuresBarrier"
+                    app:layout_constraintEnd_toStartOf="@+id/shopFeatures3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/shopFeatures1"
+                    app:layout_constraintTop_toTopOf="@id/shopFeatures1" />
+
+                <TextView
+                    android:id="@+id/shopFeatures3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/darker_gray"
+                    android:padding="10dp"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/featuresBarrier"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/shopFeatures2"
+                    app:layout_constraintTop_toTopOf="@id/shopFeatures2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/featuresBarrier"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tuesday" />
+                    app:barrierDirection="top"
+                    tools:layout_editor_absoluteY="583dp" />
 
-                <com.google.android.material.tabs.TabItem
+                <TextView
+                    android:id="@+id/shopMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wednesday" />
-            </com.google.android.material.tabs.TabLayout>
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="@string/shopMenu"
+                    android:textColor="@color/logoScreen"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/shopFeatures1"
+                    app:layout_constraintTop_toBottomOf="@id/featuresBarrier" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toEndOf="@id/menuCategoriesTab"
-                app:layout_constraintStart_toStartOf="@id/menuCategoriesTab"
-                app:layout_constraintTop_toBottomOf="@id/menuCategoriesTab" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/menuCategoriesTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/shopMenu"
+                    app:layout_constraintTop_toBottomOf="@id/shopMenu"
+                    app:tabGravity="fill"
+                    app:tabMaxWidth="500dp" />
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/shopMenu"
+                    app:layout_constraintTop_toBottomOf="@id/menuCategoriesTab">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/menuItemsRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toStartOf="@id/menuCategoriesTab"
+                        app:layout_constraintStart_toStartOf="@id/menuCategoriesTab"
+                        app:layout_constraintTop_toBottomOf="@id/menuCategoriesTab" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

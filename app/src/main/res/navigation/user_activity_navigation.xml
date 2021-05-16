@@ -59,7 +59,11 @@
         android:id="@+id/shopFragment"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.ShopFragment"
         android:label="fragment_shop"
-        tools:layout="@layout/fragment_shop" />
+        tools:layout="@layout/fragment_shop" >
+        <argument
+            android:name="ShopDetails"
+            app:argType="com.example.neighborGoodsApp.models.ShopDetails" />
+    </fragment>
     <fragment
         android:id="@+id/navMenuCart"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.CartFragment"

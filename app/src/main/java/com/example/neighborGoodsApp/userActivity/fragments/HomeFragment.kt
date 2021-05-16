@@ -14,9 +14,7 @@ import com.example.neighborGoodsApp.adapters.CategoriesAdapter
 import com.example.neighborGoodsApp.adapters.PopularItemsAdapter
 import com.example.neighborGoodsApp.adapters.ShopAdapter
 import com.example.neighborGoodsApp.databinding.FragmentHomeBinding
-import com.example.neighborGoodsApp.models.Category
-import com.example.neighborGoodsApp.models.PopularItem
-import com.example.neighborGoodsApp.models.Shop
+import com.example.neighborGoodsApp.models.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import kotlin.random.Random
@@ -65,10 +63,16 @@ class HomeFragment : Fragment() {
         for(i in 0 until 6) {
             itemList.add(PopularItem("", "Item Name $i", "Item Shop $i", 74*i + Random.nextInt(9)))
         }
+        val shopDetails = ShopDetails(Shop(1,",","","Alpha", listOf("Alpha", "Beta"),4f,50,
+            listOf("Good", "Better", "Best")),"Helsinki", true, true, listOf("Good", "Bad"),
+            listOf(listOf(ShopMenuItem("Alpha", listOf("Everything","Pulses"), "",20)), listOf(
+                ShopMenuItem("Beta",
+            listOf("Picture", "Pulses"), "",2000)
+            )))
         Timber.i(itemList.size.toString())
         binding.popularItemsRV.apply {
             adapter = PopularItemsAdapter(itemList){
-                findNavController().navigate(R.id.action_homeFragment_to_searchResultFragment)
+                findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(shopDetails))
             }
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.HORIZONTAL

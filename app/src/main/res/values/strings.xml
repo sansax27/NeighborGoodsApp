@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <string name="appName">NeighborGoods App</string>
     <string name="logoAllScreens">The Logo Of NeighborHoods</string>
 
     <string name="loginEnterEmail">Enter Email-Address</string>
@@ -151,4 +151,7 @@
     <string name="inStock">In Stock</string>
 
     <string name="variants">Variants</string>
+    
+    <string name="delivery">Delivery</string>
+    <string name="takeAway">Take Away</string>
 </resources>

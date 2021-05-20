@@ -49,7 +49,6 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/addItem"
             app:layout_constraintStart_toEndOf="@id/shopItemImage" />
 
 
@@ -63,5 +62,45 @@
             app:cornerRadius="5dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/shopItemPrice"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/addItemLL"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/shopItemPrice"
+            app:layout_constraintEnd_toEndOf="@id/shopItemAdditives"
+            app:layout_constraintTop_toTopOf="@id/shopItemPrice"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/removeItem"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/noOfItems"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/addItemIcon"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:scaleType="fitXY"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

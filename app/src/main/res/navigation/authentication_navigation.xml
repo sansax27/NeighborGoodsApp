@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/createProfileFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.CreateProfileFragment"
+        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.CreateProfileFragment"
         android:label="fragment_create_profile"
         tools:layout="@layout/fragment_create_profile" />
     <fragment

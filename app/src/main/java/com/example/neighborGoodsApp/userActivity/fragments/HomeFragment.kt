@@ -36,10 +36,16 @@ class HomeFragment : Fragment() {
             shopList.add(Shop(i, "","","Shop No. $i", listOf("Fast Food", "Snacks"),i.toFloat()
             , 30*i, specialities.subList(0, i%3+1)))
         }
+        val shopDetails = ShopDetails(Shop(1,",","","Alpha", listOf("Alpha", "Beta"),4f,50,
+            listOf("Good", "Better", "Best")),"Helsinki", true, true, listOf("Good", "Bad"),
+            listOf(listOf(ShopMenuItem("Alpha", listOf("Everything","Pulses"), "",20)), listOf(
+                ShopMenuItem("Beta",
+                    listOf("Picture", "Pulses"), "",2000)
+            )))
         Timber.i(shopList.size.toString())
         binding.nearbyStoresRV.apply {
             adapter = ShopAdapter(shopList) {
-                findNavController().navigate(R.id.action_homeFragment_to_cartFragment)
+                findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(shopDetails))
             }
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.HORIZONTAL
@@ -61,14 +67,9 @@ class HomeFragment : Fragment() {
         }
         val itemList = mutableListOf<PopularItem>()
         for(i in 0 until 6) {
-            itemList.add(PopularItem("", "Item Name $i", "Item Shop $i", 74*i + Random.nextInt(9)))
+            itemList.add(PopularItem(i,"", "Item Name $i", "Item Shop $i", 74*i + Random.nextInt(9)))
         }
-        val shopDetails = ShopDetails(Shop(1,",","","Alpha", listOf("Alpha", "Beta"),4f,50,
-            listOf("Good", "Better", "Best")),"Helsinki", true, true, listOf("Good", "Bad"),
-            listOf(listOf(ShopMenuItem("Alpha", listOf("Everything","Pulses"), "",20)), listOf(
-                ShopMenuItem("Beta",
-            listOf("Picture", "Pulses"), "",2000)
-            )))
+
         Timber.i(itemList.size.toString())
         binding.popularItemsRV.apply {
             adapter = PopularItemsAdapter(itemList){
@@ -79,10 +80,10 @@ class HomeFragment : Fragment() {
             }
         }
         binding.viewAllNearbyStores.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchResultFragment)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchResultFragment("nearby", ""))
         }
         binding.viewAllPopularItems.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchResultFragment)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchResultFragment("", "popular"))
         }
         return binding.root
     }

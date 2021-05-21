@@ -11,17 +11,27 @@ import retrofit2.http.POST
 
 interface APIRetrofitInterface {
 
-    @FormUrlEncoded
-    @POST("/users")
-    fun createUser(@Field("email") email: String, @Field("password") password: String, @Field("phone") phone:String,
-    @Field("name") name:String, address:String, @Field("city") city:Int): Response<String>
 
     @FormUrlEncoded
-    @POST("/users/login")
-    fun loginUser(@Field("email") email: String, @Field("password") password:String):Response<LoginUserResponse>
+    @POST("users")
+    suspend fun createUser(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("phone") phone: String,
+        @Field("name") name: String,
+        @Field("address") address: String,
+        @Field("city") city: Int
+    ): Response<Any>
 
-    @GET("/countries")
-    fun getCities(): Response<List<City>>
+    @FormUrlEncoded
+    @POST("users/login")
+    suspend fun loginUser(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Response<LoginUserResponse>
+
+    @GET("cities")
+    suspend fun getCities(): Response<List<City>>
 
 
 }

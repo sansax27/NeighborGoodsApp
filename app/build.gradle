@@ -55,27 +55,15 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    def nav_version = "2.3.5"
 
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-native-mt'
 
 
 
-    
-
-    // Kotlin
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-
-    // Feature module Support
-    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.3.5'
-
-    // Testing Navigation
-    androidTestImplementation 'androidx.navigation:navigation-testing:2.3.5'
-
-    // Jetpack Compose Integration
-    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha01'
+    //Navigation
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

@@ -19,6 +19,7 @@ import com.example.neighborGoodsApp.authentication.viewmodels.CreateUserViewMode
 import com.example.neighborGoodsApp.databinding.FragmentCreateProfileBinding
 import com.example.neighborGoodsApp.models.City
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CreateProfileFragment : Fragment() {
@@ -42,62 +43,62 @@ class CreateProfileFragment : Fragment() {
         val address = binding.profileAddressInput
         val addressLayer = binding.profileAddress
 
-        val city = binding.profileCityInput
-        val cityLayer = binding.profileCity
-        var cityList = listOf<City>()
-        if (isConnected(requireContext())) {
-            viewModel.getCities()
-            viewModel.getCitiesStatus.observe(viewLifecycleOwner) {
-                when (it) {
-                    is State.Loading -> {
-                        binding.profilePB.visibility = View.VISIBLE
-                        binding.createProfileRoot.apply {
-                            alpha = 0.5f
-                            forEach { v ->
-                                v.isEnabled = false
-                            }
-                        }
-                    }
-                    is State.Failure -> {
-                        showLongToast(it.message)
-                        Handler(Looper.getMainLooper()).postDelayed(
-                            {
-                                findNavController().popBackStack()
-                            },
-                            2500
-                        )
-                    }
-                    is State.Success -> {
-                        val list = mutableListOf<String>()
-                        cityList = it.data
-                        for (g in it.data) {
-                            list.add(g.name)
-                        }
-                        val adapter = ArrayAdapter<String>(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1,
-                            list
-                        )
-                        binding.profileCityInput.setAdapter(adapter)
-                        binding.profilePB.visibility = View.GONE
-                        binding.createProfileRoot.apply {
-                            alpha = 1f
-                            forEach { v ->
-                                v.isEnabled = true
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            showLongToast("No Network!!")
-            Handler(Looper.getMainLooper()).postDelayed(
-                {
-                    findNavController().popBackStack()
-                },
-                2500
-            )
-        }
+//        val city = binding.profileCityInput
+//        val cityLayer = binding.profileCity
+//        var cityList = listOf<City>()
+//        if (isConnected(requireContext())) {
+//            viewModel.getCities()
+//            viewModel.getCitiesStatus.observe(viewLifecycleOwner) {
+//                when (it) {
+//                    is State.Loading -> {
+//                        binding.profilePB.visibility = View.VISIBLE
+//                        binding.createProfileRoot.apply {
+//                            alpha = 0.5f
+//                            forEach { v ->
+//                                v.isEnabled = false
+//                            }
+//                        }
+//                    }
+//                    is State.Failure -> {
+//                        showLongToast(it.message)
+//                        Handler(Looper.getMainLooper()).postDelayed(
+//                            {
+//                                findNavController().popBackStack()
+//                            },
+//                            2500
+//                        )
+//                    }
+//                    is State.Success -> {
+////                        val list = mutableListOf<String>()
+////                        cityList = it.data
+////                        for (g in it.data) {
+////                            list.add(g.name)
+////                        }
+////                        val adapter = ArrayAdapter(
+////                            requireContext(),
+////                            android.R.layout.simple_list_item_1,
+////                            list
+////                        )
+////                        binding.profileCityInput.setAdapter(adapter)
+//                        binding.profilePB.visibility = View.GONE
+//                        binding.createProfileRoot.apply {
+//                            alpha = 1f
+//                            forEach { v ->
+//                                v.isEnabled = true
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            showLongToast("No Network!!")
+//            Handler(Looper.getMainLooper()).postDelayed(
+//                {
+//                    findNavController().popBackStack()
+//                },
+//                2500
+//            )
+//        }
         viewModel.createUserStatus.observe(viewLifecycleOwner) {
             when(it) {
                 is State.Success -> {
@@ -130,11 +131,12 @@ class CreateProfileFragment : Fragment() {
             } else if (address.text.isNullOrEmpty() || address.text.isNullOrBlank()) {
                 addressLayer.error = "Address must Not Be Blank Or Empty"
             } else {
-                if(city.listSelection!=ListView.INVALID_POSITION) {
-                    viewModel.createUser(email, password, phone, name.text.toString(), address.text.toString(), cityList[binding.profileCityInput.listSelection].id)
-                } else {
-                    cityLayer.error = "Please Enter the City"
-                }
+//                Timber.i(city.listSelection.toString())
+//                if(city.listSelection!=ListView.INVALID_POSITION) {
+                    viewModel.createUser(email, password, phone, name.text.toString(), address.text.toString(), 1)
+//                } else {
+//                    cityLayer.error = "Please Enter the City"
+//                }
             }
         }
         return binding.root

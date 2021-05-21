@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://54.237.210.1:3000/api"
+private const val BASE_URL = "http://54.237.210.1:3000/api/"
 
 object APIRetrofitClient {
     fun getClient(): Retrofit {

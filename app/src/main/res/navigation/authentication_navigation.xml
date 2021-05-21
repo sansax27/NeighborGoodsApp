@@ -47,26 +47,43 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
-            android:id="@+id/action_signUpFragment_to_otpFragment"
-            app:destination="@id/otpFragment" />
-        <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_createProfileFragment"
+            app:destination="@id/createProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/createProfileFragment"
         android:name="com.example.neighborGoodsApp.authentication.ui.fragments.CreateProfileFragment"
         android:label="fragment_create_profile"
-        tools:layout="@layout/fragment_create_profile" />
+        tools:layout="@layout/fragment_create_profile" >
+        <action
+            android:id="@+id/action_createProfileFragment_to_otpFragment"
+            app:destination="@id/otpFragment"
+            app:popUpTo="@id/createProfileFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/otpFragment"
         android:name="com.example.neighborGoodsApp.authentication.ui.fragments.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" >
         <action
-            android:id="@+id/action_otpFragment_to_createProfileFragment"
-            app:destination="@id/createProfileFragment" />
+            android:id="@+id/action_otpFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/otpFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

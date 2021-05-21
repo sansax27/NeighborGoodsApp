@@ -1,6 +1,9 @@
 package com.example.neighborGoodsApp.application
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkRequest
 import com.example.neighborGoodsApp.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -15,4 +18,5 @@ class NeighborGoods: Application() {
             Timber.plant(DebugTree())
         }
     }
+
 }

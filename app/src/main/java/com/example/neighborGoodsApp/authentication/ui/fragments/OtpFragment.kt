@@ -23,7 +23,7 @@ class OtpFragment : Fragment() {
     ): View? {
         _binding = FragmentOtpBinding.inflate(layoutInflater)
         binding.verifyButton.setOnClickListener {
-            findNavController().navigate(OtpFragmentDirections.actionOtpFragmentToCreateProfileFragment())
+
         }
         return binding.root
     }

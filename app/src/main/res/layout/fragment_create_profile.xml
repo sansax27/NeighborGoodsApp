@@ -93,7 +93,21 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/profileEnterName"
                         android:inputType="textPersonName" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/detectLocation"
+                    android:layout_width="50dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_address"
+                    app:layout_constraintBottom_toBottomOf="@id/profileAddress"
+                    app:layout_constraintEnd_toEndOf="@id/userName"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/profileAddress"
+                    app:layout_constraintTop_toTopOf="@id/profileAddress"
+                    app:layout_constraintVertical_bias="0.13999999" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/profileAddress"
@@ -108,7 +122,7 @@
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="@id/userName"
+                    app:layout_constraintEnd_toStartOf="@id/detectLocation"
                     app:layout_constraintStart_toStartOf="@id/userName"
                     app:layout_constraintTop_toBottomOf="@id/userName">
 
@@ -116,7 +130,6 @@
                         android:id="@+id/profileAddressInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_address"
                         android:hint="@string/profileAddress"
                         android:inputType="textPostalAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -134,7 +147,7 @@
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
-                    app:layout_constraintEnd_toEndOf="@id/profileAddress"
+                    app:layout_constraintEnd_toEndOf="@id/detectLocation"
                     app:layout_constraintStart_toStartOf="@id/profileAddress"
                     app:layout_constraintTop_toBottomOf="@id/profileAddress">
 

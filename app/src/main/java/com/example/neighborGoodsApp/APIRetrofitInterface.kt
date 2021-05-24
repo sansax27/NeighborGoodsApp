@@ -2,11 +2,10 @@ package com.example.neighborGoodsApp
 
 import com.example.neighborGoodsApp.models.City
 import com.example.neighborGoodsApp.models.LoginUserResponse
+import com.example.neighborGoodsApp.models.UploadImage
+import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface APIRetrofitInterface {
@@ -20,7 +19,9 @@ interface APIRetrofitInterface {
         @Field("phone") phone: String,
         @Field("name") name: String,
         @Field("address") address: String,
-        @Field("city") city: Int
+        @Field("address") city: Int,
+        @Field("profilePicId") profilePicId:Int,
+        @Field("role") role:String
     ): Response<Any>
 
     @FormUrlEncoded
@@ -31,7 +32,14 @@ interface APIRetrofitInterface {
     ): Response<LoginUserResponse>
 
     @GET("cities")
-    suspend fun getCities(): Response<List<City>>
+    suspend fun getCities(@Query(value = "filter") filter:String): Response<List<City>>
 
 
+
+    @Multipart
+    @POST("StorageFiles/upload")
+    suspend fun uploadProfilePic(@Part image:MultipartBody.Part): Response<List<UploadImage>>
+
+    @POST("users/logout")
+    suspend fun logout(@Query(value = "access_token") accessToken:String):Response<*>
 }

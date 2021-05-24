@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -85,5 +88,14 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/otpFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="direct"
+            app:argType="boolean" />
     </fragment>
 </navigation>

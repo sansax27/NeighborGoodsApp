@@ -11,13 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.isConnected
-import com.example.neighborGoodsApp.User
+import com.example.neighborGoodsApp.Utils.getStringFromSharedPreferences
+import com.example.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.ui.activity.MainActivity
 import com.example.neighborGoodsApp.databinding.FragmentProfileBinding
 import com.example.neighborGoodsApp.userActivity.viewModels.ProfileFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
         }
         binding.logout.setOnClickListener {
             if (isConnected(requireContext())) {
-                viewModel.logout(User.accessToken)
+                viewModel.logout(getStringFromSharedPreferences(requireContext(),"accessToken"))
             } else {
                 showLongToast("No Network Connection!!")
             }
@@ -50,6 +50,7 @@ class ProfileFragment : Fragment() {
         viewModel.logoutStatus.observe(viewLifecycleOwner) {
             when(it) {
                 is State.Success -> {
+                    putStringIntoSharedPreferences(requireContext(), "accessToken","")
                     requireActivity().startActivityFromFragment(this, Intent(requireActivity(), MainActivity::class.java),15)
                     requireActivity().finish()
                 }

@@ -1,10 +1,12 @@
 package com.example.neighborGoodsApp
 
+import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Patterns
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import java.util.regex.Pattern
 
 object Utils {
@@ -22,5 +24,12 @@ object Utils {
     fun isConnected(context: Context):Boolean {
         val networkInfo = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
         return networkInfo!=null && networkInfo.isConnectedOrConnecting
+    }
+    fun putStringIntoSharedPreferences(context: Context, key:String, value:String) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(key, value).apply()
+    }
+
+    fun getStringFromSharedPreferences(context: Context, key: String):String {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(key,"")!!
     }
 }

@@ -4,17 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.neighborGoodsApp.R
+import com.example.neighborGoodsApp.AppRepository
+import com.example.neighborGoodsApp.State
+import com.example.neighborGoodsApp.Utils.handleStatesUI
+import com.example.neighborGoodsApp.Utils.isConnected
+import com.example.neighborGoodsApp.Utils.logout
+import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.CategoriesAdapter
 import com.example.neighborGoodsApp.adapters.PopularItemsAdapter
 import com.example.neighborGoodsApp.adapters.ShopAdapter
 import com.example.neighborGoodsApp.databinding.FragmentHomeBinding
-import com.example.neighborGoodsApp.models.*
+import com.example.neighborGoodsApp.models.PopularItem
+import com.example.neighborGoodsApp.userActivity.viewModels.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import kotlin.random.Random
@@ -25,44 +34,51 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = _binding
 
+    private val viewModel:HomeFragmentViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val specialities = listOf("Good", "Better", "Best")
-        val shopList = mutableListOf<Shop>()
-        for(i in 0 until 6) {
-            shopList.add(Shop(i, "","","Shop No. $i", listOf("Fast Food", "Snacks"),i.toFloat()
-            , 30*i, specialities.subList(0, i%3+1)))
+        viewModel.prepareHomeScreen()
+        handleStatesUI(binding.homePB, binding.homeRoot, true)
+        if(isConnected(requireContext())) {
+            viewModel.prepareHomeScreen()
+        } else {
+            Toast.makeText(requireContext(), "Unable To Retrieve Data, No Internet Connection Try Again Later!!", Toast.LENGTH_LONG).show()
+            binding.homeTopRoot.visibility = View.GONE
         }
-        val shopDetails = ShopDetails(Shop(1,",","","Alpha", listOf("Alpha", "Beta"),4f,50,
-            listOf("Good", "Better", "Best")),"Helsinki", true, true, listOf("Good", "Bad"),
-            listOf(listOf(ShopMenuItem("Alpha", listOf("Everything","Pulses"), "",20)), listOf(
-                ShopMenuItem("Beta",
-                    listOf("Picture", "Pulses"), "",2000)
-            )))
-        Timber.i(shopList.size.toString())
-        binding.nearbyStoresRV.apply {
-            adapter = ShopAdapter(shopList) {
-                findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(shopDetails))
-            }
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = RecyclerView.HORIZONTAL
-            }
-        }
-        val categories = listOf("Flowers", "Food", "Grocery")
-        val categoriesList = mutableListOf<Category>()
-        for(i in 0 until 3) {
-            categoriesList.add(Category("", categories[i]))
-        }
-        Timber.i(categoriesList.size.toString())
-        binding.categoriesRV.apply {
-            adapter = CategoriesAdapter(categoriesList) {
-                findNavController().navigate(R.id.action_homeFragment_to_searchResultFragment)
-            }
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = RecyclerView.HORIZONTAL
+        viewModel.prepareHomeScreenStatus.observe(viewLifecycleOwner) {
+            when(it) {
+                is State.Loading -> {}
+                is State.Success -> {
+                    binding.categoriesRV.apply {
+                        adapter = CategoriesAdapter(viewModel.categoryList) {
+                        }
+                        layoutManager = LinearLayoutManager(requireContext()).apply {
+                            orientation = RecyclerView.HORIZONTAL
+                        }
+                    }
+                    binding.nearbyStoresRV.apply {
+                        adapter = ShopAdapter(viewModel.shopList) { shop ->
+                            findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(shop.id))
+                        }
+                        layoutManager = LinearLayoutManager(requireContext()).apply {
+                            orientation = RecyclerView.HORIZONTAL
+                        }
+                    }
+                    handleStatesUI(binding.homePB, binding.homeRoot, false)
+                }
+                is State.Failure -> {
+                    if(it.message.contains("Authorization")) {
+                        showLongToast("Your Authorization has expired and therefore You Have Logged out!!")
+                        logout(lifecycleScope, requireActivity())
+                        handleStatesUI(binding.homePB, binding.homeRoot, true)
+                    } else {
+                        Toast.makeText(requireContext(), "Unable To Retrieve Data, Try Again Later!!", Toast.LENGTH_LONG).show()
+                        binding.homeTopRoot.visibility = View.GONE
+                    }
+                }
             }
         }
         val itemList = mutableListOf<PopularItem>()
@@ -73,7 +89,7 @@ class HomeFragment : Fragment() {
         Timber.i(itemList.size.toString())
         binding.popularItemsRV.apply {
             adapter = PopularItemsAdapter(itemList){
-                findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(shopDetails))
+                findNavController().navigate(HomeFragmentDirections.actionNavMenuHomeToShopFragment(2))
             }
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.HORIZONTAL

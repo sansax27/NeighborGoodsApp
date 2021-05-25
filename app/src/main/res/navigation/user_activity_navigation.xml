@@ -67,8 +67,8 @@
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" >
         <argument
-            android:name="ShopDetails"
-            app:argType="com.example.neighborGoodsApp.models.ShopDetails" />
+            android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/navMenuCart"

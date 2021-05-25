@@ -12,7 +12,7 @@ class CategoriesAdapter(private val categoryList: List<Category>, private val mo
     inner class ViewHolder(private val itemBinding: CategoryItemBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Category) {
             Timber.i("FFFFF")
-            itemBinding.categoryTitle.text = data.categoryName
+            itemBinding.categoryTitle.text = data.name
             itemBinding.root.setOnClickListener {
                 move(data)
             }

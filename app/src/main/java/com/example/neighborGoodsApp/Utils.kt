@@ -2,6 +2,7 @@ package com.example.neighborGoodsApp
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.util.Patterns
 import android.view.View
@@ -10,8 +11,11 @@ import android.widget.Toast
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import com.example.neighborGoodsApp.authentication.ui.activity.MainActivity
+import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.util.regex.Pattern
 
@@ -69,5 +73,10 @@ object Utils {
         } else {
             liveData.postValue(State.Failure(response.message()))
         }
+    }
+    fun logout(lifecycleScope:LifecycleCoroutineScope, activity: Activity) = lifecycleScope.launch {
+        AppRepository.logout(PreferenceManager.getDefaultSharedPreferences(activity).getString("accessToken","")!!)
+        activity.startActivity(Intent(activity, MainActivity::class.java))
+        activity.finish()
     }
 }

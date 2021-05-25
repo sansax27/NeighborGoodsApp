@@ -13,12 +13,11 @@ object AppRepository {
         password: String,
         phone: String,
         name: String,
-        address:String,
-        city: Int,
+        addressId:Int,
         profilePicId:Int,
         role:String
     ) = withContext(Dispatchers.IO) {
-        retrofitInstance.createUser(email, password, phone, name, address, city, profilePicId, role)
+        retrofitInstance.createUser(email, password, phone, name, addressId,profilePicId, role)
     }
 
     suspend fun loginUser(email: String, password: String) =
@@ -33,5 +32,16 @@ object AppRepository {
 
     suspend fun logout(accessToken:String) = withContext(Dispatchers.IO) {
         retrofitInstance.logout(accessToken)
+    }
+
+    suspend fun getStates(filter:String) = withContext(Dispatchers.IO) {
+        retrofitInstance.getStates(filter)
+    }
+
+    suspend fun getCountries() = withContext(Dispatchers.IO) {
+        retrofitInstance.getCountries()
+    }
+    suspend fun createAddress(cityId:Int, address:String, default:Boolean, created:Boolean) = withContext(Dispatchers.IO) {
+        return@withContext retrofitInstance.createAddress(cityId, address, default, created)
     }
 }

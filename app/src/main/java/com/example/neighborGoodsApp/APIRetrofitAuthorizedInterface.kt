@@ -16,8 +16,9 @@ interface APIRetrofitAuthorizedInterface {
     @GET("Vendors")
     suspend fun getVendors(@Query(value = "filter") filter: String): Response<List<Shop>>
 
-    @POST("Addresses/updateAddress")
+    @POST("Addresses/{id}/updateAddress")
     suspend fun updateDefaultAddress(
+        @Path("id") userId: Int = User.id,
         @Field("currentAddressId") currentAddressId: Int,
         @Field("newAddressId") newAddressId: Int
     ): Response<String>

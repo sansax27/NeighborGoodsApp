@@ -66,7 +66,7 @@ object AppRepository {
     }
 
     suspend fun updateDefaultAddress(currentAddressId:Int, newAddressId:Int) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.updateDefaultAddress(currentAddressId, newAddressId)
+        retrofitAuthorizedInstance!!.updateDefaultAddress(currentAddressId = currentAddressId, newAddressId = newAddressId)
     }
 
     suspend fun updateAddress(addressId:Int, cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) = withContext(Dispatchers.IO) {

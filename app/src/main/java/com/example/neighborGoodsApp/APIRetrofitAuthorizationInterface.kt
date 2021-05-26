@@ -48,6 +48,9 @@ interface APIRetrofitAuthorizationInterface {
     @GET("countries")
     suspend fun getCountries():Response<List<Id>>
 
+    @GET("users/findOne")
+    suspend fun ifEmailExists(@Query(value = "filter") filter: String):Response<String>
+
     @FormUrlEncoded
     @POST("Addresses")
     suspend fun createAddress(@Field("cityId")cityId:Int, @Field("address") address: String, @Field("default") default:Boolean, @Field("created") created:Boolean):Response<Id>

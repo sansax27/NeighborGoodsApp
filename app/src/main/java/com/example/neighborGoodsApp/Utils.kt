@@ -3,6 +3,7 @@ package com.example.neighborGoodsApp
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.util.Patterns
 import android.view.View
@@ -78,5 +79,10 @@ object Utils {
         AppRepository.logout(PreferenceManager.getDefaultSharedPreferences(activity).getString("accessToken","")!!)
         activity.startActivity(Intent(activity, MainActivity::class.java))
         activity.finish()
+    }
+
+    fun isGPSAvailable(context: Context):Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }

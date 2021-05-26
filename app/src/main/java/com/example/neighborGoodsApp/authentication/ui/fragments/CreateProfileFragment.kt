@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,8 +20,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.isConnected
+import com.example.neighborGoodsApp.Utils.isGPSAvailable
 import com.example.neighborGoodsApp.Utils.showLongToast
-import com.example.neighborGoodsApp.authentication.viewmodels.CreateUserViewModel
+import com.example.neighborGoodsApp.authentication.viewmodels.CreateProfileFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentCreateProfileBinding
 import com.example.neighborGoodsApp.models.Id
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -37,7 +37,7 @@ class CreateProfileFragment : Fragment() {
     private lateinit var _binding: FragmentCreateProfileBinding
     private val binding: FragmentCreateProfileBinding
         get() = _binding
-    private val viewModel: CreateUserViewModel by viewModels()
+    private val viewModel: CreateProfileFragmentViewModel by viewModels()
     private var imageUri: Uri? = null
     private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
         imageUri = it
@@ -83,8 +83,12 @@ class CreateProfileFragment : Fragment() {
         val addressLayer = binding.profileAddress
 
         binding.detectLocation.setOnClickListener {
-            detectLocation = true
-            verifyLocationPermissions()
+            if (isGPSAvailable(requireContext())) {
+                detectLocation = true
+                verifyLocationPermissions()
+            } else {
+                showLongToast("Please Enable GPS!!")
+            }
         }
         viewModel.createUserStatus.observe(viewLifecycleOwner) {
             when (it) {

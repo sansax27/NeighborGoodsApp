@@ -31,6 +31,9 @@ object AppRepository {
     suspend fun loginUser(email: String, password: String) =
         withContext(Dispatchers.IO) { retrofitInstance.loginUser(email, password) }
 
+    suspend fun ifEmailExists(filter: String) = withContext(Dispatchers.IO) {
+        retrofitInstance.ifEmailExists(filter)
+    }
     suspend fun getCities(filter: String) = withContext(Dispatchers.IO) {
         retrofitInstance.getCities(filter)
     }

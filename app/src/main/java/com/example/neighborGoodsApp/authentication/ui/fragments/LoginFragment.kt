@@ -9,7 +9,6 @@ import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.isConnected
@@ -17,12 +16,10 @@ import com.example.neighborGoodsApp.Utils.isValidEmail
 import com.example.neighborGoodsApp.Utils.isValidPassword
 import com.example.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.example.neighborGoodsApp.Utils.showLongToast
-import com.example.neighborGoodsApp.authentication.viewmodels.LoginViewModel
+import com.example.neighborGoodsApp.authentication.viewmodels.LoginFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentLoginBinding
-import com.example.neighborGoodsApp.models.UserDetails
 import com.example.neighborGoodsApp.userActivity.activity.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Appendable
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -31,7 +28,7 @@ class LoginFragment : Fragment() {
     private val binding: FragmentLoginBinding
         get() = _binding
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginFragmentViewModel by viewModels()
     private val toUserActivityCode = 154
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

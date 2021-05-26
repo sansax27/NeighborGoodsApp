@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.isConnected

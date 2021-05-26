@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neighborGoodsApp.databinding.ShopMenuItemBinding
 import com.example.neighborGoodsApp.models.ShopMenuItem
-import com.example.neighborGoodsApp.userActivity.viewModels.ManageCartViewModel
+import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import timber.log.Timber
 
-class MenuItemsAdapter(private val shopId:Int, private val menuItemList:List<ShopMenuItem>, private val viewModel:ManageCartViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
+class MenuItemsAdapter(private val shopId:Int, private val menuItemList:List<ShopMenuItem>, private val viewModel:UserActivityViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val itemBinding:ShopMenuItemBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data:ShopMenuItem) {

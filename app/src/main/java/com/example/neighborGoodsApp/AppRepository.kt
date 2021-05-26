@@ -21,11 +21,10 @@ object AppRepository {
         password: String,
         phone: String,
         name: String,
-        addressId: Int,
         profilePicId: Int,
         role: String
     ) = withContext(Dispatchers.IO) {
-        retrofitInstance.createUser(email, password, phone, name, addressId, profilePicId, role)
+        retrofitInstance.createUser(email, password, phone, name, profilePicId, role)
     }
 
     suspend fun loginUser(email: String, password: String) =
@@ -54,9 +53,9 @@ object AppRepository {
         retrofitInstance.getCountries()
     }
 
-    suspend fun createAddress(cityId: Int, address: String, default: Boolean, created: Boolean) =
+    suspend fun createAddress(cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) =
         withContext(Dispatchers.IO) {
-            return@withContext retrofitInstance.createAddress(cityId, address, default, created)
+            return@withContext retrofitInstance.createAddress(cityId, address, userId,default, created)
         }
 
     suspend fun getCategories(filter: String) =
@@ -64,5 +63,17 @@ object AppRepository {
 
     suspend fun getVendors(filter:String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getVendors(filter)
+    }
+
+    suspend fun updateDefaultAddress(currentAddressId:Int, newAddressId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.updateDefaultAddress(currentAddressId, newAddressId)
+    }
+
+    suspend fun updateAddress(addressId:Int, cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.updateAddress(addressId, cityId, address, userId, default, created)
+    }
+
+    suspend fun deleteAddress(addressId: Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.deleteAddress(addressId)
     }
 }

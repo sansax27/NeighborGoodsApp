@@ -147,13 +147,16 @@
     <string name="confirmNewPassword">Confirm New Password</string>
 
     <string name="editProfile">Edit Profile</string>
-    
+
     <string name="inStock">In Stock</string>
 
     <string name="variants">Variants</string>
-    
+
     <string name="delivery">Delivery</string>
     <string name="takeAway">Take Away</string>
     <string name="forgotPasswordHeading">Forgot Password</string>
 
+    <string name="address">Address</string>
+    <string name="addAddress">Add Address</string>
+    <string name="editAddress">Edit Address</string>
 </resources>

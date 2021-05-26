@@ -60,7 +60,7 @@
                     app:layout_constraintEnd_toEndOf="@id/itemShopPicture"
                     app:layout_constraintStart_toEndOf="@id/shopName"
                     app:layout_constraintTop_toTopOf="@id/shopLogo"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/ic_favorite" />
 
                 <TextView
                     android:id="@+id/shopCategories"

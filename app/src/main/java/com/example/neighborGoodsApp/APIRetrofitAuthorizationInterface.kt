@@ -1,5 +1,6 @@
 package com.example.neighborGoodsApp
 
+import com.example.neighborGoodsApp.models.Address
 import com.example.neighborGoodsApp.models.Id
 import com.example.neighborGoodsApp.models.LoginUserResponse
 import com.example.neighborGoodsApp.models.UploadImage
@@ -18,9 +19,8 @@ interface APIRetrofitAuthorizationInterface {
         @Field("password") password: String,
         @Field("phone") phone: String,
         @Field("name") name: String,
-        @Field("address") addressId:Int,
-        @Field("profilePicId") profilePicId:Int,
-        @Field("role") role:String
+        @Field("profilePicId") profilePicId: Int,
+        @Field("role") role: String
     ): Response<Id>
 
     @FormUrlEncoded
@@ -31,27 +31,34 @@ interface APIRetrofitAuthorizationInterface {
     ): Response<LoginUserResponse>
 
     @GET("cities")
-    suspend fun getCities(@Query(value = "filter") filter:String): Response<List<Id>>
+    suspend fun getCities(@Query(value = "filter") filter: String): Response<List<Id>>
 
 
     @GET("states")
-    suspend fun getStates(@Query(value = "filter") filter: String):Response<List<Id>>
+    suspend fun getStates(@Query(value = "filter") filter: String): Response<List<Id>>
 
 
     @Multipart
     @POST("StorageFiles/upload")
-    suspend fun uploadProfilePic(@Part image:MultipartBody.Part): Response<List<UploadImage>>
+    suspend fun uploadProfilePic(@Part image: MultipartBody.Part): Response<List<UploadImage>>
 
     @POST("users/logout")
-    suspend fun logout(@Query(value = "access_token") accessToken:String):Response<*>
+    suspend fun logout(@Query(value = "access_token") accessToken: String): Response<*>
 
     @GET("countries")
-    suspend fun getCountries():Response<List<Id>>
+    suspend fun getCountries(): Response<List<Id>>
 
     @GET("users/findOne")
-    suspend fun ifEmailExists(@Query(value = "filter") filter: String):Response<String>
+    suspend fun ifEmailExists(@Query(value = "filter") filter: String): Response<String>
 
     @FormUrlEncoded
     @POST("Addresses")
-    suspend fun createAddress(@Field("cityId")cityId:Int, @Field("address") address: String, @Field("default") default:Boolean, @Field("created") created:Boolean):Response<Id>
+    suspend fun createAddress(
+        @Field("cityId") cityId: Int,
+        @Field("street1") address: String,
+        @Field(value = "userId") userId: Int,
+        @Field("default") default: Boolean,
+        @Field("created") created: Boolean
+    ): Response<Address>
+
 }

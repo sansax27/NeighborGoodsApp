@@ -19,15 +19,13 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 import com.example.neighborGoodsApp.Utils.handleResponse
+import com.example.neighborGoodsApp.models.Address
 
 
 @HiltViewModel
 class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
 
 
-    init {
-        getCountries()
-    }
     private val createUserStatusPrivate = MutableLiveData<State<Id>>()
     val createUserStatus: LiveData<State<Id>>
         get() = createUserStatusPrivate
@@ -46,8 +44,8 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
     private val getStatesStatusPrivate = MutableLiveData<State<List<Id>>>()
     val getStatesStatus:LiveData<State<List<Id>>> get() = getStatesStatusPrivate
 
-    private val createAddressStatusPrivate = MutableLiveData<State<Id>>()
-    val createAddressStatus: LiveData<State<Id>> get() = createAddressStatusPrivate
+    private val createAddressStatusPrivate = MutableLiveData<State<Address>>()
+    val createAddressStatus: LiveData<State<Address>> get() = createAddressStatusPrivate
 
     private val getStateStatusIdPrivate = MutableLiveData<State<List<Id>>>()
     val getStateIdStatus: LiveData<State<List<Id>>> get() = getStateStatusIdPrivate
@@ -57,18 +55,17 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
         password: String,
         phone: String,
         name: String,
-        addressId: Int,
         profilePicId: Int,
         role: String
     ) =
         viewModelScope.launch {
-            handleResponse(AppRepository.createUser(email, password, phone, name, addressId, profilePicId, role), createUserStatusPrivate)
+            handleResponse(AppRepository.createUser(email, password, phone, name, profilePicId, role), createUserStatusPrivate)
         }
 
 
-    fun createAddress(cityId: Int, address: String, default: Boolean, created: Boolean) =
+    fun createAddress(cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) =
         viewModelScope.launch {
-            handleResponse(AppRepository.createAddress(cityId, address, default, created), createAddressStatusPrivate)
+            handleResponse(AppRepository.createAddress(cityId, address,userId, default, created), createAddressStatusPrivate)
         }
 
     fun getCities(filter: String) =
@@ -83,7 +80,7 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
     fun getStates(filter: String) = viewModelScope.launch {
         handleResponse(AppRepository.getStates(filter), getStatesStatusPrivate)
     }
-    private fun getCountries() = viewModelScope.launch {
+    fun getCountries() = viewModelScope.launch {
         handleResponse(AppRepository.getCountries(), getCountriesStatusPrivate)
     }
 

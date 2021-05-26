@@ -11,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.State
+import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.Utils.isConnected
 import com.example.neighborGoodsApp.Utils.isValidEmail
 import com.example.neighborGoodsApp.Utils.isValidPassword
-import com.example.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.viewmodels.LoginFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentLoginBinding
@@ -39,7 +39,6 @@ class LoginFragment : Fragment() {
         val emailLayer = binding.loginEnterEmail
         val password = binding.loginEnterPasswordInput
         val passwordLayer = binding.loginEnterPassword
-
 
         binding.loginButton.setOnClickListener {
             if (!email.text.toString().isValidEmail()) {
@@ -71,17 +70,15 @@ class LoginFragment : Fragment() {
                 }
                 is State.Success -> {
                     val data = it.data.userDetails
-                    putStringIntoSharedPreferences(requireContext(), "accessToken", it.data.id)
-                    putStringIntoSharedPreferences(requireContext(),"ttl", it.data.ttl)
-//                    putStringIntoSharedPreferences(requireContext(),"address", data.address)
-//                    putStringIntoSharedPreferences(requireContext(),"email", data.email)
-//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putInt("city", data.city).apply()
-//                    putStringIntoSharedPreferences(requireContext(), "name", data.name)
-//                    putStringIntoSharedPreferences(requireContext(), "phone", data.phone)
-//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putInt("profilePicId", data.profilePicId).apply()
-//                    putStringIntoSharedPreferences(requireContext(), "role", data.role)
-//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putBoolean("isEmailVerified", data.isEmailVerified).apply()
-                    AppRepository.setRetrofitAuthorizedInstance(it.data.id)
+                    User.accessToken = it.data.id
+                    User.ttl = it.data.ttl
+                    User.email = data.email
+                    User.id = data.id
+                    User.phone = data.phone
+                    User.name = data.name
+                    User.role = data.role
+                    User.profilePicId = data.profilePicId
+                    AppRepository.setRetrofitAuthorizedInstance(User.accessToken)
                     if (!data.isEmailVerified) {
                         findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment("test", "test", true))
                     } else {

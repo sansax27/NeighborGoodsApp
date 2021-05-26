@@ -29,7 +29,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CreateProfileFragment : Fragment() {
@@ -44,7 +43,6 @@ class CreateProfileFragment : Fragment() {
         binding.profilePicture.setImageURI(imageUri)
     }
     private var detectLocation = false
-    private var profilePicId = 0
     private var countryList = listOf<Id>()
     private var countryId = -1
     private var stateList = listOf<Id>()
@@ -81,6 +79,14 @@ class CreateProfileFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val address = binding.profileAddressInput
         val addressLayer = binding.profileAddress
+        if(isConnected(requireContext())) {
+            viewModel.getCountries()
+        } else {
+            showLongToast("No Network Connection, Can't Fetch Required Details Of Sign Up")
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().popBackStack()
+            }, 2000)
+        }
 
         binding.detectLocation.setOnClickListener {
             if (isGPSAvailable(requireContext())) {
@@ -93,13 +99,18 @@ class CreateProfileFragment : Fragment() {
         viewModel.createUserStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Success -> {
-                    findNavController().navigate(
-                        CreateProfileFragmentDirections.actionCreateProfileFragmentToOtpFragment(
-                            email,
-                            phone,
-                            false
+                    if (isConnected(requireContext())) {
+                        viewModel.createAddress(
+                            cityId,
+                            address.text.toString(),
+                            it.data.id,
+                            default = true,
+                            created = true
                         )
-                    )
+                    } else {
+                        showLongToast("No Network Connection!!")
+                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    }
                 }
                 is State.Failure -> {
                     showLongToast(it.message)
@@ -109,10 +120,40 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.getCountriesStatus.observe(viewLifecycleOwner) {
+        viewModel.uploadImageStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
+                    handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
                 }
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                }
+                is State.Success -> {
+                    if (isConnected(requireContext())) {
+                        if (isConnected(requireContext())) {
+                            viewModel.createUser(
+                                email,
+                                password,
+                                phone,
+                                name.text.toString(),
+                                it.data[0].id,
+                                "Customer"
+                            )
+                        } else {
+                            showLongToast("No Internet Connection!!")
+                            handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                        }
+                    } else {
+                        showLongToast("No Internet Connection!!")
+                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    }
+                }
+            }
+        }
+        viewModel.getCountriesStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> handleStatesUI(binding.profilePB, binding.createProfileRoot,true)
                 is State.Success -> {
                     countryList = it.data
                     val list = mutableListOf<String>()
@@ -128,62 +169,41 @@ class CreateProfileFragment : Fragment() {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
                 }
                 is State.Failure -> {
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
+                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().popBackStack()
                     }, 2500)
                 }
             }
         }
-        viewModel.uploadImageStatus.observe(viewLifecycleOwner) {
-            when (it) {
-                is State.Loading -> {
-                    Timber.i("PPPPPPP")
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
-                }
-                is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                }
-                is State.Success -> {
-                    if (isConnected(requireContext())) {
-                        profilePicId = it.data[0].id
-                        viewModel.createAddress(
-                            cityId,
-                            address.text.toString(),
-                            default = true,
-                            created = true
-                        )
-                    } else {
-                        showLongToast("No Internet Connection!!")
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    }
-                }
-            }
-        }
         viewModel.createAddressStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Success -> {
-                    if (isConnected(requireContext())) {
-                        viewModel.createUser(
-                            email,
-                            password,
-                            phone,
-                            name.text.toString(),
-                            it.data.id,
-                            profilePicId,
-                            "Customer"
+                    showLongToast("SignUp Successful!!")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(
+                            CreateProfileFragmentDirections.actionCreateProfileFragmentToOtpFragment(
+                                email,
+                                phone,
+                                false
+                            )
                         )
-                    } else {
-                        showLongToast("No Internet Connection!!")
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    }
+                    }, 2000)
                 }
                 is State.Loading -> {
+
                 }
                 is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    showLongToast("SignUp Successful! But Could Not Save Address")
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(
+                            CreateProfileFragmentDirections.actionCreateProfileFragmentToOtpFragment(
+                                email,
+                                phone,
+                                false
+                            )
+                        )
+                    }, 2000)
                 }
             }
         }
@@ -191,7 +211,8 @@ class CreateProfileFragment : Fragment() {
             when (it) {
                 is State.Success -> {
                     val filter =
-                        Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id))).toString()
+                        Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
+                            .toString()
                     viewModel.getCities(filter)
                 }
                 is State.Failure -> {
@@ -226,12 +247,12 @@ class CreateProfileFragment : Fragment() {
                     )
                     binding.profileCityInput.setAdapter(adapter)
                     binding.profileCity.visibility = View.VISIBLE
-                    if(detectLocation) {
+                    if (detectLocation) {
                         binding.profileCountry.visibility = View.GONE
                         binding.profileState.visibility = View.GONE
                     }
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    if(detectLocation) {
+                    if (detectLocation) {
                         showLongToast("For Precise Location, Please Select City Manually")
                     }
                 }
@@ -253,7 +274,7 @@ class CreateProfileFragment : Fragment() {
                 cityId = -1
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to countryId))).toString()
-            if(isConnected(requireContext())) {
+            if (isConnected(requireContext())) {
                 viewModel.getStates(filter)
             } else {
                 showLongToast("No Network!!, Unable to Fetch Location Related Data!!. Retry By Selecting the Option Again!!")
@@ -261,7 +282,7 @@ class CreateProfileFragment : Fragment() {
         }
 
         viewModel.getStatesStatus.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is State.Success -> {
                     val list = mutableListOf<String>()
                     stateList = it.data
@@ -303,13 +324,13 @@ class CreateProfileFragment : Fragment() {
                 addressLayer.error = "Address must Not Be Blank Or Empty"
             } else if (imageUri == null) {
                 showLongToast("Please Enter Image")
-            } else if (detectLocation && cityId==-1) {
+            } else if (detectLocation && cityId == -1) {
                 showLongToast("Please Select City")
-            } else if(!detectLocation && countryId==-1) {
+            } else if (!detectLocation && countryId == -1) {
                 showLongToast("Please Select Country")
-            } else if(!detectLocation && stateId==-1) {
+            } else if (!detectLocation && stateId == -1) {
                 showLongToast("Please Select State")
-            } else if(!detectLocation && cityId==-1) {
+            } else if (!detectLocation && cityId == -1) {
                 showLongToast("Please Select City")
             } else {
                 if (isConnected(requireContext())) {

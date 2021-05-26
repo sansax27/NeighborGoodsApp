@@ -4,15 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.neighborGoodsApp.adapters.MenuItemsAdapter
 import com.example.neighborGoodsApp.databinding.FragmentShopBinding
-import com.example.neighborGoodsApp.userActivity.viewModels.ManageCartViewModel
-import com.google.android.material.tabs.TabLayout
+import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -21,7 +16,7 @@ class ShopFragment : Fragment() {
     private lateinit var _binding: FragmentShopBinding
     private val binding: FragmentShopBinding
         get() = _binding
-    private val manageCartViewModel:ManageCartViewModel by activityViewModels()
+    private val manageCartViewModel:UserActivityViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

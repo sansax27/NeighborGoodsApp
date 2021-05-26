@@ -8,7 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.databinding.ActivityUserBinding
-import com.example.neighborGoodsApp.userActivity.viewModels.ManageCartViewModel
+import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -17,7 +17,7 @@ class UserActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityUserBinding
     private val binding: ActivityUserBinding
         get() = _binding
-    private val manageCartViewModel: ManageCartViewModel by viewModels()
+    private val manageCartViewModel: UserActivityViewModel by viewModels()
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

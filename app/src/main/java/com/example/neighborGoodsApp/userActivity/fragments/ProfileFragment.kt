@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
         }
         binding.logout.setOnClickListener {
             if (isConnected(requireContext())) {
-                viewModel.logout(getStringFromSharedPreferences(requireContext(),"accessToken"))
+                viewModel.logout(getStringFromSharedPreferences("accessToken"))
             } else {
                 showLongToast("No Network Connection!!")
             }
@@ -50,7 +50,7 @@ class ProfileFragment : Fragment() {
         viewModel.logoutStatus.observe(viewLifecycleOwner) {
             when(it) {
                 is State.Success -> {
-                    putStringIntoSharedPreferences(requireContext(), "accessToken","")
+                    putStringIntoSharedPreferences("accessToken","")
                     requireActivity().startActivityFromFragment(this, Intent(requireActivity(), MainActivity::class.java),15)
                     requireActivity().finish()
                 }

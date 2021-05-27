@@ -1,13 +1,16 @@
 package com.example.neighborGoodsApp.authentication.ui.activity
 
 import android.content.Intent
+import android.hardware.usb.UsbRequest
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.preference.PreferenceManager
 import com.example.neighborGoodsApp.R
+import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.authentication.ui.fragments.LogoFragmentDirections
 import com.example.neighborGoodsApp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,10 +32,20 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.authNavHost) as NavHostFragment
         navController = navHostFragment.navController
         Handler(Looper.getMainLooper()).postDelayed({
-            if (getStringFromSharedPreferences(this, "accessToken") != "") {
+            if (PreferenceManager.getDefaultSharedPreferences(this).getString("accessToken","") != "") {
                 startActivity(Intent(this, UserActivity::class.java))
                 finish()
             } else {
+                PreferenceManager.getDefaultSharedPreferences(this).apply {
+                    User.accessToken = getString("accessToken","")!!
+                    User.ttl = getString("ttl","")!!
+                    User.profilePicId = getInt("profilePicId", -1)
+                    User.email = getString("email","")!!
+                    User.phone = getString("phone","")!!
+                    User.isEmailVerified = getBoolean("isEmailVerified",false)
+                    User.role = getString("role","")!!
+                    User.id = getInt("id",-1)
+                }
                 navController.navigate(LogoFragmentDirections.actionLogoFragmentToLoginFragment())
             }
         }, 2000)

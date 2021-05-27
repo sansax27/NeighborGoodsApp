@@ -138,7 +138,7 @@ class CreateProfileFragment : Fragment() {
                                 phone,
                                 name.text.toString(),
                                 it.data[0].id,
-                                "Customer"
+                                "User"
                             )
                         } else {
                             showLongToast("No Internet Connection!!")

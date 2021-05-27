@@ -18,7 +18,7 @@ interface APIRetrofitAuthorizationInterface {
         @Field("email") email: String,
         @Field("password") password: String,
         @Field("phone") phone: String,
-        @Field("name") name: String,
+        @Field("firstName") name: String,
         @Field("profilePicId") profilePicId: Int,
         @Field("role") role: String
     ): Response<Id>

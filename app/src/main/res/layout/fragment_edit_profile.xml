@@ -5,9 +5,21 @@
     tools:context=".userActivity.fragments.EditProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editProfileRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp">
+
+        <ProgressBar
+            android:id="@+id/editProfilePB"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editprofileName"
@@ -89,8 +101,20 @@
                 android:hint="@string/loginEnterEmail" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/authenticationDisclaimer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/authenticationDisclaimer"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="@id/editProfileEmailAddress"
+            app:layout_constraintStart_toStartOf="@id/editProfileEmailAddress"
+            app:layout_constraintTop_toBottomOf="@id/editProfileEmailAddress" />
+
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/saveUserChanges"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -100,6 +124,6 @@
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="@id/editProfileEmailAddress"
             app:layout_constraintStart_toStartOf="@id/editProfileEmailAddress"
-            app:layout_constraintTop_toBottomOf="@id/editProfileEmailAddress" />
+            app:layout_constraintTop_toBottomOf="@id/authenticationDisclaimer" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

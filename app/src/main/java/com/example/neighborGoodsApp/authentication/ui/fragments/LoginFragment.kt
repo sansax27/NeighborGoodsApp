@@ -9,12 +9,14 @@ import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.Utils.isConnected
 import com.example.neighborGoodsApp.Utils.isValidEmail
 import com.example.neighborGoodsApp.Utils.isValidPassword
+import com.example.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.viewmodels.LoginFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentLoginBinding
@@ -70,17 +72,34 @@ class LoginFragment : Fragment() {
                 }
                 is State.Success -> {
                     val data = it.data.userDetails
+                    putStringIntoSharedPreferences("accessToken", it.data.id)
+                    putStringIntoSharedPreferences("ttl", it.data.ttl)
+                    putStringIntoSharedPreferences("email", data.email)
+                    putStringIntoSharedPreferences("name", data.name)
+                    putStringIntoSharedPreferences("role", data.role)
+                    putStringIntoSharedPreferences("phone", data.phone)
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply {
+                        putBoolean("isEmailVerified", data.isEmailVerified)
+                        putInt("id", data.id)
+                        putInt("profilePicId", data.profilePicId)
+                    }.apply()
                     User.accessToken = it.data.id
                     User.ttl = it.data.ttl
                     User.email = data.email
-                    User.id = data.id
-                    User.phone = data.phone
                     User.name = data.name
+                    User.phone = data.phone
                     User.role = data.role
+                    User.isEmailVerified = data.isEmailVerified
                     User.profilePicId = data.profilePicId
                     AppRepository.setRetrofitAuthorizedInstance(User.accessToken)
                     if (!data.isEmailVerified) {
-                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment("test", "test", true))
+                        findNavController().navigate(
+                            LoginFragmentDirections.actionLoginFragmentToOtpFragment(
+                                data.email,
+                                data.phone,
+                                true
+                            )
+                        )
                     } else {
                         requireActivity().startActivityFromFragment(
                             this,

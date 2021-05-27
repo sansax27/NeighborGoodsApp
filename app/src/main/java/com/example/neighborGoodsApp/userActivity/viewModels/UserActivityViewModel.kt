@@ -3,53 +3,108 @@ package com.example.neighborGoodsApp.userActivity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.neighborGoodsApp.AppRepository
+import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.models.Address
+import com.example.neighborGoodsApp.models.Category
 import com.example.neighborGoodsApp.models.Shop
 import com.example.neighborGoodsApp.models.ShopMenuItem
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserActivityViewModel @Inject constructor() : ViewModel() {
     private val items = mutableMapOf<ShopMenuItem, Int>()
+
     private val itemSizePrivate = MutableLiveData(items.size)
-    private val totalSum = 0
-    val totalPrice = MutableLiveData(0)
-    private val addressList = mutableListOf<Address>()
+    val itemSize: LiveData<Int>
+        get() = itemSizePrivate
+
+    private val totalPrice = MutableLiveData(0)
+
+    private val addressListPrivate = mutableListOf<Address>()
+    val addressList:List<Address> get() = addressListPrivate
+
+    private val categoryListPrivate = mutableListOf<Category>()
+    val categoryList:List<Category> get() = categoryListPrivate
+
+    private val shopListPrivate = mutableListOf<Shop>()
+    val shopList:List<Shop> get() = shopListPrivate
 
 
-    private val storeList = mutableListOf<Shop>()
-    fun getAddressList(): List<Address> {
-        return addressList
+    private val prepareHomeScreenStatusPrivate = MutableLiveData<State<String>>()
+    val prepareHomeScreenStatus: LiveData<State<String>> get() = prepareHomeScreenStatusPrivate
+
+    fun prepareHomeScreen(userId: Int) = viewModelScope.launch {
+        prepareHomeScreenStatusPrivate.postValue(State.Loading())
+        val response1 = async {
+            val filter = Gson().toJson(mapOf("where" to mapOf("type" to "Vendor"))).toString()
+            AppRepository.getCategories(filter)
+        }
+        val response2 = async {
+            val filter =
+                Gson().toJson(mapOf("include" to listOf(mapOf("relation" to "categories"))))
+                    .toString()
+            AppRepository.getVendors(filter)
+        }
+        val response3 = async {
+            val filter = Gson().toJson(mapOf("where" to mapOf("userId" to userId))).toString()
+            AppRepository.getUserAddresses(filter)
+        }
+        if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
+            categoryListPrivate.addAll(response1.await().body()!!)
+            shopListPrivate.addAll(response2.await().body()!!)
+            addressListPrivate.addAll(response3.await().body()!!)
+            for (p in addressList) {
+                if (p.default) {
+                    User.defaultAddressId = p.id
+                    break
+                }
+            }
+            prepareHomeScreenStatusPrivate.postValue(State.Success("Success"))
+        } else {
+            prepareHomeScreenStatusPrivate.postValue(
+                State.Failure(
+                    "${
+                        response1.await().message() ?: ""
+                    }+\n${response2.await().message() ?: ""} ${response3.await().message() ?: ""}"
+                )
+            )
+        }
     }
 
+
+
+
     fun addAddress(address: Address) {
-        addressList.add(address)
+        addressListPrivate.add(address)
     }
 
     fun removeAddress(address: Address) {
-        addressList.remove(address)
+        addressListPrivate.remove(address)
     }
 
     fun updateDefaultAddress(addressId: Int) {
         addressList.forEachIndexed { index, address ->
             if (address.id == addressId) {
                 val newAddress = address.copy(default = true)
-                addressList.removeAt(index)
-                addressList.add(index, newAddress)
+                addressListPrivate.removeAt(index)
+                addressListPrivate.add(index, newAddress)
             }
             if (address.id == User.defaultAddressId) {
                 val newAddress = address.copy(default = false)
-                addressList.removeAt(index)
-                addressList.add(index, newAddress)
+                addressListPrivate.removeAt(index)
+                addressListPrivate.add(index, newAddress)
             }
         }
-        User.id = addressId
+        User.defaultAddressId = addressId
     }
 
-    val itemSize: LiveData<Int>
-        get() = itemSizePrivate
 
     fun addItem(item: ShopMenuItem) {
         items[item] = 1

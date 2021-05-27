@@ -46,11 +46,8 @@
             android:id="@+id/action_searchResultFragment_to_filterFragment"
             app:destination="@id/filterFragment" />
         <argument
-            android:name="Sort"
-            app:argType="string" />
-        <argument
-            android:name="Item"
-            app:argType="string" />
+            android:name="Category"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -67,8 +64,8 @@
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" >
         <argument
-            android:name="id"
-            app:argType="integer" />
+            android:name="Shop"
+            app:argType="com.example.neighborGoodsApp.models.Shop" />
     </fragment>
     <fragment
         android:id="@+id/navMenuCart"
@@ -121,7 +118,11 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.AddressFragment"
@@ -142,5 +143,14 @@
         <argument
             android:name="edit"
             app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.neighborGoodsApp.userActivity.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>

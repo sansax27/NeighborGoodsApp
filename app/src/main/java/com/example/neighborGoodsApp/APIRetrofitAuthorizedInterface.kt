@@ -2,7 +2,6 @@ package com.example.neighborGoodsApp
 
 import com.example.neighborGoodsApp.models.Address
 import com.example.neighborGoodsApp.models.Category
-import com.example.neighborGoodsApp.models.Id
 import com.example.neighborGoodsApp.models.Shop
 import retrofit2.Response
 import retrofit2.http.*
@@ -11,10 +10,10 @@ interface APIRetrofitAuthorizedInterface {
 
 
     @GET("Categories")
-    suspend fun getCategories(@Query(value = "filter") filter: String): Response<List<Category>>
+    suspend fun getCategories(@Query("filter") filter: String): Response<List<Category>>
 
     @GET("Vendors")
-    suspend fun getVendors(@Query(value = "filter") filter: String): Response<List<Shop>>
+    suspend fun getVendors(@Query("filter") filter: String): Response<List<Shop>>
 
     @POST("Addresses/{id}/updateAddress")
     suspend fun updateDefaultAddress(
@@ -34,5 +33,20 @@ interface APIRetrofitAuthorizedInterface {
     ): Response<Address>
 
     @DELETE("Addresses/{id}")
-    suspend fun deleteAddress(@Path(value = "id") addressId: Int):Response<String>
+    suspend fun deleteAddress(@Path("id") addressId: Int): Response<String>
+
+    @POST("users/change-password")
+    suspend fun changePassword(currentPassword: String, newPassword: String): Response<String>
+
+    @PUT("users/{id}")
+    suspend fun updateUserDetails(
+        @Path("id") userId: Int,
+        @Field("firstName") name: String,
+        @Field("email") email:String,
+        @Field("phone") phone:String,
+        @Field("isEmailVerified") isVerified:Boolean
+    ): Response<String>
+
+    @GET("Addresses")
+    suspend fun getUserAddresses(@Query("filter") filter: String):Response<List<Address>>
 }

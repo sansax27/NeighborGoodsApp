@@ -13,6 +13,7 @@ import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.isConnected
 import com.example.neighborGoodsApp.Utils.isValidEmail
 import com.example.neighborGoodsApp.Utils.isValidPassword
+import com.example.neighborGoodsApp.Utils.isValidPhone
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.viewmodels.SignUpFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentSignUpBinding
@@ -44,17 +45,16 @@ class SignUpFragment : Fragment() {
         val confirmPassword = binding.enterConfirmPasswordInput
         val confirmPasswordLayer = binding.enterConfirmPassword
         binding.signUpButton.setOnClickListener {
-            if (!email.text.toString().isValidEmail()) {
+            if (!email.text.isValidEmail()) {
                 emailLayer.error = "Please Enter Valid Email Address"
-            }else if (password.text.isNullOrEmpty() || (password.text.toString().length < 8) || !password.text.toString()
-                    .isValidPassword()
+            }else if (!password.text.isValidPassword()
             ) {
                 passwordLayer.error =
                     "Please Enter Password which is not Empty, has At least 1 Alphabet, 1 Number and One Special Character and length" +
                             " is greater than that 7"
             } else if (confirmPassword.text.toString() != password.text.toString()) {
                 confirmPasswordLayer.error = "Confirm Password Must Be Same As Password"
-            } else if (phone.text.isNullOrEmpty() || phone.text!!.length != 10) {
+            } else if (!phone.text.isValidPhone()) {
                 phoneLayer.error = "Please Enter 10 Digit Number"
             }else {
 //                if(isConnected(requireContext())) {

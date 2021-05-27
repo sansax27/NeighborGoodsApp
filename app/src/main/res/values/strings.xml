@@ -159,4 +159,6 @@
     <string name="address">Address</string>
     <string name="addAddress">Add Address</string>
     <string name="editAddress">Edit Address</string>
+
+    <string name="authenticationDisclaimer">If Either of Email Or Phone Changes, you have to ReVerify.</string>
 </resources>

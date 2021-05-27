@@ -26,7 +26,10 @@ object Utils {
 
     fun CharSequence?.isValidPassword(): Boolean {
         val pattern = Pattern.compile("^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$")
-        return pattern.matcher(this!!).matches()
+        return pattern.matcher(this!!).matches() && !isNullOrEmpty() && length>=8
+    }
+    fun CharSequence?.isValidPhone():Boolean {
+        return !isNullOrEmpty() || this!!.length !=10
     }
     fun Fragment.showLongToast(message:String) {
         Toast.makeText(this.requireContext(), message, Toast.LENGTH_LONG).show()
@@ -36,12 +39,12 @@ object Utils {
         val networkInfo = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
         return networkInfo!=null && networkInfo.isConnectedOrConnecting
     }
-    fun putStringIntoSharedPreferences(context: Context, key:String, value:String) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(key, value).apply()
+    fun Fragment.putStringIntoSharedPreferences(key:String, value:String) {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(key, value).apply()
     }
 
-    fun getStringFromSharedPreferences(context: Context, key: String):String {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(key,"")!!
+    fun Fragment.getStringFromSharedPreferences(key: String):String {
+        return PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(key,"")!!
     }
 
     fun handleStatesUI(view:View, viewGroup:ViewGroup, show:Boolean) {
@@ -85,4 +88,9 @@ object Utils {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
+
+    fun Fragment.noNetwork() {
+        showLongToast("No Internet Connection!!")
+    }
+
 }

@@ -33,6 +33,7 @@ object AppRepository {
     suspend fun ifEmailExists(filter: String) = withContext(Dispatchers.IO) {
         retrofitInstance.ifEmailExists(filter)
     }
+
     suspend fun getCities(filter: String) = withContext(Dispatchers.IO) {
         retrofitInstance.getCities(filter)
     }
@@ -53,27 +54,76 @@ object AppRepository {
         retrofitInstance.getCountries()
     }
 
-    suspend fun createAddress(cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) =
+    suspend fun createAddress(
+        cityId: Int,
+        address: String,
+        userId: Int,
+        default: Boolean,
+        created: Boolean
+    ) =
         withContext(Dispatchers.IO) {
-            return@withContext retrofitInstance.createAddress(cityId, address, userId,default, created)
+            return@withContext retrofitInstance.createAddress(
+                cityId,
+                address,
+                userId,
+                default,
+                created
+            )
         }
 
     suspend fun getCategories(filter: String) =
         withContext(Dispatchers.IO) { retrofitAuthorizedInstance!!.getCategories(filter) }
 
-    suspend fun getVendors(filter:String) = withContext(Dispatchers.IO) {
+    suspend fun getVendors(filter: String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getVendors(filter)
     }
 
-    suspend fun updateDefaultAddress(currentAddressId:Int, newAddressId:Int) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.updateDefaultAddress(currentAddressId = currentAddressId, newAddressId = newAddressId)
-    }
+    suspend fun updateDefaultAddress(currentAddressId: Int, newAddressId: Int) =
+        withContext(Dispatchers.IO) {
+            retrofitAuthorizedInstance!!.updateDefaultAddress(
+                currentAddressId = currentAddressId,
+                newAddressId = newAddressId
+            )
+        }
 
-    suspend fun updateAddress(addressId:Int, cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.updateAddress(addressId, cityId, address, userId, default, created)
+    suspend fun updateAddress(
+        addressId: Int,
+        cityId: Int,
+        address: String,
+        userId: Int,
+        default: Boolean,
+        created: Boolean
+    ) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.updateAddress(
+            addressId,
+            cityId,
+            address,
+            userId,
+            default,
+            created
+        )
     }
 
     suspend fun deleteAddress(addressId: Int) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.deleteAddress(addressId)
+    }
+
+    suspend fun changePassword(currentPassword: String, newPassword: String) =
+        withContext(Dispatchers.IO) {
+            retrofitAuthorizedInstance!!.changePassword(currentPassword, newPassword)
+        }
+
+    suspend fun updateUserDetails(
+        userId: Int,
+        name: String,
+        email: String,
+        phone: String,
+        isVerified: Boolean
+    ) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.updateUserDetails(userId, name, email, phone, isVerified)
+    }
+
+    suspend fun getUserAddresses(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getUserAddresses(filter)
     }
 }

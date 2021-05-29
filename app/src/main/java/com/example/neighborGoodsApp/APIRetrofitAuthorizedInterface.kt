@@ -35,7 +35,7 @@ interface APIRetrofitAuthorizedInterface {
     ): Response<Address>
 
     @DELETE("Addresses/{id}")
-    suspend fun deleteAddress(@Path("id") addressId: Int): Response<List<String>>
+    suspend fun deleteAddress(@Path("id") addressId: Int): Response<Id>
 
     @FormUrlEncoded
     @POST("users/change-password")

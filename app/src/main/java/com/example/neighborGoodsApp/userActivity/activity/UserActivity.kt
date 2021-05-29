@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import com.example.neighborGoodsApp.R
@@ -17,7 +18,6 @@ class UserActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityUserBinding
     private val binding: ActivityUserBinding
         get() = _binding
-    private val manageCartViewModel: UserActivityViewModel by viewModels()
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,13 @@ class UserActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.userNavigationHost) as NavHostFragment
         navController = navHostFragment.navController
         binding.userNavigation.setOnNavigationItemSelectedListener {
-            it.onNavDestinationSelected(navController)
+            when(it.itemId) {
+                R.id.navMenuHome -> navController.navigate(R.id.navMenuHome)
+                R.id.navMenuCart -> navController.navigate(R.id.navMenuCart)
+                R.id.navMenuProfile -> navController.navigate(R.id.navMenuProfile)
+                R.id.navMenuSearch -> navController.navigate(R.id.navMenuSearch)
+            }
+            true
         }
         setContentView(binding.root)
     }

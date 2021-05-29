@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.CartItemsAdapter
 import com.example.neighborGoodsApp.databinding.FragmentCartBinding
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
@@ -24,11 +25,17 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(layoutInflater)
-        binding.cartRV.apply {
-            adapter = CartItemsAdapter(manageCartViewModel.getItems())
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = RecyclerView.VERTICAL
+        if (manageCartViewModel.itemSize.value==0) {
+            binding.cartRoot.visibility = View.GONE
+            showLongToast("No items There to Show Cart")
+        } else {
+            binding.cartRV.apply {
+                adapter = CartItemsAdapter(manageCartViewModel.getItems())
+                layoutManager = LinearLayoutManager(requireContext()).apply {
+                    orientation = RecyclerView.VERTICAL
+                }
             }
+            binding.cartShopName.text = manageCartViewModel.shopName
         }
         return binding.root
     }

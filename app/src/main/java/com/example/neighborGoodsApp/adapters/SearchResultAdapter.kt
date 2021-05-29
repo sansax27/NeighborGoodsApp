@@ -21,6 +21,16 @@ class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Ada
                     move(data)
                 }
             }
+            itemBinding.shopRatings.text = if (data.ratings==null) {
+                "NA"
+            } else {
+                data.ratings.toString()
+            }
+            itemBinding.shopRatingsCount.text = if (data.ratingsCount==null) {
+                "NA"
+            } else {
+                data.ratingsCount.toString()
+            }
             itemBinding.shopName.text = data.shopName
             itemBinding.shopCategories.text = data.shopCategory.name
         }

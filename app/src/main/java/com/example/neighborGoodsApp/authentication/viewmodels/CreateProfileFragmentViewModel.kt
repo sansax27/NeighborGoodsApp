@@ -20,6 +20,7 @@ import java.io.File
 import javax.inject.Inject
 import com.example.neighborGoodsApp.Utils.handleResponse
 import com.example.neighborGoodsApp.models.Address
+import com.example.neighborGoodsApp.models.City
 
 
 @HiltViewModel
@@ -33,8 +34,8 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
     private val uploadImageStatusPrivate = MutableLiveData<State<List<UploadImage>>>()
     val uploadImageStatus: LiveData<State<List<UploadImage>>> get() = uploadImageStatusPrivate
 
-    private val getCitiesStatusPrivate = MutableLiveData<State<List<Id>>>()
-    val getCitiesStatus: LiveData<State<List<Id>>>
+    private val getCitiesStatusPrivate = MutableLiveData<State<List<City>>>()
+    val getCitiesStatus: LiveData<State<List<City>>>
         get() = getCitiesStatusPrivate
 
     private val getCountriesStatusPrivate = MutableLiveData<State<List<Id>>>()

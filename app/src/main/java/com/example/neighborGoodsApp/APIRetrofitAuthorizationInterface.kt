@@ -1,9 +1,6 @@
 package com.example.neighborGoodsApp
 
-import com.example.neighborGoodsApp.models.Address
-import com.example.neighborGoodsApp.models.Id
-import com.example.neighborGoodsApp.models.LoginUserResponse
-import com.example.neighborGoodsApp.models.UploadImage
+import com.example.neighborGoodsApp.models.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -31,11 +28,11 @@ interface APIRetrofitAuthorizationInterface {
     ): Response<LoginUserResponse>
 
     @GET("cities")
-    suspend fun getCities(@Query(value = "filter") filter: String): Response<List<Id>>
+    suspend fun getCities(@Query("filter") filter: String): Response<List<City>>
 
 
     @GET("states")
-    suspend fun getStates(@Query(value = "filter") filter: String): Response<List<Id>>
+    suspend fun getStates(@Query("filter") filter: String): Response<List<Id>>
 
 
     @Multipart

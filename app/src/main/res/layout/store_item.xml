@@ -5,14 +5,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="20dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            app:cardCornerRadius="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="25dp"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,19 +28,23 @@
                     android:id="@+id/itemShopPicture"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
+                    android:scaleType="fitXY"
                     app:layout_constraintEnd_toEndOf="@id/likeShop"
                     app:layout_constraintStart_toStartOf="@id/shopLogo"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/ic_placeholder_view_vector" />
 
                 <ImageView
                     android:id="@+id/shopLogo"
                     android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/itemShopPicture"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/ic_logo_placeholder" />
 
                 <TextView
                     android:id="@+id/shopName"
@@ -47,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="Text View"
                     android:textColor="@color/black"
-                    android:textSize="36sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/likeShop"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
@@ -55,19 +60,21 @@
 
                 <ImageView
                     android:id="@+id/likeShop"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
                     app:layout_constraintEnd_toEndOf="@id/itemShopPicture"
                     app:layout_constraintStart_toEndOf="@id/shopName"
                     app:layout_constraintTop_toTopOf="@id/shopLogo"
-                    app:srcCompat="@drawable/ic_favorite" />
+                    app:srcCompat="@drawable/ic_favorite"
+                    app:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/shopCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@id/shopLogo"
                     app:layout_constraintEnd_toEndOf="@id/shopName"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
@@ -78,18 +85,19 @@
                     android:id="@+id/shopRatings"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Text View"
+                    android:text="4.5"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:drawableStartCompat="@drawable/ic_rating"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
-                    app:layout_constraintTop_toBottomOf="@id/shopLogo" />
+                    app:layout_constraintTop_toBottomOf="@id/shopCategories" />
 
                 <TextView
                     android:id="@+id/shopRatingsCount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingStart="30dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="0dp"
                     android:text="(100+)"
                     android:textSize="24sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/shopRatings"
@@ -106,6 +114,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/specialityTwo"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -123,6 +132,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/specialityThree"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -140,6 +150,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/likeShop"
                     app:layout_constraintHorizontal_bias="0.5"

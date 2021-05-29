@@ -7,6 +7,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/staringBar"
+            android:layout_width="10dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/logoScreen"
+            app:layout_constraintBottom_toTopOf="@id/profileSV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profileScreenName"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staringBar"
+            app:layout_constraintTop_toTopOf="@id/staringBar" />
+
+        <TextView
+            android:id="@+id/profileScreenEmail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@id/staringBar"
+            app:layout_constraintEnd_toEndOf="@id/profileScreenName"
+            app:layout_constraintStart_toStartOf="@id/profileScreenName"
+            app:layout_constraintTop_toBottomOf="@id/profileScreenName" />
+
         <ProgressBar
             android:id="@+id/profileFragmentPB"
             style="?android:attr/progressBarStyle"
@@ -19,172 +54,194 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:id="@+id/profileSV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/staringBar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/rootProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/myOrders"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/myOrders"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_orders"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/divider1"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rootProfile"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/myOrders"
-                app:layout_constraintStart_toStartOf="@id/myOrders"
-                app:layout_constraintTop_toBottomOf="@id/myOrders" />
-
-            <TextView
-                android:id="@+id/manageAddress"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/manageAddresses"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_location"
-                app:layout_constraintEnd_toEndOf="@id/divider1"
-                app:layout_constraintStart_toStartOf="@id/divider1"
-                app:layout_constraintTop_toBottomOf="@id/divider1" />
+                android:padding="16dp">
 
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/manageAddress"
-                app:layout_constraintStart_toStartOf="@id/manageAddress"
-                app:layout_constraintTop_toBottomOf="@id/manageAddress" />
+                <TextView
+                    android:id="@+id/myOrders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/myOrders"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_orders"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/payments"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/payments"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_payments_card"
-                app:layout_constraintEnd_toEndOf="@id/divider2"
-                app:layout_constraintStart_toStartOf="@id/divider2"
-                app:layout_constraintTop_toBottomOf="@id/divider2" />
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/myOrders"
+                    app:layout_constraintStart_toStartOf="@id/myOrders"
+                    app:layout_constraintTop_toBottomOf="@id/myOrders" />
 
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/payments"
-                app:layout_constraintStart_toStartOf="@id/payments"
-                app:layout_constraintTop_toBottomOf="@id/payments" />
+                <TextView
+                    android:id="@+id/manageAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/manageAddresses"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_location"
+                    app:layout_constraintEnd_toEndOf="@id/divider1"
+                    app:layout_constraintStart_toStartOf="@id/divider1"
+                    app:layout_constraintTop_toBottomOf="@id/divider1" />
 
-            <TextView
-                android:id="@+id/favourites"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:drawableTint="@color/black"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/favourites"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_favorite"
-                app:layout_constraintEnd_toEndOf="@id/divider3"
-                app:layout_constraintStart_toStartOf="@id/divider3"
-                app:layout_constraintTop_toBottomOf="@id/divider3" />
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/manageAddress"
+                    app:layout_constraintStart_toStartOf="@id/manageAddress"
+                    app:layout_constraintTop_toBottomOf="@id/manageAddress" />
 
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/favourites"
-                app:layout_constraintStart_toStartOf="@id/favourites"
-                app:layout_constraintTop_toBottomOf="@id/favourites" />
+                <TextView
+                    android:id="@+id/payments"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/payments"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_payments_card"
+                    app:layout_constraintEnd_toEndOf="@id/divider2"
+                    app:layout_constraintStart_toStartOf="@id/divider2"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
 
-            <TextView
-                android:id="@+id/help"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:drawableTint="@color/black"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/help"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_help"
-                app:layout_constraintEnd_toEndOf="@id/divider4"
-                app:layout_constraintStart_toStartOf="@id/divider4"
-                app:layout_constraintTop_toBottomOf="@id/divider4" />
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/payments"
+                    app:layout_constraintStart_toStartOf="@id/payments"
+                    app:layout_constraintTop_toBottomOf="@id/payments" />
 
-            <View
-                android:id="@+id/divider5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/help"
-                app:layout_constraintStart_toStartOf="@id/help"
-                app:layout_constraintTop_toBottomOf="@id/help" />
+                <TextView
+                    android:id="@+id/favourites"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/favourites"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_favorite"
+                    app:layout_constraintEnd_toEndOf="@id/divider3"
+                    app:layout_constraintStart_toStartOf="@id/divider3"
+                    app:layout_constraintTop_toBottomOf="@id/divider3" />
 
-            <TextView
-                android:id="@+id/settings"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/settings"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_settings"
-                app:layout_constraintEnd_toEndOf="@id/divider5"
-                app:layout_constraintStart_toStartOf="@id/divider5"
-                app:layout_constraintTop_toBottomOf="@id/divider5" />
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/favourites"
+                    app:layout_constraintStart_toStartOf="@id/favourites"
+                    app:layout_constraintTop_toBottomOf="@id/favourites" />
 
-            <View
-                android:id="@+id/divider6"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/settings"
-                app:layout_constraintStart_toStartOf="@id/settings"
-                app:layout_constraintTop_toBottomOf="@id/settings" />
+                <TextView
+                    android:id="@+id/help"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/help"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_help"
+                    app:layout_constraintEnd_toEndOf="@id/divider4"
+                    app:layout_constraintStart_toStartOf="@id/divider4"
+                    app:layout_constraintTop_toBottomOf="@id/divider4" />
 
-            <TextView
-                android:id="@+id/logout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/logout"
-                android:textSize="24sp"
-                app:drawableStartCompat="@drawable/ic_logout"
-                app:layout_constraintEnd_toEndOf="@id/divider6"
-                app:layout_constraintStart_toStartOf="@id/divider6"
-                app:layout_constraintTop_toBottomOf="@id/divider6" />
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/help"
+                    app:layout_constraintStart_toStartOf="@id/help"
+                    app:layout_constraintTop_toBottomOf="@id/help" />
 
-            <View
-                android:id="@+id/divider7"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="@id/logout"
-                app:layout_constraintStart_toStartOf="@id/logout"
-                app:layout_constraintTop_toBottomOf="@id/logout" />
+                <TextView
+                    android:id="@+id/settings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/settings"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_settings"
+                    app:layout_constraintEnd_toEndOf="@id/divider5"
+                    app:layout_constraintStart_toStartOf="@id/divider5"
+                    app:layout_constraintTop_toBottomOf="@id/divider5" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/settings"
+                    app:layout_constraintStart_toStartOf="@id/settings"
+                    app:layout_constraintTop_toBottomOf="@id/settings" />
+
+                <TextView
+                    android:id="@+id/logout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/logout"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:drawableStartCompat="@drawable/ic_logout"
+                    app:layout_constraintEnd_toEndOf="@id/divider6"
+                    app:layout_constraintStart_toStartOf="@id/divider6"
+                    app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/logout"
+                    app:layout_constraintStart_toStartOf="@id/logout"
+                    app:layout_constraintTop_toBottomOf="@id/logout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

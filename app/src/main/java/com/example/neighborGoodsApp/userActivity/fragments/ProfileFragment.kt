@@ -10,6 +10,7 @@ import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.State
+import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.Utils.isConnected
 import com.example.neighborGoodsApp.Utils.getStringFromSharedPreferences
 import com.example.neighborGoodsApp.Utils.putStringIntoSharedPreferences
@@ -34,6 +35,8 @@ class ProfileFragment : Fragment() {
         binding.settings.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
         }
+        binding.profileScreenName.text = User.name
+        binding.profileScreenEmail.text = User.email
         binding.favourites.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFavoritesFragment())
         }

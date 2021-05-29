@@ -24,6 +24,7 @@ import com.example.neighborGoodsApp.Utils.isGPSAvailable
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.viewmodels.CreateProfileFragmentViewModel
 import com.example.neighborGoodsApp.databinding.FragmentCreateProfileBinding
+import com.example.neighborGoodsApp.models.City
 import com.example.neighborGoodsApp.models.Id
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -47,7 +48,7 @@ class CreateProfileFragment : Fragment() {
     private var countryId = -1
     private var stateList = listOf<Id>()
     private var stateId = -1
-    private var cityList = listOf<Id>()
+    private var cityList = listOf<City>()
     private var cityId = -1
     private var detectedState = ""
     private val requestPermissionLauncher =
@@ -320,7 +321,7 @@ class CreateProfileFragment : Fragment() {
             viewModel.getCities(filter)
         }
         binding.proceedButton.setOnClickListener {
-            if (name.text.isNullOrBlank() || name.text.isNullOrEmpty()) {
+            if (name.text.isNullOrBlank() || name.text.isNullOrEmpty() || name.text!!.length<5) {
                 nameLayer.error = "Name Must Not Be Blank Or Empty"
             } else if (address.text.isNullOrEmpty() || address.text.isNullOrBlank()) {
                 addressLayer.error = "Address must Not Be Blank Or Empty"

@@ -17,7 +17,7 @@ class AddressAdapter(private val updateDefaultAddress:(addressId:Int) -> Unit, p
         fun bind(data:Address) {
             itemBinding.address.text = data.address
             itemBinding.addressCity.text = data.city.name
-            itemBinding.defaultCheckBox.isSelected = data.default
+            itemBinding.defaultCheckBox.isChecked = data.default
             itemBinding.defaultCheckBox.setOnClickListener {
                 updateDefaultAddress(data.id)
             }

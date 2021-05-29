@@ -11,10 +11,16 @@ class ShopAdapter(private val shopList:List<Shop>, private val move: (shop:Shop)
     inner class ViewHolder(private val itemBinding: StoreItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Shop) {
             itemBinding.shopName.text = data.shopName
-            itemBinding.shopRatings.text = data.ratings.toString()
-            itemBinding.shopRatingsCount.text = if (data.ratingsCount != null && data.ratingsCount <= 100) {
-                data.ratingsCount.toString()
+            itemBinding.shopRatings.text = if (data.ratings==null) {
+                "NA"
             } else {
+                data.ratings.toString()
+            }
+            itemBinding.shopRatingsCount.text = if (data.ratingsCount == null) {
+                "NA"
+            } else if (data.ratingsCount<=0) {
+                data.ratingsCount.toString()
+            }else {
                 "100+"
             }
             itemBinding.shopCategories.text = data.shopCategory.name

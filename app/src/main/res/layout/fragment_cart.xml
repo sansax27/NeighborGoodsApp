@@ -3,22 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".userActivity.fragments.CartFragment">
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cartRoot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/cartShopLogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_logo_placeholder" />
+
+            <TextView
+                android:id="@+id/cartShopName"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center|start"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:text="TextView"
+                android:textAlignment="gravity"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@id/cartShopLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cartShopLogo"
+                app:layout_constraintTop_toTopOf="@id/cartShopLogo" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cartRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cartShopLogo"
                 tools:itemCount="2"
                 tools:listitem="@layout/cart_rv_item" />
 

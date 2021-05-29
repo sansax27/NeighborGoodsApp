@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Unable To Retrieve Data, No Internet Connection Try Again Later!!", Toast.LENGTH_LONG).show()
             binding.homeRoot.visibility = View.GONE
         }
+        binding.toolbarProfile.text = "SS"
         viewModel.prepareHomeScreenStatus.observe(viewLifecycleOwner) {
             when(it) {
                 is State.Loading -> {}
@@ -105,6 +106,11 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(-1))
         }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.location.text = viewModel.defaultAddress.city.name
     }
 
 }

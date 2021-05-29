@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neighborGoodsApp.databinding.ShopMenuItemBinding
+import com.example.neighborGoodsApp.models.Shop
 import com.example.neighborGoodsApp.models.ShopMenuItem
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import timber.log.Timber
 
-class MenuItemsAdapter(private val shopId:Int, private val viewModel:UserActivityViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
+class MenuItemsAdapter(private val shop:Shop, private val viewModel:UserActivityViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
     private val menuItemList = mutableListOf<ShopMenuItem>()
 
     fun submitList(list: List<ShopMenuItem>) {
@@ -22,14 +23,14 @@ class MenuItemsAdapter(private val shopId:Int, private val viewModel:UserActivit
             itemBinding.shopItemName.text = data.name
             itemBinding.shopItemAdditives.text = data.tag
             itemBinding.shopItemPrice.text = data.price.toString()
-            if(viewModel.shopExists(data) && viewModel.getShopId()==shopId) {
+            if(viewModel.shopExists(data) && viewModel.getShopId()==shop.id) {
                 itemBinding.noOfItems.text = viewModel.getQuantity(data).toString()
                 itemBinding.addItem.visibility = View.GONE
                 itemBinding.addItemLL.visibility = View.VISIBLE
             }
             itemBinding.addItem.setOnClickListener {
-                if(viewModel.getShopId()!=shopId) {
-                    viewModel.giveShop(shopId)
+                if(viewModel.getShopId()!=shop.id) {
+                    viewModel.giveShop(shop)
                 }
                 it.visibility = View.GONE
                 itemBinding.addItemLL.visibility = View.VISIBLE

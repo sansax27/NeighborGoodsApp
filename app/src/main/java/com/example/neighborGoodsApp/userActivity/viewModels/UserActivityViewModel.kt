@@ -27,6 +27,11 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     lateinit var defaultAddress:Address
     private set
 
+    private var shop: Shop? = null
+    var shopName = ""
+    private set
+    var shopLogo = ""
+    private set
 
     private val addressListPrivate = mutableListOf<Address>()
     val addressList:List<Address> get() = addressListPrivate
@@ -59,8 +64,11 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             AppRepository.getUserAddresses(filter)
         }
         if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
+            categoryListPrivate.clear()
             categoryListPrivate.addAll(response1.await().body()!!)
+            shopListPrivate.clear()
             shopListPrivate.addAll(response2.await().body()!!)
+            addressListPrivate.clear()
             addressListPrivate.addAll(response3.await().body()!!)
             for (h in addressListPrivate) {
                 Timber.i(h.address+h.default.toString())
@@ -120,7 +128,6 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         itemSizePrivate.postValue(items.size)
     }
 
-    private var shopId = -1
 
     fun updateQuantity(item: ShopMenuItem, quantity: Int) {
         if (quantity == 0) {
@@ -139,7 +146,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     }
 
     fun getShopId(): Int {
-        return shopId
+        return shop?.id ?: -1
     }
 
     fun shopExists(item: ShopMenuItem): Boolean {
@@ -150,12 +157,14 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         return items[item]!!
     }
 
-    fun giveShop(id: Int) {
-        shopId = if (items.isNotEmpty()) {
+    fun giveShop(newShop: Shop) {
+        shop = if (items.isNotEmpty()) {
             items.clear()
-            id
+            shopName = newShop.shopName
+            shopLogo = newShop.shopLogo
+            newShop
         } else {
-            id
+            newShop
         }
     }
 

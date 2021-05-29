@@ -9,14 +9,15 @@ import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils
 import com.example.neighborGoodsApp.Utils.handleResponse
 import com.example.neighborGoodsApp.models.Address
+import com.example.neighborGoodsApp.models.City
 import com.example.neighborGoodsApp.models.Id
 import kotlinx.coroutines.launch
 
 class AddAddressFragmentViewModel: ViewModel() {
 
 
-    private val getCitiesStatusPrivate = MutableLiveData<State<List<Id>>>()
-    val getCitiesStatus: LiveData<State<List<Id>>>
+    private val getCitiesStatusPrivate = MutableLiveData<State<List<City>>>()
+    val getCitiesStatus: LiveData<State<List<City>>>
         get() = getCitiesStatusPrivate
 
     private val getCountriesStatusPrivate = MutableLiveData<State<List<Id>>>()

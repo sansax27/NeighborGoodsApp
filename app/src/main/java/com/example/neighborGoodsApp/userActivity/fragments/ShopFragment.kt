@@ -59,9 +59,17 @@ class ShopFragment : Fragment() {
             }, 2000)
         }
         val shopListId = shop.id
-        rvAdapter = MenuItemsAdapter(shop.id, manageCartViewModel)
-        binding.shopRating.text = shop.ratings.toString()
-        binding.noOfShopReviews.text = shop.ratingsCount.toString()
+        rvAdapter = MenuItemsAdapter(shop, manageCartViewModel)
+        binding.shopRating.text = if (shop.ratings==null) {
+            "NA"
+        } else {
+            shop.ratings.toString()
+        }
+        binding.noOfShopReviews.text = if (shop.ratingsCount==null) {
+            "NA"
+        } else {
+            shop.ratingsCount.toString()
+        }
         binding.shopLocation.text =
             Geocoder(requireContext()).getFromLocation(27.0, 27.0, 1)[0].adminArea
         if (shop.delivery) {

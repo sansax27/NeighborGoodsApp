@@ -24,6 +24,8 @@ import com.example.neighborGoodsApp.Utils
 import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.databinding.FragmentAddAddressBinding
+import com.example.neighborGoodsApp.models.Address
+import com.example.neighborGoodsApp.models.City
 import com.example.neighborGoodsApp.models.Id
 import com.example.neighborGoodsApp.userActivity.viewModels.AddAddressFragmentViewModel
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
@@ -43,8 +45,8 @@ class AddAddressFragment : Fragment() {
     private var countryId = -1
     private var stateList = listOf<Id>()
     private var stateId = -1
-    private var cityList = listOf<Id>()
-    private var cityId = -1
+    private var cityList = listOf<City>()
+    private var city:City? = null
     private var detectedState = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val requestLocationPermissionLauncher =
@@ -118,7 +120,8 @@ class AddAddressFragment : Fragment() {
             when (it) {
                 is State.Success -> {
                     showLongToast("Address Successfully Added!!")
-                    addressViewModel.addAddress(it.data)
+                    val newAddress = Address(it.data.id, city!!,it.data.address, it.data.default, it.data.created)
+                    addressViewModel.addAddress(newAddress)
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().popBackStack()
                     }, 2000)
@@ -189,7 +192,7 @@ class AddAddressFragment : Fragment() {
             }
         }
         binding.addAddressCityInput.setOnItemClickListener { _, _, position, _ ->
-            cityId = cityList[position].id
+            city = cityList[position]
         }
         binding.addAddressCountryInput.setOnItemClickListener { _, _, position, _ ->
             countryId = countryList[position].id
@@ -201,7 +204,7 @@ class AddAddressFragment : Fragment() {
             binding.addAddressCity.apply {
                 binding.addAddressCityInput.setText("")
                 visibility = View.GONE
-                cityId = -1
+                city = null
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to countryId))).toString()
             if (Utils.isConnected(requireContext())) {
@@ -245,7 +248,7 @@ class AddAddressFragment : Fragment() {
             binding.addAddressCity.apply {
                 binding.addAddressCityInput.setText("")
                 visibility = View.GONE
-                cityId = -1
+                city = null
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("stateId" to stateId))).toString()
             viewModel.getCities(filter)
@@ -272,19 +275,19 @@ class AddAddressFragment : Fragment() {
         binding.proceedButton.setOnClickListener {
             if (address.text.isNullOrEmpty() || address.text.isNullOrBlank()) {
                 addressLayer.error = "Address must Not Be Blank Or Empty"
-            } else if (detectLocation && cityId == -1) {
+            } else if (detectLocation && city == null) {
                 showLongToast("Please Select City")
             } else if (!detectLocation && countryId == -1) {
                 showLongToast("Please Select Country")
             } else if (!detectLocation && stateId == -1) {
                 showLongToast("Please Select State")
-            } else if (!detectLocation && cityId == -1) {
+            } else if (!detectLocation && city == null) {
                 showLongToast("Please Select City")
             } else {
                 if (Utils.isConnected(requireContext())) {
                     if (edit) {
                         viewModel.updateAddress(
-                            updateAddressId, cityId,
+                            updateAddressId, city!!.id,
                             address.text.toString(),
                             User.id,
                             default = false,
@@ -292,7 +295,7 @@ class AddAddressFragment : Fragment() {
                         )
                     } else {
                         viewModel.createAddress(
-                            cityId,
+                            city!!.id,
                             address.text.toString(),
                             User.id,
                             default = false,

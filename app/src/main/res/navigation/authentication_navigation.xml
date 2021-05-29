@@ -95,7 +95,7 @@
             android:name="phone"
             app:argType="string" />
         <argument
-            android:name="direct"
+            android:name="login"
             app:argType="boolean" />
     </fragment>
 </navigation>

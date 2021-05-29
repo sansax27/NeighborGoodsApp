@@ -3,85 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".userActivity.fragments.SearchResultFragment">
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/searchResultPB"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/sortCriteria"
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/searchResultRoot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sortCriteria"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/sortCriteriaChipGroup"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/noOfResults"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/filterViewOnMap"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/sortCriteria"
-                app:layout_constraintTop_toBottomOf="@id/sortCriteria" />
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/sortCriteriaChipGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/filterViewOnMap"
-                android:layout_width="40dp"
-                android:layout_height="0dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_map_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@id/noOfResults"
-                app:layout_constraintEnd_toStartOf="@id/filterScreen"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@id/noOfResults"
-                app:layout_constraintTop_toTopOf="@id/noOfResults" />
+                <TextView
+                    android:id="@+id/noOfResults"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="TextView"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/filterViewOnMap"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/sortCriteria"
+                    app:layout_constraintTop_toBottomOf="@id/sortCriteria" />
 
-            <ImageView
-                android:id="@+id/filterScreen"
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@id/noOfResults"
-                app:layout_constraintEnd_toEndOf="@id/sortCriteria"
-                app:layout_constraintTop_toTopOf="@id/noOfResults"
-                app:srcCompat="@drawable/ic_down" />
+                <ImageView
+                    android:id="@+id/filterViewOnMap"
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_map_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/noOfResults"
+                    app:layout_constraintEnd_toStartOf="@id/filterScreen"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/noOfResults"
+                    app:layout_constraintTop_toTopOf="@id/noOfResults" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filterResultsRV"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="@id/filterScreen"
-                app:layout_constraintStart_toStartOf="@id/noOfResults"
-                app:layout_constraintTop_toBottomOf="@id/noOfResults"
-                tools:itemCount="10"
-                tools:listitem="@layout/filter_rv_item" />
+                <ImageView
+                    android:id="@+id/filterScreen"
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@id/noOfResults"
+                    app:layout_constraintEnd_toEndOf="@id/sortCriteria"
+                    app:layout_constraintTop_toTopOf="@id/noOfResults"
+                    app:srcCompat="@drawable/ic_down" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filterResultsRV"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="@id/filterScreen"
+                    app:layout_constraintStart_toStartOf="@id/noOfResults"
+                    app:layout_constraintTop_toBottomOf="@id/noOfResults"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/filter_rv_item" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

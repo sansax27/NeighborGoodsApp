@@ -9,7 +9,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:elevation="10dp"
             app:cardCornerRadius="50dp"
@@ -45,7 +45,7 @@
                 <TextView
                     android:id="@+id/shopName"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textColor="@color/black"
                     android:textSize="36sp"
@@ -60,27 +60,30 @@
                     android:layout_height="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/shopLogo"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/ic_favorite"
+                    app:tint="@color/black" />
 
                 <TextView
                     android:id="@+id/shopCategories"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center|left"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|start"
                     android:text="TextView"
                     android:textAlignment="gravity"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@id/shopLogo"
                     app:layout_constraintEnd_toEndOf="@id/shopName"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
-                    app:layout_constraintTop_toBottomOf="@id/shopName" />
+                    app:layout_constraintTop_toBottomOf="@id/shopName"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/shopRatings"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:gravity="center|left"
-                    android:text="TextView"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center|start"
+                    android:text="4.5"
                     android:textAlignment="gravity"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -92,11 +95,12 @@
                     android:id="@+id/shopRatingsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:gravity="center|left"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center|start"
                     android:text="(100+)"
                     android:textAlignment="gravity"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="@id/shopCategories"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/shopRatings"
                     app:layout_constraintTop_toTopOf="@id/shopRatings" />
@@ -104,7 +108,7 @@
                 <TextView
                     android:id="@+id/specialityOne"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/darker_gray"
                     android:gravity="center"
                     android:maxLength="14"
@@ -120,7 +124,7 @@
                 <TextView
                     android:id="@+id/specialityTwo"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/darker_gray"
                     android:gravity="center"
@@ -136,7 +140,7 @@
                 <TextView
                     android:id="@+id/specialityThree"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/darker_gray"
                     android:gravity="center"

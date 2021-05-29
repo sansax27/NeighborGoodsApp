@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
             when(it) {
                 is State.Success -> {
                     putStringIntoSharedPreferences("accessToken","")
+                    showLongToast("LogOut Successful!!")
                     requireActivity().startActivityFromFragment(this, Intent(requireActivity(), MainActivity::class.java),15)
                     requireActivity().finish()
                 }
@@ -75,7 +76,9 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-
+        binding.manageAddress.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAddressFragment())
+        }
         return binding.root
     }
 

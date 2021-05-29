@@ -104,7 +104,8 @@
                         android:id="@+id/settingsCurrentPasswordInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/enterCurrentPassword" />
+                        android:hint="@string/enterCurrentPassword"
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +130,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/white"
-                        android:hint="@string/enterNewPassword" />
+                        android:hint="@string/enterNewPassword"
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -153,7 +155,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/white"
-                        android:hint="@string/confirmNewPassword" />
+                        android:hint="@string/confirmNewPassword"
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button

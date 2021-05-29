@@ -7,14 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.User
-import com.example.neighborGoodsApp.models.Address
-import com.example.neighborGoodsApp.models.Category
-import com.example.neighborGoodsApp.models.Shop
-import com.example.neighborGoodsApp.models.ShopMenuItem
+import com.example.neighborGoodsApp.models.*
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +23,10 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     val itemSize: LiveData<Int>
         get() = itemSizePrivate
 
-    private val totalPrice = MutableLiveData(0)
+    val totalPrice = MutableLiveData(0)
+    lateinit var defaultAddress:Address
+    private set
+
 
     private val addressListPrivate = mutableListOf<Address>()
     val addressList:List<Address> get() = addressListPrivate
@@ -53,15 +54,21 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             AppRepository.getVendors(filter)
         }
         val response3 = async {
-            val filter = Gson().toJson(mapOf("where" to mapOf("userId" to userId))).toString()
+            val filter = Gson().toJson(mapOf("where" to mapOf("userId" to userId), "include" to listOf(
+                mapOf("relation" to "city")))).toString()
             AppRepository.getUserAddresses(filter)
         }
         if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
             categoryListPrivate.addAll(response1.await().body()!!)
             shopListPrivate.addAll(response2.await().body()!!)
             addressListPrivate.addAll(response3.await().body()!!)
-            for (p in addressList) {
-                if (p.default) {
+            for (h in addressListPrivate) {
+                Timber.i(h.address+h.default.toString())
+            }
+            for (p in addressListPrivate) {
+                if(p.default) {
+                    Timber.i("Here!!")
+                    defaultAddress = p
                     User.defaultAddressId = p.id
                     break
                 }
@@ -72,7 +79,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 State.Failure(
                     "${
                         response1.await().message() ?: ""
-                    }+\n${response2.await().message() ?: ""} ${response3.await().message() ?: ""}"
+                    }\n${response2.await().message() ?: ""} \n${response3.await().message() ?: ""}"
                 )
             )
         }
@@ -95,6 +102,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 val newAddress = address.copy(default = true)
                 addressListPrivate.removeAt(index)
                 addressListPrivate.add(index, newAddress)
+                defaultAddress = newAddress
             }
             if (address.id == User.defaultAddressId) {
                 val newAddress = address.copy(default = false)

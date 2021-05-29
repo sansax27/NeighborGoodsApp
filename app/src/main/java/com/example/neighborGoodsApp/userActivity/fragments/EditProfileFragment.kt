@@ -20,6 +20,7 @@ import com.example.neighborGoodsApp.Utils.isValidPhone
 import com.example.neighborGoodsApp.Utils.logout
 import com.example.neighborGoodsApp.Utils.noNetwork
 import com.example.neighborGoodsApp.Utils.showLongToast
+import com.example.neighborGoodsApp.authentication.ui.activity.MainActivity
 import com.example.neighborGoodsApp.databinding.FragmentEditProfileBinding
 import com.example.neighborGoodsApp.userActivity.activity.UserActivity
 import com.example.neighborGoodsApp.userActivity.viewModels.EditProfileFragmentViewModel
@@ -37,7 +38,6 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditProfileBinding.inflate(layoutInflater, container, false)
-        showLongToast("Select the Check Box Of Data You Want To Update")
         val userId = requireArguments().getInt("id")
         val email = binding.editProfileEmailAddressInput
         val emailLayer = binding.editProfileEmailAddress
@@ -47,7 +47,7 @@ class EditProfileFragment : Fragment() {
 
         val name = binding.editprofileNameInput
         val nameLayer = binding.editprofileName
-
+        binding.saveUserChanges.setOnClickListener {
         if (!email.text.isValidEmail()) {
             emailLayer.error = "Please Enter Valid Email"
         } else if (!phone.text.isValidPhone()) {
@@ -77,13 +77,14 @@ class EditProfileFragment : Fragment() {
                 noNetwork()
             }
         }
+        }
         viewModel.editProfileStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Success -> {
                     showLongToast("Successfully Edited Details, Now Login Again!!")
                     requireActivity().startActivityFromFragment(
                         this,
-                        Intent(requireActivity(), UserActivity::class.java),
+                        Intent(requireActivity(), MainActivity::class.java),
                         140
                     )
                     requireActivity().finish()

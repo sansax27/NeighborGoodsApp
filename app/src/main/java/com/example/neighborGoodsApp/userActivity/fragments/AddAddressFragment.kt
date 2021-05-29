@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.R
@@ -36,7 +37,7 @@ class AddAddressFragment : Fragment() {
     private lateinit var _binding: FragmentAddAddressBinding
     private val binding: FragmentAddAddressBinding get() = _binding
     private val viewModel: AddAddressFragmentViewModel by viewModels()
-    private val addressViewModel:UserActivityViewModel by viewModels()
+    private val addressViewModel:UserActivityViewModel by activityViewModels()
     private var detectLocation = false
     private var countryList = listOf<Id>()
     private var countryId = -1
@@ -121,6 +122,7 @@ class AddAddressFragment : Fragment() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().popBackStack()
                     }, 2000)
+
                 }
                 is State.Loading -> handleStatesUI(
                     binding.addAddressPB,

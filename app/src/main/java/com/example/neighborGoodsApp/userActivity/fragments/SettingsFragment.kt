@@ -67,7 +67,7 @@ class SettingsFragment : Fragment() {
                         showLongToast("You have Been Logged Out!!")
                         logout(lifecycleScope, requireActivity())
                     } else {
-                        showLongToast("Error Occurred!! Can't Change Password")
+                        showLongToast(it.message)
                         handleStatesUI(binding.settingsPB, binding.settingsRoot, false)
                     }
                 }

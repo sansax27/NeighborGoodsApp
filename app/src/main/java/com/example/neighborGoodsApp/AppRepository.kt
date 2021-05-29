@@ -110,7 +110,7 @@ object AppRepository {
 
     suspend fun changePassword(currentPassword: String, newPassword: String) =
         withContext(Dispatchers.IO) {
-            retrofitAuthorizedInstance!!.changePassword(currentPassword, newPassword)
+            retrofitAuthorizedInstance!!.changePassword(currentPassword, newPassword, User.accessToken)
         }
 
     suspend fun updateUserDetails(
@@ -120,10 +120,14 @@ object AppRepository {
         phone: String,
         isVerified: Boolean
     ) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.updateUserDetails(userId, name, email, phone, isVerified)
+        retrofitAuthorizedInstance!!.updateUserDetails(userId, name, email, phone, isVerified, User.accessToken)
     }
 
     suspend fun getUserAddresses(filter: String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getUserAddresses(filter)
     }
+    suspend fun getProducts(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getProducts(filter)
+    }
+
 }

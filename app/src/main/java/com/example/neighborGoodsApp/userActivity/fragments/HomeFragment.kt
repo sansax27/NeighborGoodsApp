@@ -41,10 +41,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         handleStatesUI(binding.homePB, binding.homeRoot, true)
         if(isConnected(requireContext())) {
+            Timber.i(User.id.toString())
             viewModel.prepareHomeScreen(User.id)
         } else {
             Toast.makeText(requireContext(), "Unable To Retrieve Data, No Internet Connection Try Again Later!!", Toast.LENGTH_LONG).show()
-            binding.homeTopRoot.visibility = View.GONE
+            binding.homeRoot.visibility = View.GONE
         }
         viewModel.prepareHomeScreenStatus.observe(viewLifecycleOwner) {
             when(it) {
@@ -66,6 +67,7 @@ class HomeFragment : Fragment() {
                             orientation = RecyclerView.HORIZONTAL
                         }
                     }
+                    binding.location.text = viewModel.defaultAddress.city.name
                     handleStatesUI(binding.homePB, binding.homeRoot, false)
                 }
                 is State.Failure -> {
@@ -74,8 +76,8 @@ class HomeFragment : Fragment() {
                         logout(lifecycleScope, requireActivity())
                         handleStatesUI(binding.homePB, binding.homeRoot, true)
                     } else {
-                        Toast.makeText(requireContext(), "Unable To Retrieve Data, Try Again Later!!", Toast.LENGTH_LONG).show()
-                        binding.homeTopRoot.visibility = View.GONE
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        binding.homeRoot.visibility = View.GONE
                     }
                 }
             }
@@ -84,7 +86,9 @@ class HomeFragment : Fragment() {
         for(i in 0 until 6) {
             itemList.add(PopularItem(i,"", "Item Name $i", "Item Shop $i", 74*i + Random.nextInt(9)))
         }
-
+        binding.viewOnMapButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMapsFragment())
+        }
         Timber.i(itemList.size.toString())
         binding.popularItemsRV.apply {
             adapter = PopularItemsAdapter(itemList){

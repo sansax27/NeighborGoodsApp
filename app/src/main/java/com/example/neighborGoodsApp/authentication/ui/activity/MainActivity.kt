@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.PreferenceManager
+import com.example.neighborGoodsApp.AppRepository
 import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.authentication.ui.fragments.LogoFragmentDirections
@@ -33,9 +34,6 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         Handler(Looper.getMainLooper()).postDelayed({
             if (PreferenceManager.getDefaultSharedPreferences(this).getString("accessToken","") != "") {
-                startActivity(Intent(this, UserActivity::class.java))
-                finish()
-            } else {
                 PreferenceManager.getDefaultSharedPreferences(this).apply {
                     User.accessToken = getString("accessToken","")!!
                     User.ttl = getString("ttl","")!!
@@ -46,6 +44,10 @@ class MainActivity : AppCompatActivity() {
                     User.role = getString("role","")!!
                     User.id = getInt("id",-1)
                 }
+                AppRepository.setRetrofitAuthorizedInstance(User.accessToken)
+                startActivity(Intent(this, UserActivity::class.java))
+                finish()
+            } else {
                 navController.navigate(LogoFragmentDirections.actionLogoFragmentToLoginFragment())
             }
         }, 2000)

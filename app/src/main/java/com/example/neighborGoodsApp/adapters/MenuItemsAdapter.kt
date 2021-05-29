@@ -9,14 +9,18 @@ import com.example.neighborGoodsApp.models.ShopMenuItem
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import timber.log.Timber
 
-class MenuItemsAdapter(private val shopId:Int, private val menuItemList:List<ShopMenuItem>, private val viewModel:UserActivityViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
+class MenuItemsAdapter(private val shopId:Int, private val viewModel:UserActivityViewModel): RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
+    private val menuItemList = mutableListOf<ShopMenuItem>()
 
+    fun submitList(list: List<ShopMenuItem>) {
+        menuItemList.clear()
+        menuItemList.addAll(list)
+    }
     inner class ViewHolder(private val itemBinding:ShopMenuItemBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data:ShopMenuItem) {
             Timber.i("PPPPPP")
             itemBinding.shopItemName.text = data.name
-            itemBinding.shopItemAdditives.text = data.additives.joinToString(", ")
-            Timber.i(data.price.toString())
+            itemBinding.shopItemAdditives.text = data.tag
             itemBinding.shopItemPrice.text = data.price.toString()
             if(viewModel.shopExists(data) && viewModel.getShopId()==shopId) {
                 itemBinding.noOfItems.text = viewModel.getQuantity(data).toString()

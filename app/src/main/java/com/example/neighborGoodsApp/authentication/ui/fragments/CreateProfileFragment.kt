@@ -62,6 +62,8 @@ class CreateProfileFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
                 getAutomaticLocation()
+            } else {
+                showLongToast("For Automatic Location, You must Allow GPS Services")
             }
         }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -390,9 +392,6 @@ class CreateProfileFragment : Fragment() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)

@@ -14,6 +14,11 @@ class SettingsFragmentViewModel: ViewModel() {
     val changePasswordStatus:LiveData<State<String>> get() = changePasswordStatusPrivate
 
     fun changePassword(currentPassword:String, newPassword:String) = viewModelScope.launch {
-        handleResponse(AppRepository.changePassword(currentPassword, newPassword), changePasswordStatusPrivate)
+        val response = AppRepository.changePassword(currentPassword, newPassword)
+        if (response.isSuccessful) {
+            changePasswordStatusPrivate.postValue(State.Success("Success"))
+        } else {
+            changePasswordStatusPrivate.postValue(State.Failure(response.message()))
+        }
     }
 }

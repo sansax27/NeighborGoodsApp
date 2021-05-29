@@ -15,7 +15,7 @@ class CartItemsAdapter(itemMap:Map<ShopMenuItem, Int>): RecyclerView.Adapter<Car
     }
     inner class ViewHolder(private val itemBinding:CartRvItemBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data:Pair<ShopMenuItem, Int>) {
-            itemBinding.cartItemDetails.text = data.first.additives.joinToString(", ")
+            itemBinding.cartItemDetails.text = data.first.tag
             itemBinding.cartItemName.text = data.first.name
             val totalPrice = "$ %s".format(data.first.price*data.second)
             itemBinding.itemTotalPrice.text = totalPrice

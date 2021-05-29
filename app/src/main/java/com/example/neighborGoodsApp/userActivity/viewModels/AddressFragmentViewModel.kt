@@ -14,8 +14,8 @@ class AddressFragmentViewModel:ViewModel() {
     private val updateDefaultAddressStatusPrivate = MutableLiveData<State<String>>()
     val updateDefaultAddressStatus:LiveData<State<String>> get() = updateDefaultAddressStatusPrivate
 
-    private val deleteAddressStatusPrivate = MutableLiveData<State<String>>()
-    val deleteAddressStatus:LiveData<State<String>> get() = deleteAddressStatusPrivate
+    private val deleteAddressStatusPrivate = MutableLiveData<State<List<String>>>()
+    val deleteAddressStatus:LiveData<State<List<String>>> get() = deleteAddressStatusPrivate
     fun updateDefaultAddress(currentAddressId:Int, newAddressId:Int) = viewModelScope.launch {
         handleResponse(AppRepository.updateDefaultAddress(currentAddressId, newAddressId), updateDefaultAddressStatusPrivate)
     }

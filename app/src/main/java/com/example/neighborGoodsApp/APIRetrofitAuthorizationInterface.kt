@@ -17,7 +17,7 @@ interface APIRetrofitAuthorizationInterface {
     suspend fun createUser(
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("phone") phone: String,
+        @Field("phoneNo") phone: String,
         @Field("firstName") name: String,
         @Field("profilePicId") profilePicId: Int,
         @Field("role") role: String
@@ -56,8 +56,8 @@ interface APIRetrofitAuthorizationInterface {
     suspend fun createAddress(
         @Field("cityId") cityId: Int,
         @Field("street1") address: String,
-        @Field(value = "userId") userId: Int,
-        @Field("default") default: Boolean,
+        @Field("userId") userId: Int,
+        @Field("isDefault") default: Boolean,
         @Field("created") created: Boolean
     ): Response<Address>
 

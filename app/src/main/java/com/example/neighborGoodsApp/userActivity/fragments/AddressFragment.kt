@@ -85,12 +85,20 @@ class AddressFragment : Fragment() {
             findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(it, true))
         }
         binding.manageAddressRV.apply {
-            addressAdapter.submitList(addressViewModel.getAddressList())
+            addressAdapter.submitList(addressViewModel.addressList)
             adapter = addressAdapter
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.VERTICAL
             }
         }
+        binding.addAddress.setOnClickListener {
+            findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(-1, false))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setAddressRV()
     }
 
 }

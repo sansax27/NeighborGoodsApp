@@ -56,11 +56,9 @@ class AddAddressFragment : Fragment() {
             }
         }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAddAddressBinding.inflate(layoutInflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentAddAddressBinding.inflate(layoutInflater)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val updateAddressId = requireArguments().getInt("addressId")
         val edit = requireArguments().getBoolean("edit")
@@ -85,7 +83,7 @@ class AddAddressFragment : Fragment() {
                 findNavController().popBackStack()
             }, 2000)
         }
-        viewModel.getCountriesStatus.observe(viewLifecycleOwner) {
+        viewModel.getCountriesStatus.observe(this) {
             when (it) {
                 is State.Loading -> handleStatesUI(
                     binding.addAddressPB,
@@ -116,7 +114,7 @@ class AddAddressFragment : Fragment() {
         }
         val address = binding.addAddressInput
         val addressLayer = binding.addAddressAddress
-        viewModel.createAddressStatus.observe(viewLifecycleOwner) {
+        viewModel.createAddressStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     showLongToast("Address Successfully Added!!")
@@ -138,7 +136,7 @@ class AddAddressFragment : Fragment() {
                 }
             }
         }
-        viewModel.getStateIdStatus.observe(viewLifecycleOwner) {
+        viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     val filter =
@@ -155,7 +153,7 @@ class AddAddressFragment : Fragment() {
                 }
             }
         }
-        viewModel.getCitiesStatus.observe(viewLifecycleOwner) {
+        viewModel.getCitiesStatus.observe(this) {
             when (it) {
                 is State.Loading -> handleStatesUI(
                     binding.addAddressPB,
@@ -179,7 +177,7 @@ class AddAddressFragment : Fragment() {
                         list
                     )
                     binding.addAddressCityInput.setAdapter(adapter)
-                    binding.addAddressCityInput.visibility = View.VISIBLE
+                    binding.addAddressCity.visibility = View.VISIBLE
                     if (detectLocation) {
                         binding.addAddressCountry.visibility = View.GONE
                         binding.addAddressState.visibility = View.GONE
@@ -214,7 +212,7 @@ class AddAddressFragment : Fragment() {
             }
         }
 
-        viewModel.getStatesStatus.observe(viewLifecycleOwner) {
+        viewModel.getStatesStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     val list = mutableListOf<String>()
@@ -253,7 +251,7 @@ class AddAddressFragment : Fragment() {
             val filter = Gson().toJson(mapOf("where" to mapOf("stateId" to stateId))).toString()
             viewModel.getCities(filter)
         }
-        viewModel.updateAddressStatus.observe(viewLifecycleOwner) {
+        viewModel.updateAddressStatus.observe(this) {
             when (it) {
                 is State.Loading -> handleStatesUI(
                     binding.addAddressPB,
@@ -262,6 +260,8 @@ class AddAddressFragment : Fragment() {
                 )
                 is State.Success -> {
                     showLongToast("Successfully Updated Address")
+                    val newAddress = Address(it.data.id, city!!, it.data.address, it.data.default, it.data.created)
+                    addressViewModel.updateAddress(newAddress)
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().popBackStack()
                     }, 2000)
@@ -308,6 +308,11 @@ class AddAddressFragment : Fragment() {
             }
 
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

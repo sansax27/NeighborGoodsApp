@@ -28,10 +28,9 @@ class SignUpFragment : Fragment() {
     private val binding: FragmentSignUpBinding
         get() = _binding
     private val viewModel:SignUpFragmentViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentSignUpBinding.inflate(layoutInflater)
         val email = binding.enterEmailSignUpInput
         val emailLayer = binding.enterEmailSignUp
@@ -72,7 +71,7 @@ class SignUpFragment : Fragment() {
                 )
             }
         }
-        viewModel.ifEmailExistsStatus.observe(viewLifecycleOwner) {
+        viewModel.ifEmailExistsStatus.observe(this) {
             when(it) {
                 is State.Loading -> handleStatesUI(binding.signUpPB, binding.signUpRoot, true)
                 is State.Success -> {
@@ -99,6 +98,11 @@ class SignUpFragment : Fragment() {
         binding.signInText.setOnClickListener {
             findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

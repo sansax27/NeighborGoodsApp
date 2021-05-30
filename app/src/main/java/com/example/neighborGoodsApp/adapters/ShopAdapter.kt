@@ -23,7 +23,11 @@ class ShopAdapter(private val shopList:List<Shop>, private val move: (shop:Shop)
             }else {
                 "100+"
             }
-            itemBinding.shopCategories.text = data.shopCategory.name
+            itemBinding.shopCategories.text = if(data.shopCategory!=null) {
+                data.shopCategory.name
+            } else {
+                ""
+            }
             itemBinding.root.setOnClickListener {
                 move(data)
             }

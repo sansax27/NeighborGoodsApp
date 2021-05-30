@@ -27,10 +27,9 @@ class ProfileFragment : Fragment() {
     private val binding: FragmentProfileBinding
         get() = _binding
     private val viewModel:ProfileFragmentViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         binding.settings.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
@@ -50,7 +49,7 @@ class ProfileFragment : Fragment() {
                 showLongToast("No Network Connection!!")
             }
         }
-        viewModel.logoutStatus.observe(viewLifecycleOwner) {
+        viewModel.logoutStatus.observe(this) {
             when(it) {
                 is State.Success -> {
                     putStringIntoSharedPreferences("accessToken","")
@@ -82,6 +81,11 @@ class ProfileFragment : Fragment() {
         binding.manageAddress.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAddressFragment())
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

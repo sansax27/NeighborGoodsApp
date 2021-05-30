@@ -161,4 +161,11 @@
     <string name="editAddress">Edit Address</string>
 
     <string name="authenticationDisclaimer">If Either of Email Or Phone Changes, you have to ReVerify.</string>
+
+    <string name="filter">Filter</string>
+    <string name="none">None</string>
+    <string name="all">All</string>
+
+    <string name="noOfResults">%s Results</string>
+    <string name="Stores">Stores</string>
 </resources>

@@ -20,10 +20,9 @@ class CartFragment : Fragment() {
     private val binding: FragmentCartBinding
         get() = _binding
     private val manageCartViewModel:UserActivityViewModel by activityViewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentCartBinding.inflate(layoutInflater)
         if (manageCartViewModel.itemSize.value==0) {
             binding.cartRoot.visibility = View.GONE
@@ -37,6 +36,11 @@ class CartFragment : Fragment() {
             }
             binding.cartShopName.text = manageCartViewModel.shopName
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

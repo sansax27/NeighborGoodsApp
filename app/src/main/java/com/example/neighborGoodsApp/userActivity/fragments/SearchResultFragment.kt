@@ -3,13 +3,12 @@ package com.example.neighborGoodsApp.userActivity.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +20,11 @@ import com.example.neighborGoodsApp.Utils.noNetwork
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.SearchResultAdapter
 import com.example.neighborGoodsApp.databinding.FragmentSearchResultBinding
+import com.example.neighborGoodsApp.models.Shop
 import com.example.neighborGoodsApp.userActivity.viewModels.SearchResultFragmentViewModel
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -32,18 +33,18 @@ class SearchResultFragment : Fragment() {
     private val binding: FragmentSearchResultBinding get() = _binding
     private val userActivityViewModel: UserActivityViewModel by activityViewModels()
     private val viewModel: SearchResultFragmentViewModel by viewModels()
-    private val rvAdapter = SearchResultAdapter{
+    private val rvAdapter = SearchResultAdapter {
         findNavController().navigate(
             SearchResultFragmentDirections.actionSearchResultFragmentToShopFragment(
                 it
             )
         )
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchResultBinding.inflate(layoutInflater, container, false)
+    private val shopList = mutableListOf<Shop>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentSearchResultBinding.inflate(layoutInflater)
+        handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
         val categoryId = requireArguments().getInt("Category")
         binding.filterResultsRV.apply {
             adapter = rvAdapter
@@ -53,6 +54,8 @@ class SearchResultFragment : Fragment() {
         }
         if (categoryId == -1) {
             rvAdapter.submitList(userActivityViewModel.shopList)
+            binding.noOfResults.text =
+                getString(R.string.noOfResults).format(userActivityViewModel.shopList.size)
             rvAdapter.notifyDataSetChanged()
         } else {
             if ((isConnected(requireContext()))) {
@@ -61,7 +64,7 @@ class SearchResultFragment : Fragment() {
                 noNetwork()
             }
         }
-        viewModel.getVendorsStatus.observe(viewLifecycleOwner) {
+        viewModel.getVendorsStatus.observe(this) {
             when (it) {
                 is State.Failure -> {
                     showLongToast("Could Not Load The Search Results")
@@ -70,16 +73,74 @@ class SearchResultFragment : Fragment() {
                     }, 2000)
                 }
                 is State.Loading -> {
-                    handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
                 }
                 is State.Success -> {
                     rvAdapter.submitList(it.data)
+                    shopList.clear()
+                    shopList.addAll(it.data)
                     rvAdapter.notifyDataSetChanged()
+                    binding.noOfResults.text = getString(R.string.noOfResults).format(it.data.size)
+                    Timber.i("Resetting")
                     handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
                 }
             }
         }
+        binding.filterViewOnMap.setOnClickListener {
+            handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
+            userActivityViewModel.toShowOnMapList.apply {
+                clear()
+                addAll(rvAdapter.shopList)
+            }
+            handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
+            findNavController().navigate(SearchResultFragmentDirections.actionSearchResultFragmentToMapsFragment())
+        }
+        binding.filterScreen.setOnClickListener {
+            findNavController().navigate(SearchResultFragmentDirections.actionSearchResultFragmentToFilterFragment())
+        }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
+        if (userActivityViewModel.searchResultCollectionPolicy == 1 || userActivityViewModel.searchResultCollectionPolicy == 2 || userActivityViewModel.searchResultCategoryPolicy.isNotEmpty()) {
+            if (requireArguments().getInt("Category")!=-1) {
+                rvAdapter.applyFilters(
+                    shopList,
+                    userActivityViewModel.searchResultCollectionPolicy,
+                    userActivityViewModel.searchResultCategoryPolicy
+                )
+            } else {
+                rvAdapter.applyFilters(
+                    userActivityViewModel.shopList,
+                    userActivityViewModel.searchResultCollectionPolicy,
+                    userActivityViewModel.searchResultCategoryPolicy
+                )
+            }
+        } else {
+            if (requireArguments().getInt("Category")!=-1) {
+                rvAdapter.submitList(shopList)
+            } else {
+                rvAdapter.submitList(userActivityViewModel.shopList)
+                rvAdapter.notifyDataSetChanged()
+            }
+        }
+        binding.noOfResults.text = getString(R.string.noOfResults).format(rvAdapter.itemCount)
+        handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
+    }
+
+
+
+
+    override fun onDetach() {
+        super.onDetach()
+        userActivityViewModel.searchResultCollectionPolicy = 0
+        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
     }
 
 }

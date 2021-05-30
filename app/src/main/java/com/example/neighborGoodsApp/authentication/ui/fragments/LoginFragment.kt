@@ -32,11 +32,10 @@ class LoginFragment : Fragment() {
 
     private val viewModel: LoginFragmentViewModel by viewModels()
     private val toUserActivityCode = 154
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentLoginBinding.inflate(layoutInflater)
         val email = binding.loginEnterEmailInput
         val emailLayer = binding.loginEnterEmail
         val password = binding.loginEnterPasswordInput
@@ -59,7 +58,7 @@ class LoginFragment : Fragment() {
                 }
             }
         }
-        viewModel.loginStatus.observe(viewLifecycleOwner) {
+        viewModel.loginStatus.observe(this) {
             when (it) {
                 is State.Loading -> {
                     binding.loginRoot.apply {
@@ -129,6 +128,12 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
         }
 
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        
         return binding.root
     }
 

@@ -26,6 +26,7 @@ import com.example.neighborGoodsApp.models.PopularItem
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -34,11 +35,11 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = _binding
     private val viewModel:UserActivityViewModel by activityViewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    private var initializedDefaultAddress = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
         handleStatesUI(binding.homePB, binding.homeRoot, true)
         if(isConnected(requireContext())) {
             Timber.i(User.id.toString())
@@ -47,8 +48,8 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Unable To Retrieve Data, No Internet Connection Try Again Later!!", Toast.LENGTH_LONG).show()
             binding.homeRoot.visibility = View.GONE
         }
-        binding.toolbarProfile.text = "SS"
-        viewModel.prepareHomeScreenStatus.observe(viewLifecycleOwner) {
+        binding.toolbarProfile.text = User.name.substring(0,2).uppercase(Locale.getDefault())
+        viewModel.prepareHomeScreenStatus.observe(this) {
             when(it) {
                 is State.Loading -> {}
                 is State.Success -> {
@@ -69,6 +70,7 @@ class HomeFragment : Fragment() {
                         }
                     }
                     binding.location.text = viewModel.defaultAddress.city.name
+                    initializedDefaultAddress = true
                     handleStatesUI(binding.homePB, binding.homeRoot, false)
                 }
                 is State.Failure -> {
@@ -88,6 +90,12 @@ class HomeFragment : Fragment() {
             itemList.add(PopularItem(i,"", "Item Name $i", "Item Shop $i", 74*i + Random.nextInt(9)))
         }
         binding.viewOnMapButton.setOnClickListener {
+            handleStatesUI(binding.homePB, binding.homeRoot, true)
+            viewModel.toShowOnMapList.apply {
+                clear()
+                addAll(viewModel.shopList)
+            }
+            handleStatesUI(binding.homePB, binding.homeRoot, false)
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMapsFragment())
         }
         Timber.i(itemList.size.toString())
@@ -105,12 +113,18 @@ class HomeFragment : Fragment() {
         binding.viewAllPopularItems.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(-1))
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
-
     override fun onResume() {
         super.onResume()
-        binding.location.text = viewModel.defaultAddress.city.name
+        if (initializedDefaultAddress) {
+            binding.location.text = viewModel.defaultAddress.city.name
+        }
     }
 
 }

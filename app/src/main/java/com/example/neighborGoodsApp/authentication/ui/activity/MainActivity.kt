@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                     User.ttl = getString("ttl","")!!
                     User.profilePicId = getInt("profilePicId", -1)
                     User.email = getString("email","")!!
+                    User.name = getString("name","")!!
                     User.phone = getString("phone","")!!
                     User.isEmailVerified = getBoolean("isEmailVerified",false)
                     User.role = getString("role","")!!

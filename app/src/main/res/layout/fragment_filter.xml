@@ -3,129 +3,199 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".userActivity.fragments.FilterFragment">
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/filterBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/back_button_drawable"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/filterHeading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center|start"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:text="@string/filter"
+            android:textAlignment="gravity"
+            android:textColor="@color/logoScreen"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/filterBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/filterBack"
+            app:layout_constraintTop_toTopOf="@id/filterBack" />
+
+        <ProgressBar
+            android:id="@+id/filterPB"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/sortByFilter"
-                android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/filterSV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filterBack">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filterRoot"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/sortByFilter"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="10dp">
 
-            <RadioGroup
-                android:id="@+id/sortRadioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@id/sortByFilter"
-                app:layout_constraintTop_toBottomOf="@id/sortByFilter">
+                <TextView
+                    android:id="@+id/sortByFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/sortByFilter"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/sortMostPopularRadio"
+                <RadioGroup
+                    android:id="@+id/sortRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@id/sortByFilter"
+                    app:layout_constraintTop_toBottomOf="@id/sortByFilter">
+
+                    <RadioButton
+                        android:id="@+id/sortMostPopularRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/sortMostPopular"
+                        android:textColor="@android:color/tertiary_text_light"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/sortNearByRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/sortNearby"
+                        android:textColor="@android:color/tertiary_text_light"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/priceSort"
+                        android:textColor="@android:color/tertiary_text_light"
+                        android:textSize="20sp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/filterByType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/filterType"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/sortRadioGroup"
+                    app:layout_constraintTop_toBottomOf="@id/sortRadioGroup" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/typeChipGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/filterByType"
+                    app:layout_constraintTop_toBottomOf="@id/filterByType"
+                    app:singleSelection="false">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/noneByTypeFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="@string/all" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:id="@+id/filterByOther"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/filterOther"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/typeChipGroup"
+                    app:layout_constraintTop_toBottomOf="@id/typeChipGroup" />
+
+                <RadioGroup
+                    android:id="@+id/deliveryWay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:text="@string/sortMostPopular"
-                    android:textColor="@android:color/tertiary_text_light"
-                    android:textSize="20sp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/filterByType"
+                    app:layout_constraintTop_toBottomOf="@id/filterByOther">
 
-                <RadioButton
-                    android:id="@+id/sortNearByRadio"
-                    android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/filterByDeliveryRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/filterDelivery" />
+
+                    <RadioButton
+                        android:id="@+id/filterByPickupRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filterPickUp" />
+
+                    <RadioButton
+                        android:id="@+id/filterByNoneRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/none" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/applyFilters"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:text="@string/sortNearby"
-                    android:textColor="@android:color/tertiary_text_light"
-                    android:textSize="20sp" />
+                    android:backgroundTint="@color/logoScreen"
+                    android:text="@string/applyFilter"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/deliveryWay"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryWay" />
 
-                <RadioButton
-                    android:id="@+id/radioButton3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:button="@null"
-                    android:text="@string/priceSort"
-                    android:textColor="@android:color/tertiary_text_light"
-                    android:textSize="20sp" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/filterByType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/filterType"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/sortRadioGroup"
-                app:layout_constraintTop_toBottomOf="@id/sortRadioGroup" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/typeChipGroup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@id/filterByType"
-                app:layout_constraintTop_toBottomOf="@id/filterByType">
-
-            </com.google.android.material.chip.ChipGroup>
-
-            <TextView
-                android:id="@+id/filterByOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/filterOther"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/typeChipGroup"
-                app:layout_constraintTop_toBottomOf="@id/typeChipGroup" />
-
-            <CheckBox
-                android:id="@+id/filterByDeliveryCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/filterDelivery"
-                app:layout_constraintStart_toStartOf="@id/filterByOther"
-                app:layout_constraintTop_toBottomOf="@id/filterByOther" />
-
-            <CheckBox
-                android:id="@+id/filterByPickupCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filterPickUp"
-                app:layout_constraintStart_toStartOf="@id/filterByDeliveryCheckBox"
-                app:layout_constraintTop_toBottomOf="@id/filterByDeliveryCheckBox" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/logoScreen"
-                android:text="@string/applyFilter"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/filterByPickupCheckBox"
-                app:layout_constraintTop_toBottomOf="@id/filterByPickupCheckBox" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

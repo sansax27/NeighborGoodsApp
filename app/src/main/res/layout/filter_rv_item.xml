@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="25dp"
             android:elevation="10dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="10dp"
@@ -87,13 +87,13 @@
                 <TextView
                     android:id="@+id/shopRatings"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center|start"
                     android:text="4.5"
                     android:textAlignment="gravity"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:drawableStartCompat="@drawable/ic_rating"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
                     app:layout_constraintTop_toBottomOf="@id/shopCategories" />
@@ -101,18 +101,18 @@
                 <TextView
                     android:id="@+id/shopRatingsCount"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:gravity="center|start"
                     android:paddingStart="10dp"
                     android:paddingEnd="0dp"
                     android:text="(100+)"
                     android:textAlignment="gravity"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/shopRatings"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/shopRatings"
-                    app:layout_constraintTop_toTopOf="@id/shopRatings" />
+                    app:layout_constraintStart_toEndOf="@id/shopRatings" />
 
                 <TextView
                     android:id="@+id/specialityOne"

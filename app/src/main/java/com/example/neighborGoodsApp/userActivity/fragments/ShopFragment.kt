@@ -42,11 +42,10 @@ class ShopFragment : Fragment() {
     private val categoryWiseShopMenuItem = mutableMapOf<String, MutableList<ShopMenuItem>>()
     private val shopMenuItemList = mutableListOf<List<ShopMenuItem>>()
     private lateinit var rvAdapter: MenuItemsAdapter
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentShopBinding.inflate(inflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentShopBinding.inflate(layoutInflater)
         val shop = requireArguments().getSerializable("Shop") as Shop
         binding.shopFragmentName.text = shop.shopName
         handleStatesUI(binding.shopPB, binding.shopRoot, true)
@@ -95,7 +94,7 @@ class ShopFragment : Fragment() {
                 binding.shopFeatures3.text = shop.specialities[2]
             }
         }
-        manageCartViewModel.itemSize.observe(viewLifecycleOwner) {
+        manageCartViewModel.itemSize.observe(this) {
             if (shopListId == manageCartViewModel.getShopId() && it > 0) {
                 binding.cartOverviewGroup.visibility = View.VISIBLE
                 val itemsString = "%s items".format(it)
@@ -104,13 +103,13 @@ class ShopFragment : Fragment() {
                 binding.cartOverviewGroup.visibility = View.GONE
             }
         }
-        manageCartViewModel.totalPrice.observe(viewLifecycleOwner) {
+        manageCartViewModel.totalPrice.observe(this) {
             if (shopListId == manageCartViewModel.getShopId()) {
                 val totalPrice = "$ %s".format(it)
                 binding.totalAmount.text = totalPrice
             }
         }
-        viewModel.getProductsStatus.observe(viewLifecycleOwner) {
+        viewModel.getProductsStatus.observe(this) {
             when (it) {
                 is State.Loading -> {
                 }
@@ -204,6 +203,12 @@ class ShopFragment : Fragment() {
                 }
             }
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
         return binding.root
     }
 }

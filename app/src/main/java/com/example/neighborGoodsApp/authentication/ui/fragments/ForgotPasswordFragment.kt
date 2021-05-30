@@ -19,11 +19,9 @@ class ForgotPasswordFragment : Fragment() {
     private val binding: FragmentForgotPasswordBinding
         get() = _binding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentForgotPasswordBinding.inflate(layoutInflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        _binding = FragmentForgotPasswordBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
         val email = binding.resetEmailInput
         val emailLayer = binding.resetEmail
         binding.sendResetLink.setOnClickListener {
@@ -34,7 +32,11 @@ class ForgotPasswordFragment : Fragment() {
             Toast.makeText(requireContext(), "Link Has been Sent!!", Toast.LENGTH_LONG).show()
             findNavController().navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToLoginFragment())
         }
-
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

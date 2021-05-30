@@ -68,10 +68,8 @@ class CreateProfileFragment : Fragment() {
             }
         }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentCreateProfileBinding.inflate(layoutInflater)
         val email = requireArguments().getString("email")!!
         val password = requireArguments().getString("password")!!
@@ -99,7 +97,7 @@ class CreateProfileFragment : Fragment() {
                 showLongToast("Please Enable GPS!!")
             }
         }
-        viewModel.createUserStatus.observe(viewLifecycleOwner) {
+        viewModel.createUserStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     if (isConnected(requireContext())) {
@@ -123,7 +121,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.uploadImageStatus.observe(viewLifecycleOwner) {
+        viewModel.uploadImageStatus.observe(this) {
             when (it) {
                 is State.Loading -> {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
@@ -154,7 +152,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.getCountriesStatus.observe(viewLifecycleOwner) {
+        viewModel.getCountriesStatus.observe(this) {
             when (it) {
                 is State.Loading -> handleStatesUI(binding.profilePB, binding.createProfileRoot,true)
                 is State.Success -> {
@@ -179,7 +177,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.createAddressStatus.observe(viewLifecycleOwner) {
+        viewModel.createAddressStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     showLongToast("SignUp Successful!!")
@@ -210,7 +208,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.getStateIdStatus.observe(viewLifecycleOwner) {
+        viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     val filter =
@@ -227,7 +225,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.getCitiesStatus.observe(viewLifecycleOwner) {
+        viewModel.getCitiesStatus.observe(this) {
             when (it) {
                 is State.Loading -> {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
@@ -284,7 +282,7 @@ class CreateProfileFragment : Fragment() {
             }
         }
 
-        viewModel.getStatesStatus.observe(viewLifecycleOwner) {
+        viewModel.getStatesStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     val list = mutableListOf<String>()
@@ -357,6 +355,12 @@ class CreateProfileFragment : Fragment() {
         binding.selectProfilePicture.setOnClickListener {
             verifyStoragePermissions()
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        
         return binding.root
     }
 

@@ -27,6 +27,10 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     lateinit var defaultAddress:Address
     private set
 
+    var searchResultCollectionPolicy = 0
+    var searchResultCategoryPolicy = mutableListOf<Int>()
+
+    val toShowOnMapList = mutableListOf<Shop>()
     private var shop: Shop? = null
     var shopName = ""
     private set
@@ -70,9 +74,6 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             shopListPrivate.addAll(response2.await().body()!!)
             addressListPrivate.clear()
             addressListPrivate.addAll(response3.await().body()!!)
-            for (h in addressListPrivate) {
-                Timber.i(h.address+h.default.toString())
-            }
             for (p in addressListPrivate) {
                 if(p.default) {
                     Timber.i("Here!!")
@@ -100,6 +101,15 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         addressListPrivate.add(address)
     }
 
+    fun updateAddress(address: Address) {
+        for (k in addressListPrivate) {
+            if (k.id==address.id) {
+                addressListPrivate.remove(k)
+                addressListPrivate.add(address)
+                break
+            }
+        }
+    }
     fun removeAddress(address: Address) {
         addressListPrivate.remove(address)
     }
@@ -167,5 +177,4 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             newShop
         }
     }
-
 }

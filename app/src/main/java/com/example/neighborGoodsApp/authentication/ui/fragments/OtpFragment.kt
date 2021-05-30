@@ -22,10 +22,8 @@ class OtpFragment : Fragment() {
     private val binding: FragmentOtpBinding
         get() = _binding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = FragmentOtpBinding.inflate(layoutInflater)
         binding.verifyButton.setOnClickListener {
             if (requireArguments().getBoolean("login")) {
@@ -42,6 +40,11 @@ class OtpFragment : Fragment() {
                 }, 2000)
             }
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

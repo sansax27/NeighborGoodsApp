@@ -26,11 +26,10 @@ class SettingsFragment : Fragment() {
     private lateinit var _binding:FragmentSettingsBinding
     private val binding:FragmentSettingsBinding get() = _binding
     private val viewModel:SettingsFragmentViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentSettingsBinding.inflate(layoutInflater)
         val currentPassword = binding.settingsCurrentPasswordInput
         val currentPasswordLayer = binding.settingsCurrentPassword
 
@@ -59,7 +58,7 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-        viewModel.changePasswordStatus.observe(viewLifecycleOwner) {
+        viewModel.changePasswordStatus.observe(this) {
             when(it) {
                 is State.Loading -> handleStatesUI(binding.settingsPB, binding.settingsRoot, true)
                 is State.Failure -> {
@@ -80,6 +79,11 @@ class SettingsFragment : Fragment() {
         binding.settingsEditProfile.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToEditProfileFragment((User.id)))
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

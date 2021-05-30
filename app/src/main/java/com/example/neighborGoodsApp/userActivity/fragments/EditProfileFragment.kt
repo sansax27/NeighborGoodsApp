@@ -22,7 +22,6 @@ import com.example.neighborGoodsApp.Utils.noNetwork
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.authentication.ui.activity.MainActivity
 import com.example.neighborGoodsApp.databinding.FragmentEditProfileBinding
-import com.example.neighborGoodsApp.userActivity.activity.UserActivity
 import com.example.neighborGoodsApp.userActivity.viewModels.EditProfileFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,11 +32,10 @@ class EditProfileFragment : Fragment() {
     private val binding: FragmentEditProfileBinding get() = _binding
 
     private val viewModel: EditProfileFragmentViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEditProfileBinding.inflate(layoutInflater, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentEditProfileBinding.inflate(layoutInflater)
         val userId = requireArguments().getInt("id")
         val email = binding.editProfileEmailAddressInput
         val emailLayer = binding.editProfileEmailAddress
@@ -48,37 +46,37 @@ class EditProfileFragment : Fragment() {
         val name = binding.editprofileNameInput
         val nameLayer = binding.editprofileName
         binding.saveUserChanges.setOnClickListener {
-        if (!email.text.isValidEmail()) {
-            emailLayer.error = "Please Enter Valid Email"
-        } else if (!phone.text.isValidPhone()) {
-            phoneLayer.error = "Please Enter Valid Phone Number"
-        } else if (name.text.isNullOrEmpty() || name.text.isNullOrBlank()) {
-            nameLayer.error = "Please Enter Name"
-        } else {
-            if (isConnected(requireContext())) {
-                if (email.text.toString() != User.email || phone.text.toString() != User.phone) {
-                    viewModel.updateUserDetails(
-                        userId,
-                        name.text.toString(),
-                        email.text.toString(),
-                        resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
-                        false
-                    )
-                } else {
-                    viewModel.updateUserDetails(
-                        userId,
-                        name.text.toString(),
-                        email.text.toString(),
-                        resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
-                        true
-                    )
-                }
+            if (!email.text.isValidEmail()) {
+                emailLayer.error = "Please Enter Valid Email"
+            } else if (!phone.text.isValidPhone()) {
+                phoneLayer.error = "Please Enter Valid Phone Number"
+            } else if (name.text.isNullOrEmpty() || name.text.isNullOrBlank()) {
+                nameLayer.error = "Please Enter Name"
             } else {
-                noNetwork()
+                if (isConnected(requireContext())) {
+                    if (email.text.toString() != User.email || phone.text.toString() != User.phone) {
+                        viewModel.updateUserDetails(
+                            userId,
+                            name.text.toString(),
+                            email.text.toString(),
+                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
+                            false
+                        )
+                    } else {
+                        viewModel.updateUserDetails(
+                            userId,
+                            name.text.toString(),
+                            email.text.toString(),
+                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
+                            true
+                        )
+                    }
+                } else {
+                    noNetwork()
+                }
             }
         }
-        }
-        viewModel.editProfileStatus.observe(viewLifecycleOwner) {
+        viewModel.editProfileStatus.observe(this) {
             when (it) {
                 is State.Success -> {
                     showLongToast("Successfully Edited Details, Now Login Again!!")
@@ -107,6 +105,11 @@ class EditProfileFragment : Fragment() {
                 }
             }
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return binding.root
     }
 

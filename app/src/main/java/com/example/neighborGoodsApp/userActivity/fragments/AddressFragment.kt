@@ -24,81 +24,99 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddressFragment : Fragment() {
-    private lateinit var _binding:FragmentAddressBinding
-    private val binding:FragmentAddressBinding get() = _binding
-    private val viewModel:AddressFragmentViewModel by viewModels()
-    private val addressViewModel:UserActivityViewModel by activityViewModels()
+    private lateinit var _binding: FragmentAddressBinding
+    private val binding: FragmentAddressBinding get() = _binding
+    private val viewModel: AddressFragmentViewModel by viewModels()
+    private val addressViewModel: UserActivityViewModel by activityViewModels()
     private var newDefaultAddressId = -1
     private var deleteAddress: Address? = null
-    private val updateAddress = fun(addressId:Int) {
+    private val updateDefaultAddress = fun(addressId: Int) {
         newDefaultAddressId = addressId
         viewModel.updateDefaultAddress(User.id, addressId)
     }
-    private val deleteAddressFunction = fun (address:Address) {
+    private val deleteAddressFunction = fun(address: Address) {
         deleteAddress = address
-        if(!address.default) {
+        if (!address.default) {
             viewModel.deleteAddress(address.id)
         } else {
             showLongToast("Can't Delete Default Address!!")
         }
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAddressBinding.inflate(layoutInflater, container, false)
-        setAddressRV()
-        viewModel.updateDefaultAddressStatus.observe(viewLifecycleOwner) {
-            when(it) {
-                is State.Loading -> handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, true)
+    private val addressAdapter = AddressAdapter(updateDefaultAddress, deleteAddressFunction) {
+        findNavController().navigate(
+            AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(
+                it,
+                true
+            )
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        _binding = FragmentAddressBinding.inflate(layoutInflater)
+        binding.manageAddressRV.apply {
+            addressAdapter.submitList(addressViewModel.addressList)
+            addressAdapter.notifyDataSetChanged()
+            adapter = addressAdapter
+            layoutManager = LinearLayoutManager(requireContext()).apply {
+                orientation = RecyclerView.VERTICAL
+            }
+        }
+        viewModel.updateDefaultAddressStatus.observe(this) {
+            when (it) {
+                is State.Loading -> handleStatesUI(
+                    binding.manageAddressPB,
+                    binding.manageAddressRoot,
+                    true
+                )
                 is State.Failure -> {
                     showLongToast(it.message)
                     handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
                 }
                 is State.Success -> {
                     addressViewModel.updateDefaultAddress(newDefaultAddressId)
-                    setAddressRV()
+                    addressAdapter.notifyDataSetChanged()
                     handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
                 }
             }
         }
-        viewModel.deleteAddressStatus.observe(viewLifecycleOwner) {
-            when(it) {
-                is State.Loading -> handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, true)
+        viewModel.deleteAddressStatus.observe(this) {
+            when (it) {
+                is State.Loading -> handleStatesUI(
+                    binding.manageAddressPB,
+                    binding.manageAddressRoot,
+                    true
+                )
                 is State.Failure -> {
                     showLongToast(it.message)
                     handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
                 }
                 is State.Success -> {
                     addressViewModel.removeAddress(deleteAddress!!)
-                    setAddressRV()
+                    addressAdapter.submitList(addressViewModel.addressList)
+                    addressAdapter.notifyDataSetChanged()
                     handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
                 }
             }
         }
+        binding.addAddress.setOnClickListener {
+            findNavController().navigate(
+                AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(
+                    -1,
+                    false
+                )
+            )
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        addressAdapter.submitList(addressViewModel.addressList)
+        addressAdapter.notifyDataSetChanged()
         return binding.root
     }
 
-    private fun setAddressRV() {
-
-        val addressAdapter = AddressAdapter(updateAddress, deleteAddressFunction) {
-            findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(it, true))
-        }
-        binding.manageAddressRV.apply {
-            addressAdapter.submitList(addressViewModel.addressList)
-            adapter = addressAdapter
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = RecyclerView.VERTICAL
-            }
-        }
-        binding.addAddress.setOnClickListener {
-            findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(-1, false))
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        setAddressRV()
-    }
 
 }

@@ -1,6 +1,7 @@
 package com.example.neighborGoodsApp.authentication.ui.activity
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.hardware.usb.UsbRequest
 import android.os.Bundle
 import android.os.Handler
@@ -55,5 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 }

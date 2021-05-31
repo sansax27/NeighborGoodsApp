@@ -9,9 +9,10 @@
 
         <ImageView
             android:id="@+id/shopItemImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@id/menuDivider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/ic_logo_placeholder" />
@@ -20,7 +21,7 @@
             android:id="@+id/shopItemName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="TextView"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -32,23 +33,33 @@
             android:id="@+id/shopItemAdditives"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="TextView"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/menuDivider"
             app:layout_constraintEnd_toEndOf="@id/shopItemName"
             app:layout_constraintStart_toEndOf="@id/shopItemImage"
-            app:layout_constraintTop_toBottomOf="@id/shopItemName" />
+            app:layout_constraintTop_toBottomOf="@id/shopItemName"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/menuDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            tools:layout_editor_absoluteY="147dp" />
 
         <TextView
             android:id="@+id/shopItemPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="TextView"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/shopItemImage" />
+            app:layout_constraintStart_toEndOf="@id/shopItemImage"
+            app:layout_constraintTop_toBottomOf="@id/menuDivider" />
 
 
         <Button
@@ -73,8 +84,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/shopItemPrice"
             app:layout_constraintEnd_toEndOf="@id/shopItemAdditives"
-            app:layout_constraintTop_toTopOf="@id/shopItemPrice"
-            tools:visibility="visible">
+            app:layout_constraintTop_toTopOf="@id/shopItemPrice">
 
             <ImageView
                 android:id="@+id/removeItem"

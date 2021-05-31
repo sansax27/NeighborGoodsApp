@@ -87,7 +87,11 @@
         android:id="@+id/navMenuSearch"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navMenuSearch_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navMenuProfile"
         android:name="com.example.neighborGoodsApp.userActivity.fragments.ProfileFragment"

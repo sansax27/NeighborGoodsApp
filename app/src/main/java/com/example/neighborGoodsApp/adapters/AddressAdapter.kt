@@ -2,6 +2,7 @@ package com.example.neighborGoodsApp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neighborGoodsApp.databinding.AddressItemBinding
 import com.example.neighborGoodsApp.models.Address

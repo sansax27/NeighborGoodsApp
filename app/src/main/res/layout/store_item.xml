@@ -13,7 +13,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            app:cardCornerRadius="25dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/itemShopPicture"
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:scaleType="fitXY"
                     app:layout_constraintEnd_toEndOf="@id/likeShop"
                     app:layout_constraintStart_toStartOf="@id/shopLogo"
@@ -36,24 +36,23 @@
 
                 <ImageView
                     android:id="@+id/shopLogo"
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/distanceBarrier"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/itemShopPicture"
+                    app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/ic_logo_placeholder" />
 
                 <TextView
                     android:id="@+id/shopName"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="Text View"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@id/likeShop"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
                     app:layout_constraintTop_toTopOf="@id/shopLogo" />
@@ -64,7 +63,6 @@
                     android:layout_height="30dp"
                     android:layout_margin="5dp"
                     app:layout_constraintEnd_toEndOf="@id/itemShopPicture"
-                    app:layout_constraintStart_toEndOf="@id/shopName"
                     app:layout_constraintTop_toTopOf="@id/shopLogo"
                     app:srcCompat="@drawable/ic_favorite"
                     app:tint="@color/black" />
@@ -73,18 +71,28 @@
                     android:id="@+id/shopCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:padding="5dp"
                     android:text="@{"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@id/shopLogo"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@id/distanceBarrier"
                     app:layout_constraintEnd_toEndOf="@id/shopName"
-                    app:layout_constraintStart_toEndOf="@id/shopLogo"
+                    app:layout_constraintStart_toStartOf="@id/shopName"
                     app:layout_constraintTop_toBottomOf="@id/shopName"
                     app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/distanceBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="top"
+                    tools:layout_editor_absoluteY="245dp" />
 
                 <TextView
                     android:id="@+id/shopRatings"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center|start"
                     android:text="4.5"
                     android:textAlignment="gravity"
@@ -92,12 +100,12 @@
                     android:textSize="20sp"
                     app:drawableStartCompat="@drawable/ic_rating"
                     app:layout_constraintStart_toEndOf="@id/shopLogo"
-                    app:layout_constraintTop_toBottomOf="@id/shopCategories" />
+                    app:layout_constraintTop_toBottomOf="@id/distanceBarrier" />
 
                 <TextView
                     android:id="@+id/shopRatingsCount"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:gravity="center|start"
                     android:paddingStart="15dp"
                     android:paddingEnd="0dp"

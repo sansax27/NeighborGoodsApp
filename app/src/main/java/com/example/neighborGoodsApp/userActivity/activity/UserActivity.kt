@@ -1,5 +1,6 @@
 package com.example.neighborGoodsApp.userActivity.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -34,5 +35,9 @@ class UserActivity : AppCompatActivity() {
             true
         }
         setContentView(binding.root)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
     }
 }

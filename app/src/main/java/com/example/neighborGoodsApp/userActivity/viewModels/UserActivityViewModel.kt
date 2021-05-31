@@ -37,6 +37,12 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     var shopLogo = ""
     private set
 
+    private val productsMapPrivate = mutableMapOf<String, List<Int>>()
+    val productsMap:Map<String, List<Int>> get() = productsMapPrivate
+
+    val searchResultVendorPolicy = mutableListOf<Int>()
+
+
     private val addressListPrivate = mutableListOf<Address>()
     val addressList:List<Address> get() = addressListPrivate
 
@@ -68,6 +74,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             AppRepository.getUserAddresses(filter)
         }
         if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
+            productsMapPrivate.clear()
             categoryListPrivate.clear()
             categoryListPrivate.addAll(response1.await().body()!!)
             shopListPrivate.clear()

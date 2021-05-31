@@ -6,19 +6,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:padding="15dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/defaultCheckBox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/defaultCheckBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/defaultCheckBox"
@@ -30,16 +30,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/address" />
 
-    <TextView
-        android:id="@+id/addressCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@id/defaultCheckBox"
-        app:layout_constraintStart_toStartOf="@id/address"
-        app:layout_constraintTop_toBottomOf="@id/address" />
+        <TextView
+            android:id="@+id/addressCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/defaultCheckBox"
+            app:layout_constraintStart_toStartOf="@id/address"
+            app:layout_constraintTop_toBottomOf="@id/address" />
 
         <Button
             android:id="@+id/editAddress"
@@ -57,17 +57,18 @@
             app:strokeColor="@color/black"
             app:strokeWidth="2dp" />
 
-    <Button
-        android:id="@+id/deleteAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/delete"
-        app:cornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editAddress"
-        app:layout_constraintTop_toBottomOf="@id/addressCity" />
+        <Button
+            android:id="@+id/deleteAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/signUpTextColor"
+            android:text="@string/delete"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/editAddress"
+            app:layout_constraintTop_toBottomOf="@id/addressCity" />
 
     <View
         android:id="@+id/chooseAddressDivider"

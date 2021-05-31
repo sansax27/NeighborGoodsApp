@@ -50,7 +50,6 @@
                         android:paddingTop="10dp"
                         android:paddingEnd="30dp"
                         android:paddingBottom="10dp"
-                        android:scaleType="fitXY"
                         app:srcCompat="@drawable/ic_home_screen_logo" />
 
 

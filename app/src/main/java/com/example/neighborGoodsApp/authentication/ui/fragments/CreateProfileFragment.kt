@@ -80,7 +80,7 @@ class CreateProfileFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val address = binding.profileAddressInput
         val addressLayer = binding.profileAddress
-        if(isConnected(requireContext())) {
+        if (isConnected(requireContext())) {
             viewModel.getCountries()
         } else {
             showLongToast("No Network Connection, Can't Fetch Required Details Of Sign Up")
@@ -114,8 +114,15 @@ class CreateProfileFragment : Fragment() {
                     }
                 }
                 is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    if (it.message.contains("Entity")) {
+                        showLongToast("Email Id already Exists!!")
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().popBackStack()
+                        }, 2000)
+                    } else {
+                        showLongToast(it.message)
+                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    }
                 }
                 is State.Loading -> {
                 }
@@ -154,7 +161,11 @@ class CreateProfileFragment : Fragment() {
         }
         viewModel.getCountriesStatus.observe(this) {
             when (it) {
-                is State.Loading -> handleStatesUI(binding.profilePB, binding.createProfileRoot,true)
+                is State.Loading -> handleStatesUI(
+                    binding.profilePB,
+                    binding.createProfileRoot,
+                    true
+                )
                 is State.Success -> {
                     countryList = it.data
                     val list = mutableListOf<String>()
@@ -319,7 +330,7 @@ class CreateProfileFragment : Fragment() {
             viewModel.getCities(filter)
         }
         binding.proceedButton.setOnClickListener {
-            if (name.text.isNullOrBlank() || name.text.isNullOrEmpty() || name.text!!.length<5) {
+            if (name.text.isNullOrBlank() || name.text.isNullOrEmpty() || name.text!!.length < 5) {
                 nameLayer.error = "Name Must Not Be Blank Or Empty"
             } else if (address.text.isNullOrEmpty() || address.text.isNullOrBlank()) {
                 addressLayer.error = "Address must Not Be Blank Or Empty"
@@ -356,11 +367,12 @@ class CreateProfileFragment : Fragment() {
             verifyStoragePermissions()
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        
+
         return binding.root
     }
 

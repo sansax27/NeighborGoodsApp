@@ -82,6 +82,7 @@ class LoginFragment : Fragment() {
                         putInt("id", data.id)
                         putInt("profilePicId", data.profilePicId)
                     }.apply()
+                    User.id = data.id
                     User.accessToken = it.data.id
                     User.ttl = it.data.ttl
                     User.email = data.email

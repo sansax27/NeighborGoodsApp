@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
                     handleStatesUI(binding.homePB, binding.homeRoot, false)
                 }
                 is State.Failure -> {
-                    if(it.message.contains("Authorization")) {
+                    if(it.message.contains("Unauthorized")) {
                         showLongToast("Your Authorization has expired and therefore You Have Logged out!!")
                         logout(lifecycleScope, requireActivity())
                         handleStatesUI(binding.homePB, binding.homeRoot, true)

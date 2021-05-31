@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.RelativeLayout
+import android.widget.TimePicker
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -23,9 +25,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -33,6 +35,7 @@ class MapsFragment : Fragment() {
     private lateinit var _binding: FragmentMapsBinding
     private val binding: FragmentMapsBinding get() = _binding
     private val userActivityViewModel: UserActivityViewModel by activityViewModels()
+    private var isFirstTime = true
 
     @SuppressLint("MissingPermission")
     private val requestLocationPermissionLauncher =
@@ -53,6 +56,8 @@ class MapsFragment : Fragment() {
         _binding = FragmentMapsBinding.inflate(layoutInflater)
         binding.mapView.onCreate(savedInstanceState)
         handleStatesUI(binding.mapPB, binding.mapView, true)
+        userActivityViewModel.searchResultCollectionPolicy = 0
+        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
         binding.mapView.getMapAsync { p0 ->
             map = p0
             map.uiSettings.isMyLocationButtonEnabled = true
@@ -73,7 +78,11 @@ class MapsFragment : Fragment() {
                 setMapAndSearchAdapter()
             }
         }
+        binding.filterApply.setOnClickListener {
+            findNavController().navigate(MapsFragmentDirections.actionMapsFragmentToFilterFragment())
+        }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,10 +95,42 @@ class MapsFragment : Fragment() {
     fun setMapAndSearchAdapter() {
         handleStatesUI(binding.mapPB, binding.mapView, true)
         shopNamesList.clear()
-        for (shop in userActivityViewModel.toShowOnMapList) {
-            val latLng = LatLng(userActivityViewModel.defaultAddress.city.latitude+(-1..1).random(), userActivityViewModel.defaultAddress.city.longitude+(-1..1).random())
-            map.addMarker(MarkerOptions().position(latLng)
-                .title(shop.shopName))
+        val locationButton= (binding.mapView.findViewById<View>(Integer.parseInt("1")).parent as View).findViewById<View>(Integer.parseInt("2"))
+        val rlp=locationButton.layoutParams as (RelativeLayout.LayoutParams)
+        // position on right bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP,0)
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE)
+        rlp.setMargins(0,0,30,30)
+        val dummy = mutableListOf<Shop>()
+        if (userActivityViewModel.searchResultCollectionPolicy == 1 || userActivityViewModel.searchResultCollectionPolicy == 2 || userActivityViewModel.searchResultCategoryPolicy.isNotEmpty()) {
+            dummy.addAll(userActivityViewModel.toShowOnMapList.filter { shop ->
+                when (userActivityViewModel.searchResultCollectionPolicy) {
+                    1 -> shop.delivery && (userActivityViewModel.searchResultCategoryPolicy.isEmpty() || (shop.shopCategory != null && userActivityViewModel.searchResultCategoryPolicy.contains(
+                        shop.shopCategory.id
+                    )))
+                    2 -> shop.takeAway && (userActivityViewModel.searchResultCategoryPolicy.isEmpty() || (shop.shopCategory != null && userActivityViewModel.searchResultCategoryPolicy.contains(
+                        shop.shopCategory.id
+                    )))
+                    else -> (userActivityViewModel.searchResultCategoryPolicy.isEmpty() || (shop.shopCategory != null && userActivityViewModel.searchResultCategoryPolicy.contains(
+                        shop.shopCategory.id
+                    )))
+                }
+            }
+            )
+        } else {
+            Timber.i("PPPPPP")
+            dummy.addAll(userActivityViewModel.toShowOnMapList)
+        }
+        map.clear()
+        for (shop in dummy) {
+            val latLng = LatLng(
+                userActivityViewModel.defaultAddress.city.latitude + (-1..1).random(),
+                userActivityViewModel.defaultAddress.city.longitude + (-1..1).random()
+            )
+            map.addMarker(
+                MarkerOptions().position(latLng)
+                    .title(shop.shopName)
+            )
             shopNamesList.add(shop.shopName)
             markerMap[latLng] = shop
         }
@@ -106,15 +147,15 @@ class MapsFragment : Fragment() {
             ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_list_item_1,
-                shopNamesList.subList(0,6)
+                shopNamesList
             )
         )
         binding.mapSearch.setOnItemClickListener { _, _, position, _ ->
             map.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                     LatLng(
-                        userActivityViewModel.defaultAddress.city.latitude+(-1..1).random(),
-                        userActivityViewModel.defaultAddress.city.longitude+(-1..1).random()
+                        userActivityViewModel.defaultAddress.city.latitude + (-1..1).random(),
+                        userActivityViewModel.defaultAddress.city.longitude + (-1..1).random()
                     ), 10f
                 )
             )
@@ -132,8 +173,11 @@ class MapsFragment : Fragment() {
 
     override fun onResume() {
         binding.mapView.onResume()
-        if (this::map.isInitialized) {
+        if (this::map.isInitialized && !isFirstTime) {
             setMapAndSearchAdapter()
+            Timber.i("PP")
+        } else {
+            isFirstTime = false
         }
         super.onResume()
     }

@@ -40,6 +40,7 @@ class SearchResultFragment : Fragment() {
             )
         )
     }
+    private var isFirstTime = true
     private val shopList = mutableListOf<Shop>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,8 @@ class SearchResultFragment : Fragment() {
                 noNetwork()
             }
         }
+        userActivityViewModel.searchResultCollectionPolicy = 0
+        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
         viewModel.getVendorsStatus.observe(this) {
             when (it) {
                 is State.Failure -> {
@@ -107,31 +110,36 @@ class SearchResultFragment : Fragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
-        if (userActivityViewModel.searchResultCollectionPolicy == 1 || userActivityViewModel.searchResultCollectionPolicy == 2 || userActivityViewModel.searchResultCategoryPolicy.isNotEmpty()) {
-            if (requireArguments().getInt("Category")!=-1) {
-                rvAdapter.applyFilters(
-                    shopList,
-                    userActivityViewModel.searchResultCollectionPolicy,
-                    userActivityViewModel.searchResultCategoryPolicy
-                )
+        if (!isFirstTime) {
+            handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
+            if (userActivityViewModel.searchResultCollectionPolicy == 1 || userActivityViewModel.searchResultCollectionPolicy == 2 || userActivityViewModel.searchResultCategoryPolicy.isNotEmpty()) {
+                if (requireArguments().getInt("Category") != -1) {
+                    rvAdapter.applyFilters(
+                        shopList,
+                        userActivityViewModel.searchResultCollectionPolicy,
+                        userActivityViewModel.searchResultCategoryPolicy
+                    )
+                } else {
+                    rvAdapter.applyFilters(
+                        userActivityViewModel.shopList,
+                        userActivityViewModel.searchResultCollectionPolicy,
+                        userActivityViewModel.searchResultCategoryPolicy
+                    )
+                }
             } else {
-                rvAdapter.applyFilters(
-                    userActivityViewModel.shopList,
-                    userActivityViewModel.searchResultCollectionPolicy,
-                    userActivityViewModel.searchResultCategoryPolicy
-                )
+                if (requireArguments().getInt("Category") != -1) {
+                    rvAdapter.submitList(shopList)
+                } else {
+                    rvAdapter.submitList(userActivityViewModel.shopList)
+                    rvAdapter.notifyDataSetChanged()
+                }
             }
+            binding.noOfResults.text = getString(R.string.noOfResults).format(rvAdapter.itemCount)
+            handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
         } else {
-            if (requireArguments().getInt("Category")!=-1) {
-                rvAdapter.submitList(shopList)
-            } else {
-                rvAdapter.submitList(userActivityViewModel.shopList)
-                rvAdapter.notifyDataSetChanged()
-            }
+            handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
+            isFirstTime = false
         }
-        binding.noOfResults.text = getString(R.string.noOfResults).format(rvAdapter.itemCount)
-        handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
     }
 
 

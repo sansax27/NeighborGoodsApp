@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_mapsFragment_to_shopFragment"
             app:destination="@id/shopFragment" />
+        <action
+            android:id="@+id/action_mapsFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"

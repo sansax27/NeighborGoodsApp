@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.neighborGoodsApp">
+    package="com.nGoodsApp.neighborGoodsApp">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.example.neighborGoodsApp.application.NeighborGoods"
+        android:name="com.nGoodsApp.neighborGoodsApp.application.NeighborGoods"
         android:allowBackup="true"
         android:configChanges="orientation"
         android:icon="@mipmap/ic_launcher"
@@ -38,11 +38,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.neighborGoodsApp.userActivity.activity.UserActivity"
+            android:name="com.nGoodsApp.neighborGoodsApp.userActivity.activity.UserActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.neighborGoodsApp.authentication.ui.activity.MainActivity"
+            android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.activity.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

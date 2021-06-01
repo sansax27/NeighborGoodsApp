@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/logoFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.LogoFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.LogoFragment"
         android:label="fragment_logo"
         tools:layout="@layout/fragment_logo" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.LoginFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.ForgotPasswordFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.SignUpFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/createProfileFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.CreateProfileFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.CreateProfileFragment"
         android:label="fragment_create_profile"
         tools:layout="@layout/fragment_create_profile" >
         <action
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.example.neighborGoodsApp.authentication.ui.fragments.OtpFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" >
         <action

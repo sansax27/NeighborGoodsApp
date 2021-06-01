@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navMenuHome"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.HomeFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.FilterFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.FilterFragment"
         android:label="fragment_filter"
         tools:layout="@layout/fragment_filter" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.SearchResultFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.SearchResultFragment"
         android:label="fragment_search_result"
         tools:layout="@layout/fragment_search_result" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.MapsFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -70,16 +70,16 @@
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.ShopFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" >
         <argument
             android:name="Shop"
-            app:argType="com.example.neighborGoodsApp.models.Shop" />
+            app:argType="com.nGoodsApp.neighborGoodsApp.models.Shop" />
     </fragment>
     <fragment
         android:id="@+id/navMenuCart"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.CartFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/navMenuSearch"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.SearchFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -97,7 +97,7 @@
     </fragment>
     <fragment
         android:id="@+id/navMenuProfile"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.ProfileFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -115,22 +115,22 @@
     </fragment>
     <fragment
         android:id="@+id/myOrdersFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.MyOrdersFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.MyOrdersFragment"
         android:label="fragment_my_orders"
         tools:layout="@layout/fragment_my_orders" />
     <fragment
         android:id="@+id/itemCustomizationFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.ItemCustomizationFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.ItemCustomizationFragment"
         android:label="fragment_item_customization"
         tools:layout="@layout/fragment_item_customization" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.FavoritesFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.SettingsFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -139,7 +139,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.AddressFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.AddressFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address" >
         <action
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.AddAddressFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.AddAddressFragment"
         android:label="fragment_add_address"
         tools:layout="@layout/fragment_add_address" >
         <argument
@@ -160,7 +160,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.neighborGoodsApp.userActivity.fragments.EditProfileFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <argument

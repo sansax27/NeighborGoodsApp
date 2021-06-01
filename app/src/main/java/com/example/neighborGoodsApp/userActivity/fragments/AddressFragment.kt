@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.Utils.handleStatesUI
+import com.example.neighborGoodsApp.Utils.logout
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.AddressAdapter
 import com.example.neighborGoodsApp.databinding.FragmentAddressBinding
@@ -70,8 +72,13 @@ class AddressFragment : Fragment() {
                     true
                 )
                 is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
+                    if (it.message.contains("Unauthorized")) {
+                        showLongToast("You Have Been Logged Out!!")
+                        logout(lifecycleScope,requireActivity())
+                    } else {
+                        showLongToast(it.message)
+                        handleStatesUI(binding.manageAddressPB, binding.manageAddressRoot, false)
+                    }
                 }
                 is State.Success -> {
                     addressViewModel.updateDefaultAddress(newDefaultAddressId)

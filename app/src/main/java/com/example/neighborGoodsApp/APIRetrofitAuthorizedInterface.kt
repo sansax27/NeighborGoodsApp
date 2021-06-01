@@ -63,4 +63,6 @@ interface APIRetrofitAuthorizedInterface {
     @GET("Products")
     suspend fun getProducts(@Query("filter") filter: String): Response<List<Products>>
 
+    @POST("users/emailOTPVerification")
+    suspend fun verifyOtp(@Query("token") accessToken: String, @Query("code") code:String):Response<Id>
 }

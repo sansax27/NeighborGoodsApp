@@ -115,6 +115,7 @@
                     android:text="@string/forgotPassword"
                     android:textColor="@color/loginForgotPassword"
                     android:textSize="20sp"
+                    android:visibility="gone"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintLeft_toLeftOf="@id/loginEnterPassword"
                     app:layout_constraintRight_toRightOf="@id/loginEnterPassword"
@@ -140,6 +141,7 @@
                     android:text="@string/orLoginMethod"
                     android:textAlignment="center"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     app:layout_constraintLeft_toLeftOf="@id/loginButton"
                     app:layout_constraintRight_toRightOf="@id/loginButton"
                     app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -152,6 +154,7 @@
                     android:backgroundTint="@color/white"
                     android:text="Google"
                     android:textColor="@color/black"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toStartOf="@+id/facebookLogin"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintHorizontal_weight="1"
@@ -167,6 +170,7 @@
                     android:text="Facebook"
                     android:textAlignment="center"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     app:icon="@drawable/facebook_logo"
                     app:iconGravity="textStart"
                     app:iconPadding="10dp"
@@ -188,8 +192,8 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintHorizontal_weight="1.5"
-                    app:layout_constraintStart_toStartOf="@id/googleLogIn"
-                    app:layout_constraintTop_toBottomOf="@id/googleLogIn" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
                 <TextView
                     android:id="@+id/signUpText"
@@ -203,7 +207,7 @@
                     android:textColor="@color/signUpTextColor"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/facebookLogin"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/notAMember"

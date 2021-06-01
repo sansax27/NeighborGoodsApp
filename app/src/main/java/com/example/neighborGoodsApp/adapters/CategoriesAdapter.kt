@@ -3,6 +3,9 @@ package com.example.neighborGoodsApp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.neighborGoodsApp.Constants
+import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.databinding.CategoryItemBinding
 import com.example.neighborGoodsApp.models.Category
 import timber.log.Timber
@@ -11,8 +14,13 @@ class CategoriesAdapter(private val categoryList: List<Category>, private val mo
 
     inner class ViewHolder(private val itemBinding: CategoryItemBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Category) {
-            Timber.i("FFFFF")
             itemBinding.categoryTitle.text = data.name
+            if (data.images!=null) {
+                if (data.images.imageUrl!=null) {
+                    Glide.with(itemBinding.categoryImageView).load(Constants.BASE_IMG_URL+data.images.imageUrl).placeholder(
+                        R.drawable.ic_logo_placeholder).into(itemBinding.categoryImageView)
+                }
+            }
             itemBinding.root.setOnClickListener {
                 move(data)
             }

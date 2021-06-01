@@ -71,8 +71,8 @@ class LoginFragment : Fragment() {
                 }
                 is State.Success -> {
                     val data = it.data.userDetails
-                    putStringIntoSharedPreferences("accessToken", it.data.id)
                     putStringIntoSharedPreferences("ttl", it.data.ttl)
+                    putStringIntoSharedPreferences("accessToken",it.data.id)
                     putStringIntoSharedPreferences("email", data.email)
                     putStringIntoSharedPreferences("name", data.name)
                     putStringIntoSharedPreferences("role", data.role)
@@ -92,22 +92,8 @@ class LoginFragment : Fragment() {
                     User.isEmailVerified = data.isEmailVerified
                     User.profilePicId = data.profilePicId
                     AppRepository.setRetrofitAuthorizedInstance(User.accessToken)
-                    if (!data.isEmailVerified) {
-                        findNavController().navigate(
-                            LoginFragmentDirections.actionLoginFragmentToOtpFragment(
-                                data.email,
-                                data.phone,
-                                true
-                            )
-                        )
-                    } else {
-                        requireActivity().startActivityFromFragment(
-                            this,
-                            Intent(requireContext(), UserActivity::class.java),
-                            toUserActivityCode
-                        )
-                        requireActivity().finish()
-                    }
+                    requireActivity().startActivityFromFragment(this, Intent(requireContext(), UserActivity::class.java),140)
+                    requireActivity().finish()
                 }
                 is State.Failure -> {
                     showLongToast(it.message)
@@ -134,7 +120,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        
+
         return binding.root
     }
 

@@ -23,9 +23,9 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     val itemSize: LiveData<Int>
         get() = itemSizePrivate
 
-    val totalPrice = MutableLiveData(0)
-    lateinit var defaultAddress:Address
-    private set
+    val totalPrice = MutableLiveData(0.0)
+    lateinit var defaultAddress: Address
+        private set
 
     var searchResultCollectionPolicy = 0
     var searchResultCategoryPolicy = mutableListOf<Int>()
@@ -33,24 +33,24 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     val toShowOnMapList = mutableListOf<Shop>()
     private var shop: Shop? = null
     var shopName = ""
-    private set
-    var shopLogo = ""
-    private set
+        private set
+    var shopLogo:String? = ""
+        private set
 
     private val productsMapPrivate = mutableMapOf<String, List<Int>>()
-    val productsMap:Map<String, List<Int>> get() = productsMapPrivate
+    val productsMap: Map<String, List<Int>> get() = productsMapPrivate
 
     val searchResultVendorPolicy = mutableListOf<Int>()
 
 
     private val addressListPrivate = mutableListOf<Address>()
-    val addressList:List<Address> get() = addressListPrivate
+    val addressList: List<Address> get() = addressListPrivate
 
     private val categoryListPrivate = mutableListOf<Category>()
-    val categoryList:List<Category> get() = categoryListPrivate
+    val categoryList: List<Category> get() = categoryListPrivate
 
     private val shopListPrivate = mutableListOf<Shop>()
-    val shopList:List<Shop> get() = shopListPrivate
+    val shopList: List<Shop> get() = shopListPrivate
 
 
     private val prepareHomeScreenStatusPrivate = MutableLiveData<State<String>>()
@@ -59,18 +59,38 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     fun prepareHomeScreen(userId: Int) = viewModelScope.launch {
         prepareHomeScreenStatusPrivate.postValue(State.Loading())
         val response1 = async {
-            val filter = Gson().toJson(mapOf("where" to mapOf("type" to "Vendor"))).toString()
+            val filter = Gson().toJson(mapOf("where" to mapOf("type" to "Vendor"), "include" to listOf(
+                mapOf("relation" to "images")))).toString()
             AppRepository.getCategories(filter)
         }
         val response2 = async {
             val filter =
-                Gson().toJson(mapOf("include" to listOf(mapOf("relation" to "categories"))))
+                Gson().toJson(
+                    mapOf(
+                        "include" to listOf(
+                            mapOf("relation" to "categories"),
+                            mapOf("relation" to "logoImage"),
+                            mapOf(
+                                "relation" to "bannerImage", "scope" to mapOf(
+                                    "include" to listOf(
+                                        mapOf("relation" to "bannerImage")
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
                     .toString()
             AppRepository.getVendors(filter)
         }
         val response3 = async {
-            val filter = Gson().toJson(mapOf("where" to mapOf("userId" to userId), "include" to listOf(
-                mapOf("relation" to "city")))).toString()
+            val filter = Gson().toJson(
+                mapOf(
+                    "where" to mapOf("userId" to userId), "include" to listOf(
+                        mapOf("relation" to "city")
+                    )
+                )
+            ).toString()
             AppRepository.getUserAddresses(filter)
         }
         if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
@@ -82,7 +102,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             addressListPrivate.clear()
             addressListPrivate.addAll(response3.await().body()!!)
             for (p in addressListPrivate) {
-                if(p.default) {
+                if (p.default) {
                     Timber.i("Here!!")
                     defaultAddress = p
                     User.defaultAddressId = p.id
@@ -102,21 +122,20 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     }
 
 
-
-
     fun addAddress(address: Address) {
         addressListPrivate.add(address)
     }
 
     fun updateAddress(address: Address) {
         for (k in addressListPrivate) {
-            if (k.id==address.id) {
+            if (k.id == address.id) {
                 addressListPrivate.remove(k)
                 addressListPrivate.add(address)
                 break
             }
         }
     }
+
     fun removeAddress(address: Address) {
         addressListPrivate.remove(address)
     }
@@ -178,9 +197,27 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         shop = if (items.isNotEmpty()) {
             items.clear()
             shopName = newShop.shopName
-            shopLogo = newShop.shopLogo
+            shopLogo = if (newShop.logoImage!=null) {
+                if (newShop.logoImage.imageUrl!=null) {
+                    newShop.logoImage.imageUrl
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
             newShop
         } else {
+            shopName = newShop.shopName
+            shopLogo = if (newShop.logoImage!=null) {
+                if (newShop.logoImage.imageUrl!=null) {
+                    newShop.logoImage.imageUrl
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
             newShop
         }
     }

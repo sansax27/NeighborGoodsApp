@@ -42,6 +42,7 @@
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -53,6 +54,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="@string/turnOffPushNotifications"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/settingsNotifications"
                     app:layout_constraintStart_toStartOf="@id/settingsNotifications"
                     app:layout_constraintTop_toBottomOf="@id/settingsNotifications" />
@@ -66,7 +68,8 @@
                     android:text="@string/turnOffEmailNotifications"
                     app:layout_constraintEnd_toEndOf="@id/turnOffPushNotifications"
                     app:layout_constraintStart_toStartOf="@id/turnOffPushNotifications"
-                    app:layout_constraintTop_toBottomOf="@id/turnOffPushNotifications" />
+                    app:layout_constraintTop_toBottomOf="@id/turnOffPushNotifications"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/settingsChangePassword"
@@ -79,8 +82,8 @@
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/turnOffEmailNotifications"
-                    app:layout_constraintStart_toStartOf="@id/turnOffEmailNotifications"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/turnOffEmailNotifications" />
 
                 <com.google.android.material.textfield.TextInputLayout

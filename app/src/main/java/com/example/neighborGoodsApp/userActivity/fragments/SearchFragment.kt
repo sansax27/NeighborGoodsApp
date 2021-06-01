@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.neighborGoodsApp.R
+import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.SearchAdapter
 import com.example.neighborGoodsApp.databinding.FragmentSearchBinding
 import com.example.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
@@ -38,6 +39,7 @@ class SearchFragment : Fragment() {
                 orientation = RecyclerView.VERTICAL
             }
         }
+        showLongToast("No Enough Items Matching Your Location!!")
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

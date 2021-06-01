@@ -17,7 +17,13 @@ class SearchResultFragmentViewModel:ViewModel() {
 
     fun getVendors(categoryId:Int) = viewModelScope.launch {
         val filter = Gson().toJson(mapOf("where" to mapOf("categoriesId" to categoryId),"include" to listOf(
-            mapOf("relation" to "categories")))).toString()
+            mapOf("relation" to "categories"),mapOf("relation" to "logoImage"),
+            mapOf(
+                "relation" to "bannerImage", "scope" to mapOf(
+                    "include" to listOf(
+                        mapOf("relation" to "bannerImage")
+                    )
+                ))))).toString()
         handleResponse(AppRepository.getVendors(filter), getVendorsStatusPrivate)
     }
 

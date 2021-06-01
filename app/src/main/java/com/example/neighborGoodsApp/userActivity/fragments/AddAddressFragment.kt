@@ -16,12 +16,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.User
 import com.example.neighborGoodsApp.Utils
 import com.example.neighborGoodsApp.Utils.handleStatesUI
+import com.example.neighborGoodsApp.Utils.logout
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.databinding.FragmentAddAddressBinding
 import com.example.neighborGoodsApp.models.Address
@@ -267,8 +269,13 @@ class AddAddressFragment : Fragment() {
                     }, 2000)
                 }
                 is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
+                    if (it.message.contains("Unauthorized")) {
+                        showLongToast("You Have Been Logged Out!")
+                        logout(lifecycleScope, requireActivity())
+                    } else {
+                        showLongToast(it.message)
+                        handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
+                    }
                 }
             }
         }

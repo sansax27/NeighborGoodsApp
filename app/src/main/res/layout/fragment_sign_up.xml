@@ -156,14 +156,26 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/signUpAgreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="@string/signUpAgreement"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/termsAndPrivacyPolicy"
+                    app:layout_constraintEnd_toStartOf="@id/termsAndPrivacyPolicy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/termsAndPrivacyPolicy" />
+
+                <TextView
                     android:id="@+id/termsAndPrivacyPolicy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:shadowColor="@color/black"
                     android:text="@string/termsAndPrivacyPolicy"
                     android:textAlignment="center"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@id/enterConfirmPassword"
-                    app:layout_constraintStart_toStartOf="@id/enterConfirmPassword"
                     app:layout_constraintTop_toBottomOf="@id/enterConfirmPassword" />
 
                 <Button
@@ -175,7 +187,7 @@
                     android:text="@string/signUpText"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="@id/termsAndPrivacyPolicy"
-                    app:layout_constraintStart_toStartOf="@id/termsAndPrivacyPolicy"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/termsAndPrivacyPolicy" />
 
                 <TextView

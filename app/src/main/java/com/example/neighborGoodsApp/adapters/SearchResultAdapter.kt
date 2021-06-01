@@ -3,6 +3,9 @@ package com.example.neighborGoodsApp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.neighborGoodsApp.Constants
+import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.databinding.FilterRvItemBinding
 import com.example.neighborGoodsApp.models.Shop
 import timber.log.Timber
@@ -27,10 +30,34 @@ class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Ada
             } else {
                 data.ratings.toString()
             }
-            itemBinding.shopRatingsCount.text = if (data.ratingsCount==null) {
+            itemBinding.shopRatingsCount.text = if (data.ratings==null) {
+                ""
+            }else if (data.ratingsCount==null) {
                 "NA"
-            } else {
+            } else if (data.ratingsCount<=100) {
                 data.ratingsCount.toString()
+            } else {
+                "100+"
+            }
+            if (data.logoImage != null) {
+                if (data.logoImage.imageUrl!= null) {
+                    Glide.with(itemBinding.shopLogo).load(Constants.BASE_IMG_URL+data.logoImage.imageUrl)
+                        .placeholder(R.drawable.ic_logo_placeholder).into(itemBinding.shopLogo)
+                }
+            }
+            if (data.bannerImage!=null) {
+                if (data.bannerImage.isNotEmpty()) {
+                    if (data.bannerImage[0] != null) {
+                        if (data.bannerImage[0].bannerImage != null) {
+                            if (data.bannerImage[0].bannerImage.imageUrl != null) {
+                                Glide.with(itemBinding.itemShopPicture)
+                                    .load(Constants.BASE_IMG_URL+data.bannerImage[0].bannerImage.imageUrl)
+                                    .placeholder(R.drawable.ic_placeholder_view_vector)
+                                    .into(itemBinding.itemShopPicture)
+                            }
+                        }
+                    }
+                }
             }
             itemBinding.shopName.text = data.shopName
             itemBinding.shopCategories.text = if(data.shopCategory==null) {

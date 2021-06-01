@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.neighborGoodsApp.Constants
+import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.CartItemsAdapter
 import com.example.neighborGoodsApp.databinding.FragmentCartBinding
@@ -19,12 +22,12 @@ class CartFragment : Fragment() {
     private lateinit var _binding: FragmentCartBinding
     private val binding: FragmentCartBinding
         get() = _binding
-    private val manageCartViewModel:UserActivityViewModel by activityViewModels()
+    private val manageCartViewModel: UserActivityViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentCartBinding.inflate(layoutInflater)
-        if (manageCartViewModel.itemSize.value==0) {
+        if (manageCartViewModel.itemSize.value == 0) {
             binding.cartRoot.visibility = View.GONE
             showLongToast("No items There to Show Cart")
         } else {
@@ -36,7 +39,18 @@ class CartFragment : Fragment() {
             }
             binding.cartShopName.text = manageCartViewModel.shopName
         }
+        if (manageCartViewModel.shopLogo != null) {
+            Glide.with(binding.cartShopLogo)
+                .load(Constants.BASE_IMG_URL + manageCartViewModel.shopLogo)
+                .placeholder(R.drawable.ic_logo_placeholder).into(binding.cartShopLogo)
+        }
+        binding.cartShopName.text = manageCartViewModel.shopName
+        manageCartViewModel.totalPrice.observe(this) {
+            binding.toPayAmount.text = it.toString()
+            binding.itemTotalAmount.text = it.toString()
+        }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

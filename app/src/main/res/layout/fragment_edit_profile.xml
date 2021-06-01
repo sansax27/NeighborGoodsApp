@@ -109,6 +109,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="34sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/editProfileEmailAddress"
             app:layout_constraintStart_toStartOf="@id/editProfileEmailAddress"
             app:layout_constraintTop_toBottomOf="@id/editProfileEmailAddress" />

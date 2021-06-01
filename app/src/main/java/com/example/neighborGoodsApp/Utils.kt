@@ -93,4 +93,7 @@ object Utils {
         showLongToast("No Internet Connection!!")
     }
 
+    fun CharSequence?.isInValidOtpDigit():Boolean {
+        return this.isNullOrBlank() || this.isNullOrEmpty()
+    }
 }

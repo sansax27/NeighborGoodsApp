@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.isConnected
+import com.example.neighborGoodsApp.Utils.logout
 import com.example.neighborGoodsApp.Utils.noNetwork
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.SearchResultAdapter
@@ -70,10 +72,15 @@ class SearchResultFragment : Fragment() {
         viewModel.getVendorsStatus.observe(this) {
             when (it) {
                 is State.Failure -> {
-                    showLongToast("Could Not Load The Search Results")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().popBackStack()
-                    }, 2000)
+                    if (it.message.contains("Unauthorized")) {
+                        showLongToast("You have been Logged Out")
+                        logout(lifecycleScope, requireActivity())
+                    } else {
+                        showLongToast("Could Not Load The Search Results")
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().popBackStack()
+                        }, 2000)
+                    }
                 }
                 is State.Loading -> {
                 }
@@ -99,6 +106,9 @@ class SearchResultFragment : Fragment() {
         }
         binding.filterScreen.setOnClickListener {
             findNavController().navigate(SearchResultFragmentDirections.actionSearchResultFragmentToFilterFragment())
+        }
+        binding.searchResultBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
     override fun onCreateView(

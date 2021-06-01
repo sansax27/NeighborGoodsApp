@@ -21,7 +21,8 @@ class ShopFragmentViewModel : ViewModel() {
                 "where" to mapOf("vendorId" to vendorId), "include" to listOf(
                     mapOf("relation" to "categories"),
                     mapOf("relation" to "productPrices"),
-                    mapOf("relation" to "productTags")
+                    mapOf("relation" to "productTags"),
+                    mapOf("relation" to "productImages", "scope" to mapOf("include" to listOf(mapOf("relation" to "productImage"))))
                 )
             )
         ).toString()

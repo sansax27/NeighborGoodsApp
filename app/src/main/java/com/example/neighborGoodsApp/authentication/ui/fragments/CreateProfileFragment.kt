@@ -194,11 +194,7 @@ class CreateProfileFragment : Fragment() {
                     showLongToast("SignUp Successful!!")
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().navigate(
-                            CreateProfileFragmentDirections.actionCreateProfileFragmentToOtpFragment(
-                                email,
-                                phone,
-                                false
-                            )
+                            CreateProfileFragmentDirections.actionCreateProfileFragmentToLoginFragment()
                         )
                     }, 2000)
                 }
@@ -209,11 +205,7 @@ class CreateProfileFragment : Fragment() {
                     showLongToast("SignUp Successful! But Could Not Save Address")
                     Handler(Looper.getMainLooper()).postDelayed({
                         findNavController().navigate(
-                            CreateProfileFragmentDirections.actionCreateProfileFragmentToOtpFragment(
-                                email,
-                                phone,
-                                false
-                            )
+                            CreateProfileFragmentDirections.actionCreateProfileFragmentToLoginFragment()
                         )
                     }, 2000)
                 }
@@ -222,10 +214,16 @@ class CreateProfileFragment : Fragment() {
         viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    val filter =
-                        Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
-                            .toString()
-                    viewModel.getCities(filter)
+                    if(it.data.isNotEmpty()) {
+                        val filter =
+                            Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
+                                .toString()
+                        viewModel.getCities(filter)
+                    } else {
+                        showLongToast("We don't serve in your state!!")
+                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+
+                    }
                 }
                 is State.Failure -> {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
@@ -331,7 +329,7 @@ class CreateProfileFragment : Fragment() {
         }
         binding.proceedButton.setOnClickListener {
             if (name.text.isNullOrBlank() || name.text.isNullOrEmpty() || name.text!!.length < 5) {
-                nameLayer.error = "Name Must Not Be Blank Or Empty"
+                nameLayer.error = "Name Must Not Be Blank Or Empty Or Length Must Not Be Less Than 5"
             } else if (address.text.isNullOrEmpty() || address.text.isNullOrBlank()) {
                 addressLayer.error = "Address must Not Be Blank Or Empty"
             } else if (imageUri == null) {

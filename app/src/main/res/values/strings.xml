@@ -28,7 +28,8 @@
 
     <string name="signUpConfirmPassword">Confirm Password!</string>
 
-    <string name="termsAndPrivacyPolicy">By signing up, I agree with Terms &amp; Privacy Policy</string>
+    <string name="termsAndPrivacyPolicy">Terms &amp; Privacy Policy</string>
+    <string name="signUpAgreement">By signing up, I agree with </string>
 
     <string name="alreadyMember">Already a member,</string>
     <string name="signInText">SignIn</string>

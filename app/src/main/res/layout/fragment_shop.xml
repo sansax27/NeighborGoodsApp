@@ -18,32 +18,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/cartOverviewGroup"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cartItemOverview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="totalNoOfItems,totalAmount" />
+            android:background="@color/selectButtonColor"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/totalNoOfItems"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="TextView"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/totalNoOfItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/totalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:padding="15dp"
-            android:text="TextView"
-            android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/totalNoOfItems"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/totalNoOfItems" />
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:padding="15dp"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/totalNoOfItems"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/totalNoOfItems" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -51,7 +55,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
-            app:layout_constraintBottom_toTopOf="@id/totalNoOfItems"
+            app:layout_constraintBottom_toTopOf="@id/cartItemOverview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

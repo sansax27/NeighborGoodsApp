@@ -50,8 +50,8 @@ class EditProfileFragment : Fragment() {
                 emailLayer.error = "Please Enter Valid Email"
             } else if (!phone.text.isValidPhone()) {
                 phoneLayer.error = "Please Enter Valid Phone Number"
-            } else if (name.text.isNullOrEmpty() || name.text.isNullOrBlank()) {
-                nameLayer.error = "Please Enter Name"
+            } else if (name.text.isNullOrEmpty() || name.text.isNullOrBlank() || name.text!!.length<5) {
+                nameLayer.error = "Name must not be Blank or Empty Or Length < 5"
             } else {
                 if (isConnected(requireContext())) {
                     if (email.text.toString() != User.email || phone.text.toString() != User.phone) {
@@ -93,7 +93,7 @@ class EditProfileFragment : Fragment() {
                     true
                 )
                 is State.Failure -> {
-                    if (it.message.contains("Authorization")) {
+                    if (it.message.contains("Unauthorized")) {
                         showLongToast("Unable to Edit Details!! You Have Been Logged Out!!")
                         Handler(Looper.getMainLooper()).postDelayed({
                             logout(lifecycleScope, requireActivity())

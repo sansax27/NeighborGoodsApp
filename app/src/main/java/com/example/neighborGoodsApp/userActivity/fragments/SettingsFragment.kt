@@ -62,7 +62,7 @@ class SettingsFragment : Fragment() {
             when(it) {
                 is State.Loading -> handleStatesUI(binding.settingsPB, binding.settingsRoot, true)
                 is State.Failure -> {
-                    if (it.message.contains("Authorization")) {
+                    if (it.message.contains("Unauthorized")) {
                         showLongToast("You have Been Logged Out!!")
                         logout(lifecycleScope, requireActivity())
                     } else {

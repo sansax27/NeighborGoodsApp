@@ -1,6 +1,7 @@
 package com.example.neighborGoodsApp.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +15,13 @@ class AddressAdapter(private val updateDefaultAddress:(addressId:Int) -> Unit, p
         addressList.clear()
         addressList.addAll(list)
     }
-    inner class ViewHolder(private val itemBinding:AddressItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
+    inner class ViewHolder(private val itemBinding: AddressItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data:Address) {
             itemBinding.address.text = data.address
             itemBinding.addressCity.text = data.city.name
+            if (data.default) {
+                itemBinding.isDefault.visibility = View.VISIBLE
+            }
             itemBinding.defaultCheckBox.isChecked = data.default
             itemBinding.defaultCheckBox.setOnClickListener {
                 updateDefaultAddress(data.id)

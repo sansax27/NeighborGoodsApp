@@ -78,6 +78,7 @@
                     android:text="@string/myOrders"
                     android:textColor="@color/black"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/ic_orders"
                     app:drawableTint="@android:color/darker_gray"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -128,6 +129,7 @@
                     android:text="@string/payments"
                     android:textColor="@color/black"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/ic_payments_card"
                     app:drawableTint="@android:color/darker_gray"
                     app:layout_constraintEnd_toEndOf="@id/divider2"
@@ -139,6 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/payments"
                     app:layout_constraintStart_toStartOf="@id/payments"
                     app:layout_constraintTop_toBottomOf="@id/payments" />
@@ -153,6 +156,7 @@
                     android:text="@string/favourites"
                     android:textColor="@color/black"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/ic_favorite"
                     app:layout_constraintEnd_toEndOf="@id/divider3"
                     app:layout_constraintStart_toStartOf="@id/divider3"
@@ -163,6 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/favourites"
                     app:layout_constraintStart_toStartOf="@id/favourites"
                     app:layout_constraintTop_toBottomOf="@id/favourites" />
@@ -180,7 +185,8 @@
                     app:drawableStartCompat="@drawable/ic_help"
                     app:layout_constraintEnd_toEndOf="@id/divider4"
                     app:layout_constraintStart_toStartOf="@id/divider4"
-                    app:layout_constraintTop_toBottomOf="@id/divider4" />
+                    app:layout_constraintTop_toBottomOf="@id/divider4"
+                    android:visibility="gone" />
 
                 <View
                     android:id="@+id/divider5"

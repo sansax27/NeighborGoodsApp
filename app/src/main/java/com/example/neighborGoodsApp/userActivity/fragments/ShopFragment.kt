@@ -15,9 +15,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.neighborGoodsApp.Constants
+import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.State
 import com.example.neighborGoodsApp.Utils.handleStatesUI
 import com.example.neighborGoodsApp.Utils.isConnected
+import com.example.neighborGoodsApp.Utils.logout
 import com.example.neighborGoodsApp.Utils.noNetwork
 import com.example.neighborGoodsApp.Utils.showLongToast
 import com.example.neighborGoodsApp.adapters.MenuItemsAdapter
@@ -30,6 +34,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.lang.Exception
 
 
 @AndroidEntryPoint
@@ -59,15 +64,19 @@ class ShopFragment : Fragment() {
         }
         val shopListId = shop.id
         rvAdapter = MenuItemsAdapter(shop, manageCartViewModel)
-        binding.shopRating.text = if (shop.ratings==null) {
+        binding.shopRating.text = if (shop.ratings == null) {
             "NA"
         } else {
             shop.ratings.toString()
         }
-        binding.noOfShopReviews.text = if (shop.ratingsCount==null) {
+        binding.noOfShopReviews.text = if (shop.ratings == null) {
+            ""
+        } else if (shop.ratingsCount == null) {
             "NA"
-        } else {
+        } else if (shop.ratingsCount <= 0) {
             shop.ratingsCount.toString()
+        } else {
+            "100+"
         }
         binding.shopLocation.text =
             Geocoder(requireContext()).getFromLocation(27.0, 27.0, 1)[0].adminArea
@@ -96,17 +105,37 @@ class ShopFragment : Fragment() {
         }
         manageCartViewModel.itemSize.observe(this) {
             if (shopListId == manageCartViewModel.getShopId() && it > 0) {
-                binding.cartOverviewGroup.visibility = View.VISIBLE
+                binding.cartItemOverview.visibility = View.VISIBLE
                 val itemsString = "%s items".format(it)
                 binding.totalNoOfItems.text = itemsString
             } else {
-                binding.cartOverviewGroup.visibility = View.GONE
+                binding.cartItemOverview.visibility = View.GONE
             }
         }
         manageCartViewModel.totalPrice.observe(this) {
             if (shopListId == manageCartViewModel.getShopId()) {
-                val totalPrice = "$ %s".format(it)
+                val totalPrice = "€ %s".format(it)
                 binding.totalAmount.text = totalPrice
+            }
+        }
+        if (shop.logoImage!=null) {
+            if (shop.logoImage.imageUrl!=null) {
+                Glide.with(binding.shopCartLogo).load(Constants.BASE_IMG_URL+shop.logoImage
+                    .imageUrl).placeholder(R.drawable.ic_logo_placeholder).into(binding.shopCartLogo)
+            }
+        }
+        if (shop.bannerImage!= null) {
+            if (shop.bannerImage.isNotEmpty()) {
+                if (shop.bannerImage[0]!= null) {
+                    if (shop.bannerImage[0].bannerImage != null) {
+                        if (shop.bannerImage[0].bannerImage.imageUrl!=null) {
+                            Glide.with(binding.shopFragmentPicture)
+                                .load(Constants.BASE_IMG_URL + shop.bannerImage[0].bannerImage.imageUrl)
+                                .placeholder(R.drawable.ic_placeholder_view_vector)
+                                .into(binding.shopFragmentPicture)
+                        }
+                    }
+                }
             }
         }
         viewModel.getProductsStatus.observe(this) {
@@ -114,10 +143,15 @@ class ShopFragment : Fragment() {
                 is State.Loading -> {
                 }
                 is State.Failure -> {
-                    showLongToast(it.message)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().popBackStack()
-                    }, 2000)
+                    if (it.message.contains("Unauthorized")) {
+                        showLongToast("You have Been LoggedOut")
+                        logout(lifecycleScope, requireActivity())
+                    } else {
+                        showLongToast(it.message)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            findNavController().popBackStack()
+                        }, 2000)
+                    }
                 }
                 is State.Success -> {
                     lifecycleScope.launch {
@@ -134,13 +168,39 @@ class ShopFragment : Fragment() {
                                 }
                             }
                             Timber.i((products.category == null).toString())
+                            var price = 4.0
+                            if (products.productPrices != null) {
+                                if (products.productPrices.isNotEmpty()) {
+                                    if (products.productPrices[0].unitPrice != null) {
+                                        price = try {
+                                            products.productPrices[0].unitPrice.toInt().toDouble()
+                                        } catch (e: Exception) {
+                                            products.productPrices[0].unitPrice.toDouble()
+                                        }
+                                    }
+                                }
+                            }
+                            var imageUrl: String? = null
+                            imageUrl = if (products.productImages != null) {
+                                if (products.productImages.isNotEmpty()) {
+                                    if (products.productImages[0].imageUrl != null) {
+                                        products.productImages[0].imageUrl
+                                    } else {
+                                        null
+                                    }
+                                } else {
+                                    null
+                                }
+                            } else {
+                                null
+                            }
                             if (products.category != null) {
                                 if (categoryWiseShopMenuItem.containsKey(products.category.name)) {
                                     categoryWiseShopMenuItem[products.category.name]!!.add(
                                         ShopMenuItem(
                                             products.name,
                                             tag,
-                                            200
+                                            price, imageUrl
                                         )
                                     )
                                 } else {
@@ -149,7 +209,7 @@ class ShopFragment : Fragment() {
                                             ShopMenuItem(
                                                 products.name,
                                                 tag,
-                                                200
+                                                price, imageUrl
                                             )
                                         )
                                 }
@@ -207,6 +267,7 @@ class ShopFragment : Fragment() {
             findNavController().popBackStack()
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

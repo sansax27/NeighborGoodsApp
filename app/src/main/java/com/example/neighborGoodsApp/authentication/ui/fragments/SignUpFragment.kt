@@ -1,5 +1,7 @@
 package com.example.neighborGoodsApp.authentication.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -96,7 +98,10 @@ class SignUpFragment : Fragment() {
             }
         }
         binding.signInText.setOnClickListener {
-            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
+            findNavController().popBackStack()
+        }
+        binding.termsAndPrivacyPolicy.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://54.237.210.1:3000/termsCondition")))
         }
     }
     override fun onCreateView(

@@ -118,14 +118,13 @@ class MapsFragment : Fragment() {
             }
             )
         } else {
-            Timber.i("PPPPPP")
             dummy.addAll(userActivityViewModel.toShowOnMapList)
         }
         map.clear()
         for (shop in dummy) {
             val latLng = LatLng(
-                userActivityViewModel.defaultAddress.city.latitude + (-1..1).random(),
-                userActivityViewModel.defaultAddress.city.longitude + (-1..1).random()
+                shop.latitude ?: userActivityViewModel.defaultAddress.city.latitude + (-1..1).random(),
+                shop.longitude ?: userActivityViewModel.defaultAddress.city.latitude + (-1..1).random()
             )
             map.addMarker(
                 MarkerOptions().position(latLng)
@@ -142,7 +141,7 @@ class MapsFragment : Fragment() {
             )
             true
         }
-
+        binding.mapSearch.threshold = 1
         binding.mapSearch.setAdapter(
             ArrayAdapter(
                 requireContext(),

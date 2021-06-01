@@ -130,4 +130,8 @@ object AppRepository {
         retrofitAuthorizedInstance!!.getProducts(filter)
     }
 
+    suspend fun verifyOtp(accessToken: String, code:String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.verifyOtp(accessToken, code)
+    }
+
 }

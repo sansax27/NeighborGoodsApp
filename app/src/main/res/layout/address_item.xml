@@ -20,15 +20,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/defaultCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/defaultWord"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/address" />
+        <TextView
+            android:id="@+id/isDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defaultWord"
+            android:textColor="@color/purple_500"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/address"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <CheckBox
+            android:id="@+id/defaultCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/defaultWord"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/address" />
 
         <TextView
             android:id="@+id/addressCity"

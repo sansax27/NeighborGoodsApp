@@ -3,33 +3,60 @@ package com.example.neighborGoodsApp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.neighborGoodsApp.Constants
+import com.example.neighborGoodsApp.R
 import com.example.neighborGoodsApp.databinding.StoreItemBinding
 import com.example.neighborGoodsApp.models.Shop
 
-class ShopAdapter(private val shopList:List<Shop>, private val move: (shop:Shop) -> Unit): RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
+class ShopAdapter(private val shopList: List<Shop>, private val move: (shop: Shop) -> Unit) :
+    RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val itemBinding: StoreItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
+    inner class ViewHolder(private val itemBinding: StoreItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Shop) {
             itemBinding.shopName.text = data.shopName
-            itemBinding.shopRatings.text = if (data.ratings==null) {
+            itemBinding.shopRatings.text = if (data.ratings == null) {
                 "NA"
             } else {
                 data.ratings.toString()
             }
-            itemBinding.shopRatingsCount.text = if (data.ratingsCount == null) {
+            itemBinding.shopRatingsCount.text = if (data.ratings==null) {
+                ""
+            } else if (data.ratingsCount == null) {
                 "NA"
-            } else if (data.ratingsCount<=0) {
+            } else if (data.ratingsCount <= 0) {
                 data.ratingsCount.toString()
-            }else {
+            } else {
                 "100+"
             }
-            itemBinding.shopCategories.text = if(data.shopCategory!=null) {
+            itemBinding.shopCategories.text = if (data.shopCategory != null) {
                 data.shopCategory.name
             } else {
                 ""
             }
             itemBinding.root.setOnClickListener {
                 move(data)
+            }
+            if (data.logoImage != null) {
+                if (data.logoImage.imageUrl!= null) {
+                    Glide.with(itemBinding.shopLogo).load(Constants.BASE_IMG_URL+data.logoImage.imageUrl)
+                        .placeholder(R.drawable.ic_logo_placeholder).into(itemBinding.shopLogo)
+                }
+            }
+            if (data.bannerImage!=null) {
+                if (data.bannerImage.isNotEmpty()) {
+                    if (data.bannerImage[0] != null) {
+                        if (data.bannerImage[0].bannerImage != null) {
+                            if (data.bannerImage[0].bannerImage.imageUrl != null) {
+                                Glide.with(itemBinding.itemShopPicture)
+                                    .load(Constants.BASE_IMG_URL+data.bannerImage[0].bannerImage.imageUrl)
+                                    .placeholder(R.drawable.ic_placeholder_view_vector)
+                                    .into(itemBinding.itemShopPicture)
+                            }
+                        }
+                    }
+                }
             }
             if (data.specialities != null) {
                 if (data.specialities.size == 1) {

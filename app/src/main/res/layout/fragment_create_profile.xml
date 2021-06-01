@@ -53,6 +53,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/iAmVendor"
                     android:textSize="24sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@id/profileSignUpHeading"
                     app:layout_constraintStart_toStartOf="@id/profileSignUpHeading"
                     app:layout_constraintTop_toBottomOf="@id/profileSignUpHeading" />
@@ -65,8 +66,8 @@
                     android:text="@string/basicProfile"
                     android:textSize="36sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/vendorCheckBox"
-                    app:layout_constraintStart_toStartOf="@id/vendorCheckBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/vendorCheckBox" />
 
                 <com.google.android.material.textfield.TextInputLayout

@@ -25,7 +25,8 @@
                 android:id="@+id/categoryImageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@color/selectButtonColor" />
+                android:background="@color/selectButtonColor"
+                app:tint="@color/white" />
         </androidx.cardview.widget.CardView>
 
         <TextView

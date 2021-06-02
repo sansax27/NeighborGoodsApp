@@ -154,6 +154,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/profileCountry"
+                        android:inputType="textPostalAddress"
                         android:padding="15dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,17 +212,22 @@
                         android:visibility="visible" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/profilePicture"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="30dp"
-                    android:contentDescription="@string/profilePicture"
-                    app:layout_constraintEnd_toStartOf="@+id/uploadProfilePicture"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_weight="1"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/profilePictureCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="5dp"
+                    app:cardMaxElevation="5dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profileCity" />
+                    app:layout_constraintTop_toBottomOf="@id/profileCity">
+
+                    <ImageView
+                        android:id="@+id/profilePicture"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:contentDescription="@string/profilePicture" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/uploadProfilePicture"
@@ -234,8 +240,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_weight="2"
-                    app:layout_constraintStart_toEndOf="@+id/profilePicture"
-                    app:layout_constraintTop_toTopOf="@id/profilePicture" />
+                    app:layout_constraintStart_toEndOf="@id/profilePictureCardView"
+                    app:layout_constraintTop_toTopOf="@id/profilePictureCardView" />
 
                 <Button
                     android:id="@+id/selectProfilePicture"
@@ -249,7 +255,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/removeProfilePicture"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toEndOf="@+id/profilePicture"
+                    app:layout_constraintStart_toEndOf="@id/profilePictureCardView"
                     app:layout_constraintStart_toStartOf="@id/uploadProfilePicture"
                     app:layout_constraintTop_toBottomOf="@id/uploadProfilePicture" />
 
@@ -262,11 +268,13 @@
                     android:text="@string/remove"
                     android:textAlignment="center"
                     android:textAllCaps="false"
-                    android:textColor="@color/loginForgotPassword"
+                    android:textColor="@color/grey"
                     app:layout_constraintEnd_toEndOf="@id/uploadProfilePicture"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/selectProfilePicture"
-                    app:layout_constraintTop_toTopOf="@id/selectProfilePicture" />
+                    app:layout_constraintTop_toTopOf="@id/selectProfilePicture"
+                    app:strokeColor="@color/grey"
+                    app:strokeWidth="2dp" />
 
                 <Button
                     android:id="@+id/proceedButton"
@@ -279,8 +287,8 @@
                     android:textAllCaps="false"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="@id/uploadProfilePicture"
-                    app:layout_constraintStart_toStartOf="@id/profilePicture"
-                    app:layout_constraintTop_toBottomOf="@id/profilePicture" />
+                    app:layout_constraintStart_toStartOf="@id/profilePictureCardView"
+                    app:layout_constraintTop_toBottomOf="@id/profilePictureCardView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

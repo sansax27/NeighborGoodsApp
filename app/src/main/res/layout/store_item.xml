@@ -22,7 +22,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/itemShopPicture"
@@ -49,7 +50,8 @@
                     android:id="@+id/shopName"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="0dp"
                     android:text="Text View"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -72,8 +74,8 @@
                     android:id="@+id/shopCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:padding="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="0dp"
                     android:text="@{"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@id/distanceBarrier"
@@ -93,7 +95,6 @@
                     android:id="@+id/shopRatings"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center|start"
                     android:text="4.5"
                     android:textAlignment="gravity"

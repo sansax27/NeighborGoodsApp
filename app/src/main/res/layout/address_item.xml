@@ -25,9 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/defaultWord"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/signUpTextColor"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@+id/address"
             app:layout_constraintEnd_toEndOf="parent" />
 

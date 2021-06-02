@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".authentication.ui.fragments.CreateVendorProfileFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/vendorProfilePB"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vendorCreateProfileRoot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/vendorProfileSignUpHeading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/profile"
+                    android:textAlignment="center"
+                    android:textColor="@color/logoScreen"
+                    android:textSize="36sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/vendorBasicProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/basicProfile"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfileSignUpHeading" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vendorUserName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/vendorBasicProfile"
+                    app:layout_constraintStart_toStartOf="@id/vendorBasicProfile"
+                    app:layout_constraintTop_toBottomOf="@id/vendorBasicProfile">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vendorUserNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/profileEnterName"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/vendorDetectLocation"
+                    android:layout_width="50dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_address"
+                    app:layout_constraintBottom_toBottomOf="@id/vendorProfileAddress"
+                    app:layout_constraintEnd_toEndOf="@id/vendorUserName"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/vendorProfileAddress"
+                    app:layout_constraintTop_toTopOf="@id/vendorProfileAddress"
+                    app:layout_constraintVertical_bias="0.13999999" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vendorProfileAddress"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toStartOf="@id/vendorDetectLocation"
+                    app:layout_constraintStart_toStartOf="@id/vendorUserName"
+                    app:layout_constraintTop_toBottomOf="@id/vendorUserName">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vendorProfileAddressInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/profileAddress"
+                        android:inputType="textPostalAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vendorProfileCountry"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/vendorDetectLocation"
+                    app:layout_constraintStart_toStartOf="@id/vendorProfileAddress"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfileAddress">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/vendorProfileCountryInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/profileCountry"
+                        android:padding="15dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vendorProfileState"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/vendorProfileCountry"
+                    app:layout_constraintStart_toStartOf="@id/vendorProfileCountry"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfileCountry">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/vendorProfileStateInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/profileState"
+                        android:padding="15dp"
+                        android:visibility="visible" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vendorProfileCity"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:elevation="15dp"
+                    android:visibility="gone"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/vendorDetectLocation"
+                    app:layout_constraintStart_toStartOf="@id/vendorProfileAddress"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfileState">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/vendorProfileCityInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/profileCity"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:visibility="visible" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/vendorStoreDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/storeDetail"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfileCity" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/vendorProfilePictureCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="5dp"
+                    app:cardMaxElevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vendorPickUp">
+
+                    <ImageView
+                        android:id="@+id/vendorProfilePicture"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:contentDescription="@string/profilePicture"
+                        android:visibility="visible" />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/deliveryRange"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vendorStoreDetail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/deliveryRangeInpur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_icon_km_blue"
+                        android:hint="@string/deliveryRange"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/minOrderFreeDelivery"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/deliveryRange"
+                    app:layout_constraintStart_toStartOf="@id/deliveryRange"
+                    app:layout_constraintTop_toBottomOf="@id/deliveryRange">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/minOrderFreeDeliveryInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_icon_euro_blue"
+                        android:hint="@string/minOrderFreeDelivery"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/minOrderAmount"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/minOrderFreeDelivery"
+                    app:layout_constraintStart_toStartOf="@id/minOrderFreeDelivery"
+                    app:layout_constraintTop_toBottomOf="@id/minOrderFreeDelivery">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/minOrderAmountInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_icon_euro_blue"
+                        android:hint="@string/minOrderAmount" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/standardDeliveryCharges"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:hintAnimationEnabled="true"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="@id/minOrderAmount"
+                    app:layout_constraintStart_toStartOf="@id/minOrderAmount"
+                    app:layout_constraintTop_toBottomOf="@id/minOrderAmount">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/standardDeliveryChargesInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_icon_euro_blue"
+                        android:hint="@string/standardDeliveryCharges" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/vendorDelivery"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deliveryService"
+                    app:layout_constraintEnd_toEndOf="@id/standardDeliveryCharges"
+                    app:layout_constraintStart_toStartOf="@id/standardDeliveryCharges"
+                    app:layout_constraintTop_toBottomOf="@id/standardDeliveryCharges" />
+
+                <CheckBox
+                    android:id="@+id/vendorPickUp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pickupService"
+                    app:layout_constraintEnd_toEndOf="@id/vendorDelivery"
+                    app:layout_constraintStart_toStartOf="@id/vendorDelivery"
+                    app:layout_constraintTop_toBottomOf="@id/vendorDelivery" />
+
+                <TextView
+                    android:id="@+id/vendorUploadProfilePicture"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:padding="15dp"
+                    android:text="@string/uploadProfilePicture"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@id/vendorProfilePictureCardView"
+                    app:layout_constraintTop_toTopOf="@id/vendorProfilePictureCardView" />
+
+                <Button
+                    android:id="@+id/vendorSelectProfilePicture"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:backgroundTint="@color/selectButtonColor"
+                    android:text="@string/select"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toStartOf="@+id/vendorRemoveProfilePicture"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@id/vendorProfilePictureCardView"
+                    app:layout_constraintStart_toStartOf="@id/vendorUploadProfilePicture"
+                    app:layout_constraintTop_toBottomOf="@id/vendorUploadProfilePicture" />
+
+                <Button
+                    android:id="@+id/vendorRemoveProfilePicture"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/remove"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/vendorUploadProfilePicture"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/vendorSelectProfilePicture"
+                    app:layout_constraintTop_toTopOf="@id/vendorSelectProfilePicture"
+                    app:strokeColor="@color/grey"
+                    app:strokeWidth="2dp" />
+
+                <Button
+                    android:id="@+id/vendorProceedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="150dp"
+                    android:backgroundTint="@color/logoScreen"
+                    android:text="@string/proceed"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/vendorUploadProfilePicture"
+                    app:layout_constraintStart_toStartOf="@id/vendorProfilePictureCardView"
+                    app:layout_constraintTop_toBottomOf="@id/vendorProfilePictureCardView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

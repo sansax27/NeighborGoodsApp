@@ -11,4 +11,5 @@ object User {
     var role = ""
     var isEmailVerified = false
     var defaultAddressId = -1
+    var profileCreated = false
 }

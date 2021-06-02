@@ -55,6 +55,8 @@ class HomeFragment : Fragment() {
                 is State.Success -> {
                     binding.categoriesRV.apply {
                         adapter = CategoriesAdapter(viewModel.categoryList) { category->
+                            viewModel.searchResultVendorPolicy = mutableListOf()
+                            viewModel.searchResultVendorPolicy.addAll(viewModel.categoriesMap[category.id]!!)
                             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(category.id))
                         }
                         layoutManager = LinearLayoutManager(requireContext()).apply {

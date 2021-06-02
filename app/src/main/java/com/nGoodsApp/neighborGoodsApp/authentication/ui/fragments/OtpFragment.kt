@@ -2,8 +2,6 @@ package com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,29 +34,46 @@ class OtpFragment : Fragment() {
             if (binding.otp1.text.isInValidOtpDigit() || binding.otp2.text.isInValidOtpDigit() || binding.otp3.text.isInValidOtpDigit() || binding.otp4.text.isInValidOtpDigit()) {
                 showLongToast("Please Enter Full Otp")
             } else {
-                val otp = binding.otp1.text.toString()+binding.otp2.text.toString()+binding.otp3.text.toString()+binding.otp4.text.toString()
-                viewModel.verifyOtp(requireArguments().getString("accessToken",""), otp)
+                val otp =
+                    binding.otp1.text.toString() + binding.otp2.text.toString() + binding.otp3.text.toString() + binding.otp4.text.toString()
+                viewModel.verifyOtp(requireArguments().getString("accessToken", ""), otp)
             }
         }
         viewModel.verifyOtpStatus.observe(this) {
-            when(it) {
+            when (it) {
                 is State.Success -> {
-                    putStringIntoSharedPreferences("accessToken", requireArguments().getString("accessToken", ""))
-                    User.accessToken = requireArguments().getString("accessToken","")
-                    showLongToast("Successfully Verified!!")
-                    requireActivity().startActivityFromFragment(this, Intent(requireContext(), UserActivity::class.java),150)
-                    requireActivity().finish()
+                    if (requireArguments().getBoolean("profileCreated")) {
+                        putStringIntoSharedPreferences(
+                            "accessToken",
+                            requireArguments().getString("accessToken", "")
+                        )
+                        User.accessToken = requireArguments().getString("accessToken", "")
+                        showLongToast("Successfully Verified!!")
+                        requireActivity().startActivityFromFragment(
+                            this,
+                            Intent(requireContext(), UserActivity::class.java),
+                            150
+                        )
+                        requireActivity().finish()
+                    } else {
+                        findNavController().navigate(
+                            OtpFragmentDirections.actionOtpFragmentToCreateProfileFragment(
+                                requireArguments().getString("accessToken", "")
+                            )
+                        )
+                    }
                 }
                 is State.Loading -> {
-//                    handleStatesUI(binding.otpPB, binding.otpRoot, true)
+                    handleStatesUI(binding.otpPB, binding.otpRoot, true)
                 }
                 is State.Failure -> {
                     showLongToast(it.message)
-//                    handleStatesUI(binding.otpPB, binding.otpRoot, false)
+                    handleStatesUI(binding.otpPB, binding.otpRoot, false)
                 }
             }
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

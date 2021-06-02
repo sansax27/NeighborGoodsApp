@@ -1,6 +1,7 @@
 package com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.net.Uri
@@ -17,18 +18,22 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import com.nGoodsApp.neighborGoodsApp.State
+import com.nGoodsApp.neighborGoodsApp.User
 import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
 import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
 import com.nGoodsApp.neighborGoodsApp.Utils.isGPSAvailable
+import com.nGoodsApp.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.authentication.viewmodels.CreateProfileFragmentViewModel
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentCreateProfileBinding
 import com.nGoodsApp.neighborGoodsApp.models.City
 import com.nGoodsApp.neighborGoodsApp.models.Id
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.gson.Gson
+import com.nGoodsApp.neighborGoodsApp.userActivity.activity.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,9 +76,6 @@ class CreateProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentCreateProfileBinding.inflate(layoutInflater)
-        val email = requireArguments().getString("email")!!
-        val password = requireArguments().getString("password")!!
-        val phone = requireArguments().getString("phone")!!
         val name = binding.userNameInput
         val nameLayer = binding.userName
         handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
@@ -89,6 +91,27 @@ class CreateProfileFragment : Fragment() {
             }, 2000)
         }
 
+        viewModel.createProfileStatus.observe(this) {
+            when(it) {
+                is State.Loading -> handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                }
+                is State.Success -> {
+                    putStringIntoSharedPreferences("accessToken", requireArguments().getString("accessToken",""))
+                    User.accessToken = requireArguments().getString("accessToken","")
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply {
+                        putBoolean("profileCreated", true)
+                        putInt("profilePicId", viewModel.profilePicId)
+                    }.apply()
+                    User.profileCreated = true
+                    User.profilePicId = viewModel.profilePicId
+                    requireActivity().startActivityFromFragment(this, Intent(requireContext(), UserActivity::class.java),140)
+                    requireActivity().finish()
+                }
+            }
+        }
         binding.detectLocation.setOnClickListener {
             if (isGPSAvailable(requireContext())) {
                 detectLocation = true
@@ -97,68 +120,7 @@ class CreateProfileFragment : Fragment() {
                 showLongToast("Please Enable GPS!!")
             }
         }
-        viewModel.createUserStatus.observe(this) {
-            when (it) {
-                is State.Success -> {
-                    if (isConnected(requireContext())) {
-                        viewModel.createAddress(
-                            cityId,
-                            address.text.toString(),
-                            it.data.id,
-                            default = true,
-                            created = true
-                        )
-                    } else {
-                        showLongToast("No Network Connection!!")
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    }
-                }
-                is State.Failure -> {
-                    if (it.message.contains("Entity")) {
-                        showLongToast("Email Id already Exists!!")
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            findNavController().popBackStack()
-                        }, 2000)
-                    } else {
-                        showLongToast(it.message)
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    }
-                }
-                is State.Loading -> {
-                }
-            }
-        }
-        viewModel.uploadImageStatus.observe(this) {
-            when (it) {
-                is State.Loading -> {
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
-                }
-                is State.Failure -> {
-                    showLongToast(it.message)
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                }
-                is State.Success -> {
-                    if (isConnected(requireContext())) {
-                        if (isConnected(requireContext())) {
-                            viewModel.createUser(
-                                email,
-                                password,
-                                phone,
-                                name.text.toString(),
-                                it.data[0].id,
-                                "User"
-                            )
-                        } else {
-                            showLongToast("No Internet Connection!!")
-                            handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                        }
-                    } else {
-                        showLongToast("No Internet Connection!!")
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-                    }
-                }
-            }
-        }
+
         viewModel.getCountriesStatus.observe(this) {
             when (it) {
                 is State.Loading -> handleStatesUI(
@@ -188,29 +150,7 @@ class CreateProfileFragment : Fragment() {
                 }
             }
         }
-        viewModel.createAddressStatus.observe(this) {
-            when (it) {
-                is State.Success -> {
-                    showLongToast("SignUp Successful!!")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().navigate(
-                            CreateProfileFragmentDirections.actionCreateProfileFragmentToLoginFragment()
-                        )
-                    }, 2000)
-                }
-                is State.Loading -> {
 
-                }
-                is State.Failure -> {
-                    showLongToast("SignUp Successful! But Could Not Save Address")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        findNavController().navigate(
-                            CreateProfileFragmentDirections.actionCreateProfileFragmentToLoginFragment()
-                        )
-                    }, 2000)
-                }
-            }
-        }
         viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
@@ -345,12 +285,7 @@ class CreateProfileFragment : Fragment() {
             } else {
                 if (isConnected(requireContext())) {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
-                    viewModel.uploadImage(
-                        requireActivity(),
-                        imageUri!!,
-                        name.text.toString(),
-                        email
-                    )
+                    viewModel.createProfile(requireActivity(), imageUri!!, name.text.toString(), cityId, address.text.toString())
                 } else {
                     showLongToast("No Internet Connection!!")
                 }

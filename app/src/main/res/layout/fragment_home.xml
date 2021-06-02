@@ -21,37 +21,44 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp">
 
                     <TextView
                         android:id="@+id/toolbarProfile"
-                        android:layout_width="0dp"
+                        android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_weight="1"
                         android:background="@drawable/round_border"
                         android:gravity="center"
                         android:scaleY="1"
-                        android:text="SA"
                         android:textAlignment="gravity"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/homeScreenLogo"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="7"
-                        android:paddingStart="30dp"
                         android:paddingTop="10dp"
-                        android:paddingEnd="30dp"
                         android:paddingBottom="10dp"
+                        app:layout_constraintEnd_toStartOf="@id/homeNotification"
+                        app:layout_constraintStart_toEndOf="@id/toolbarProfile"
+                        app:layout_constraintTop_toTopOf="@id/toolbarProfile"
                         app:srcCompat="@drawable/ic_home_screen_logo" />
 
+
+                    <View
+                        android:id="@+id/titleLocationDivider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/lightGrey"
+                        app:layout_constraintEnd_toEndOf="@id/homeNotification"
+                        app:layout_constraintStart_toStartOf="@id/toolbarProfile"
+                        app:layout_constraintTop_toBottomOf="@id/toolbarProfile" />
 
                     <ImageView
                         android:id="@+id/homeNotification"
@@ -60,8 +67,47 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_notifications_black_24dp"
                         android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/toolbarProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/toolbarProfile"
                         app:tint="@color/logoScreen" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/dividerLocationView"
+                        app:layout_constraintEnd_toEndOf="@id/homeNotification"
+                        app:layout_constraintStart_toEndOf="@id/dividerLocationView"
+                        app:layout_constraintTop_toTopOf="@id/dividerLocationView" />
+
+                    <View
+                        android:id="@+id/dividerLocationView"
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:background="@android:color/darker_gray"
+                        app:layout_constraintBottom_toBottomOf="@id/locationIcon"
+                        app:layout_constraintStart_toEndOf="@id/locationIcon"
+                        app:layout_constraintTop_toTopOf="@id/locationIcon" />
+
+                    <ImageView
+                        android:id="@+id/locationIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_location"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/toolbarProfile"
+                        app:layout_constraintTop_toBottomOf="@id/titleLocationDivider" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
         <ProgressBar
@@ -91,51 +137,16 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/location"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="8dp"
-                    android:paddingStart="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/locationIcon"
-                    app:layout_constraintTop_toTopOf="@id/dividerLocationView" />
-
-                <View
-                    android:id="@+id/dividerLocationView"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintBottom_toBottomOf="@id/locationIcon"
-                    app:layout_constraintStart_toEndOf="@id/locationIcon"
-                    app:layout_constraintTop_toTopOf="@id/locationIcon" />
-
-                <ImageView
-                    android:id="@+id/locationIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:src="@drawable/ic_location"
-                    app:layout_constraintBottom_toBottomOf="@id/location"
-                    app:layout_constraintEnd_toStartOf="@id/location"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/location" />
-
-                <TextView
                     android:id="@+id/topCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
                     android:text="@string/topCategories"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/location"
-                    app:layout_constraintStart_toStartOf="@id/locationIcon"
-                    app:layout_constraintTop_toBottomOf="@id/location" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <HorizontalScrollView
                     android:id="@+id/categoryScrollView"

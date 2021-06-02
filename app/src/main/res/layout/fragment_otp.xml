@@ -4,153 +4,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".authentication.ui.fragments.OtpFragment">
 
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/otpPB"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/verify"
-                android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/otpRoot"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:text="@string/verify"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/enterOtp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/enterOtpHeading"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@id/verify"
-                app:layout_constraintStart_toStartOf="@id/verify"
-                app:layout_constraintTop_toBottomOf="@id/verify" />
+                <TextView
+                    android:id="@+id/verify"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="@string/verify"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/otp1"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="30dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toStartOf="@+id/otp2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@id/enterOtp"
-                app:layout_constraintTop_toBottomOf="@id/enterOtp" />
+                <TextView
+                    android:id="@+id/enterOtp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/enterOtpHeading"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@id/verify"
+                    app:layout_constraintStart_toStartOf="@id/verify"
+                    app:layout_constraintTop_toBottomOf="@id/verify" />
 
-            <EditText
-                android:id="@+id/otp2"
-                style="@android:style/Widget.Material.EditText"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="10dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@id/otp1"
-                app:layout_constraintEnd_toStartOf="@+id/otp3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/otp1"
-                app:layout_constraintTop_toTopOf="@id/otp1" />
+                <EditText
+                    android:id="@+id/otp1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="30dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@+id/otp2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/enterOtp"
+                    app:layout_constraintTop_toBottomOf="@id/enterOtp" />
 
-            <EditText
-                android:id="@+id/otp3"
-                style="@android:style/Widget.Material.EditText"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="10dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@id/otp1"
-                app:layout_constraintEnd_toStartOf="@+id/otp4"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/otp2"
-                app:layout_constraintTop_toTopOf="@id/otp1" />
+                <EditText
+                    android:id="@+id/otp2"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@id/otp1"
+                    app:layout_constraintEnd_toStartOf="@+id/otp3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/otp1"
+                    app:layout_constraintTop_toTopOf="@id/otp1" />
 
-            <EditText
-                android:id="@+id/otp4"
-                style="@android:style/Widget.Material.EditText"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="10dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@id/otp1"
-                app:layout_constraintEnd_toEndOf="@id/enterOtp"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/otp3"
-                app:layout_constraintTop_toTopOf="@id/otp1" />
+                <EditText
+                    android:id="@+id/otp3"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@id/otp1"
+                    app:layout_constraintEnd_toStartOf="@+id/otp4"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/otp2"
+                    app:layout_constraintTop_toTopOf="@id/otp1" />
 
-            <Button
-                android:id="@+id/verifyButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:backgroundTint="@color/logoScreen"
-                android:text="@string/verify"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="@id/enterOtp"
-                app:layout_constraintStart_toStartOf="@id/enterOtp"
-                app:layout_constraintTop_toBottomOf="@id/otp1" />
+                <EditText
+                    android:id="@+id/otp4"
+                    style="@android:style/Widget.Material.EditText"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@id/otp1"
+                    app:layout_constraintEnd_toEndOf="@id/enterOtp"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/otp3"
+                    app:layout_constraintTop_toTopOf="@id/otp1" />
 
-            <TextView
-                android:id="@+id/resendOtpText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/notReceivedOtp"
-                android:textAlignment="viewEnd"
-                android:textSize="24sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/resendOtp"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/verifyButton" />
+                <Button
+                    android:id="@+id/verifyButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/logoScreen"
+                    android:text="@string/verify"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/enterOtp"
+                    app:layout_constraintStart_toStartOf="@id/enterOtp"
+                    app:layout_constraintTop_toBottomOf="@id/otp1" />
 
-            <TextView
-                android:id="@+id/resendOtp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/resend"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/resendOtpText"
-                app:layout_constraintTop_toTopOf="@id/resendOtpText" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/resendOtpText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/notReceivedOtp"
+                    android:textAlignment="viewEnd"
+                    android:textSize="24sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/resendOtp"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/verifyButton" />
+
+                <TextView
+                    android:id="@+id/resendOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resend"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/resendOtpText"
+                    app:layout_constraintTop_toTopOf="@id/resendOtpText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

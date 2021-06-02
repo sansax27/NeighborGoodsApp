@@ -4,15 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.nGoodsApp.neighborGoodsApp.AppRepository
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.User
-import com.nGoodsApp.neighborGoodsApp.models.*
-import com.google.gson.Gson
+import com.nGoodsApp.neighborGoodsApp.models.Address
+import com.nGoodsApp.neighborGoodsApp.models.Category
+import com.nGoodsApp.neighborGoodsApp.models.Shop
+import com.nGoodsApp.neighborGoodsApp.models.ShopMenuItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,13 +36,16 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     private var shop: Shop? = null
     var shopName = ""
         private set
-    var shopLogo:String? = ""
+    var shopLogo: String? = ""
         private set
 
-    private val productsMapPrivate = mutableMapOf<String, List<Int>>()
-    val productsMap: Map<String, List<Int>> get() = productsMapPrivate
+    private val categoriesMapPrivate = mutableMapOf<Int, MutableList<Int>>()
+    val categoriesMap: Map<Int, MutableList<Int>> get() = categoriesMapPrivate
 
-    val searchResultVendorPolicy = mutableListOf<Int>()
+    private val productsMapPrivate = mutableMapOf<String, MutableList<Int>>()
+    val productsMap: Map<String, MutableList<Int>> get() = productsMapPrivate
+
+    var searchResultVendorPolicy = mutableListOf<Int>()
 
 
     private val addressListPrivate = mutableListOf<Address>()
@@ -59,11 +64,6 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     fun prepareHomeScreen(userId: Int) = viewModelScope.launch {
         prepareHomeScreenStatusPrivate.postValue(State.Loading())
         val response1 = async {
-            val filter = Gson().toJson(mapOf("where" to mapOf("type" to "Vendor"), "include" to listOf(
-                mapOf("relation" to "images")))).toString()
-            AppRepository.getCategories(filter)
-        }
-        val response2 = async {
             val filter =
                 Gson().toJson(
                     mapOf(
@@ -83,7 +83,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                     .toString()
             AppRepository.getVendors(filter)
         }
-        val response3 = async {
+        val response2 = async {
             val filter = Gson().toJson(
                 mapOf(
                     "where" to mapOf("userId" to userId), "include" to listOf(
@@ -93,29 +93,72 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             ).toString()
             AppRepository.getUserAddresses(filter)
         }
-        if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful) {
-            productsMapPrivate.clear()
-            categoryListPrivate.clear()
-            categoryListPrivate.addAll(response1.await().body()!!)
-            shopListPrivate.clear()
-            shopListPrivate.addAll(response2.await().body()!!)
-            addressListPrivate.clear()
-            addressListPrivate.addAll(response3.await().body()!!)
-            for (p in addressListPrivate) {
-                if (p.default) {
-                    Timber.i("Here!!")
-                    defaultAddress = p
-                    User.defaultAddressId = p.id
-                    break
-                }
+        if (response1.await().isSuccessful && response2.await().isSuccessful) {
+            val orList = mutableListOf<Map<String, Int>>()
+            for (shop in response1.await().body()!!) {
+                orList.add(mapOf("vendorsId" to shop.id))
             }
-            prepareHomeScreenStatusPrivate.postValue(State.Success("Success"))
+            val filter = Gson().toJson(mapOf("where" to mapOf("or" to orList)))
+            val response3 = AppRepository.getProductsBasic(filter)
+            if (response3.isSuccessful) {
+                if (response3.body() != null) {
+                    productsMapPrivate.clear()
+                    for (item in response3.body()!!) {
+                        if (productsMapPrivate.containsKey(item.productName)) {
+                            productsMapPrivate[item.productName]!!.add(item.vendorsId)
+                        } else {
+                            productsMapPrivate[item.productName] = mutableListOf(item.vendorsId)
+                        }
+                    }
+                    productsMapPrivate.clear()
+                    categoryListPrivate.clear()
+                    shopListPrivate.clear()
+                    addressListPrivate.clear()
+                    categoriesMapPrivate.clear()
+                    addressListPrivate.addAll(response2.await().body()!!)
+                    shopListPrivate.addAll(response1.await().body()!!)
+                    for (item in shopListPrivate) {
+                        if (item.shopCategory!=null) {
+                            if (categoriesMapPrivate.containsKey(item.shopCategory.id)) {
+                                categoriesMapPrivate[item.shopCategory.id]!!.add(item.id)
+                            } else {
+                                categoriesMapPrivate[item.shopCategory.id] = mutableListOf(item.id)
+                            }
+                        }
+                    }
+                    for (p in addressListPrivate) {
+                        if (p.default) {
+                            defaultAddress = p
+                            User.defaultAddressId = p.id
+                            break
+                        }
+                    }
+                    prepareHomeScreenStatusPrivate.postValue(State.Success("Success"))
+                } else {
+                    prepareHomeScreenStatusPrivate.postValue(
+                        State.Failure(
+                            "${response1.await().message() ?: ""}\n${
+                                response2.await().message() ?: ""
+                            }\n${response3.message()}"
+                        )
+                    )
+                }
+            } else {
+                prepareHomeScreenStatusPrivate.postValue(
+                    State.Failure(
+                        "${response1.await().message() ?: ""}\n${
+                            response2.await().message() ?: ""
+                        }\n${response3.message()}"
+                    )
+                )
+            }
+
         } else {
             prepareHomeScreenStatusPrivate.postValue(
                 State.Failure(
                     "${
                         response1.await().message() ?: ""
-                    }\n${response2.await().message() ?: ""} \n${response3.await().message() ?: ""}"
+                    }\n${response2.await().message() ?: ""} "
                 )
             )
         }
@@ -197,8 +240,8 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         shop = if (items.isNotEmpty()) {
             items.clear()
             shopName = newShop.shopName
-            shopLogo = if (newShop.logoImage!=null) {
-                if (newShop.logoImage.imageUrl!=null) {
+            shopLogo = if (newShop.logoImage != null) {
+                if (newShop.logoImage.imageUrl != null) {
                     newShop.logoImage.imageUrl
                 } else {
                     null
@@ -209,8 +252,8 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             newShop
         } else {
             shopName = newShop.shopName
-            shopLogo = if (newShop.logoImage!=null) {
-                if (newShop.logoImage.imageUrl!=null) {
+            shopLogo = if (newShop.logoImage != null) {
+                if (newShop.logoImage.imageUrl != null) {
                     newShop.logoImage.imageUrl
                 } else {
                     null

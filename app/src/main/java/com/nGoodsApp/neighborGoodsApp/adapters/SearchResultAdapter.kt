@@ -12,10 +12,11 @@ import timber.log.Timber
 
 class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
-    var shopList = mutableListOf<Shop>()
+    private val shopListPrivate = mutableListOf<Shop>()
+    val shopList:List<Shop> get() = shopListPrivate
     fun submitList(list: List<Shop>) {
-        shopList.clear()
-        shopList.addAll(list)
+        shopListPrivate.clear()
+        shopListPrivate.addAll(list)
     }
 
     inner class ViewHolder(private val itemBinding:FilterRvItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
@@ -70,23 +71,24 @@ class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Ada
     fun applyFilters(
         shopListGiven:List<Shop>,
         searchResultCollectionPolicy: Int,
-        searchResultCategoryPolicy: List<Int>
+        searchResultCategoryPolicy: List<Int>,
+    searchResultVendorPolicy:List<Int>
     ) {
         val dummy = shopListGiven.filter { shop ->
             when (searchResultCollectionPolicy) {
                 1 -> shop.delivery && (searchResultCategoryPolicy.isEmpty() || (shop.shopCategory!= null && searchResultCategoryPolicy.contains(
                     shop.shopCategory.id
-                )))
+                ))) && (searchResultVendorPolicy.isEmpty() || searchResultVendorPolicy.contains(shop.id))
                 2 -> shop.takeAway && (searchResultCategoryPolicy.isEmpty() || (shop.shopCategory!= null && searchResultCategoryPolicy.contains(
                     shop.shopCategory.id
-                )))
+                ))) && (searchResultVendorPolicy.isEmpty() || searchResultVendorPolicy.contains(shop.id))
                 else -> (searchResultCategoryPolicy.isEmpty() || (shop.shopCategory!= null && searchResultCategoryPolicy.contains(
                     shop.shopCategory.id
-                )))
+                ))) && (searchResultVendorPolicy.isEmpty() || searchResultVendorPolicy.contains(shop.id))
             }
         }
-        shopList.clear()
-        shopList.addAll(dummy)
+        shopListPrivate.clear()
+        shopListPrivate.addAll(dummy)
         notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -94,10 +96,10 @@ class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(shopList[position])
+        holder.bind(shopListPrivate[position])
     }
 
     override fun getItemCount(): Int {
-        return shopList.size
+        return shopListPrivate.size
     }
 }

@@ -1,6 +1,5 @@
 package com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import com.nGoodsApp.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.authentication.viewmodels.LoginFragmentViewModel
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentLoginBinding
-import com.nGoodsApp.neighborGoodsApp.userActivity.activity.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +29,6 @@ class LoginFragment : Fragment() {
         get() = _binding
 
     private val viewModel: LoginFragmentViewModel by viewModels()
-    private val toUserActivityCode = 154
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +69,6 @@ class LoginFragment : Fragment() {
                 is State.Success -> {
                     val data = it.data.userDetails
                     putStringIntoSharedPreferences("ttl", it.data.ttl)
-                    putStringIntoSharedPreferences("accessToken",it.data.id)
                     putStringIntoSharedPreferences("email", data.email)
                     putStringIntoSharedPreferences("name", data.name)
                     putStringIntoSharedPreferences("role", data.role)
@@ -80,20 +76,20 @@ class LoginFragment : Fragment() {
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply {
                         putBoolean("isEmailVerified", data.isEmailVerified)
                         putInt("id", data.id)
-                        putInt("profilePicId", data.profilePicId)
                     }.apply()
                     User.id = data.id
-                    User.accessToken = it.data.id
                     User.ttl = it.data.ttl
                     User.email = data.email
                     User.name = data.name
                     User.phone = "data.phone"
                     User.role = data.role
                     User.isEmailVerified = data.isEmailVerified
-                    User.profilePicId = data.profilePicId
-                    AppRepository.setRetrofitAuthorizedInstance(User.accessToken)
-                    requireActivity().startActivityFromFragment(this, Intent(requireContext(), UserActivity::class.java),140)
-                    requireActivity().finish()
+                    if (it.data.profileCreated) {
+                        User.profilePicId = data.profilePicId
+                        User.profileCreated = true
+                    }
+                    AppRepository.setRetrofitAuthorizedInstance(it.data.id)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment(it.data.profileCreated, it.data.id))
                 }
                 is State.Failure -> {
                     showLongToast(it.message)

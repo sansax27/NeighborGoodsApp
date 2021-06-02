@@ -1,6 +1,7 @@
 package com.nGoodsApp.neighborGoodsApp
 
 import com.nGoodsApp.neighborGoodsApp.models.*
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -21,6 +22,37 @@ interface APIRetrofitAuthorizedInterface {
         @Field("currentAddressId") currentAddressId: Int,
         @Field("newAddressId") newAddressId: Int
     ): Response<String>
+
+
+    @FormUrlEncoded
+    @POST("Addresses")
+    suspend fun createAddress(
+        @Field("cityId") cityId: Int,
+        @Field("street1") address: String,
+        @Field("userId") userId: Int,
+        @Field("isDefault") default: Boolean,
+        @Field("created") created: Boolean
+    ): Response<Address>
+
+    @GET("countries")
+    suspend fun getCountries(): Response<List<Id>>
+
+
+    @Multipart
+    @POST("StorageFiles/upload")
+    suspend fun uploadProfilePic(@Part image: MultipartBody.Part): Response<List<UploadImage>>
+
+    @POST("users/logout")
+    suspend fun logout(@Query(value = "access_token") accessToken: String): Response<*>
+
+
+    @GET("cities")
+    suspend fun getCities(@Query("filter") filter: String): Response<List<City>>
+
+
+    @GET("states")
+    suspend fun getStates(@Query("filter") filter: String): Response<List<Id>>
+
 
 
     @FormUrlEncoded
@@ -57,6 +89,15 @@ interface APIRetrofitAuthorizedInterface {
         @Query("access_token") accessToken: String
     ): Response<UserDetails>
 
+    @FormUrlEncoded
+    @PATCH("users/{id}")
+    suspend fun createUserDetails(
+        @Path("id") userId: Int,
+        @Field("firstName") name: String,
+        @Field("profilePicId") profilePicId:Int,
+        @Field("isCreated") profileCreated:Boolean
+    ): Response<Id>
+
     @GET("Addresses")
     suspend fun getUserAddresses(@Query("filter") filter: String): Response<List<Address>>
 
@@ -64,5 +105,8 @@ interface APIRetrofitAuthorizedInterface {
     suspend fun getProducts(@Query("filter") filter: String): Response<List<Products>>
 
     @POST("users/emailOTPVerification")
-    suspend fun verifyOtp(@Query("token") accessToken: String, @Query("code") code:String):Response<Id>
+    suspend fun verifyOtp(@Field("token") accessToken: String, @Field("code") code:String):Response<Id>
+
+    @GET("Products")
+    suspend fun getProductsBasic(@Query("filter") filter: String):Response<List<ProductsBasic>>
 }

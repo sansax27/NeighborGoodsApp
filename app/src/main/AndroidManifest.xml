@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nGoodsApp.neighborGoodsApp">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -13,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.nGoodsApp.neighborGoodsApp.application.NeighborGoods"
+        android:name=".application.NeighborGoods"
         android:allowBackup="true"
         android:configChanges="orientation"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeighborHoodsApp"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".vendor.VendorActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,11 +37,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.nGoodsApp.neighborGoodsApp.userActivity.activity.UserActivity"
+            android:name=".userActivity.activity.UserActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nGoodsApp.neighborGoodsApp.authentication.ui.activity.MainActivity"
+            android:name=".authentication.ui.activity.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

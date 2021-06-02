@@ -3,23 +3,21 @@ package com.nGoodsApp.neighborGoodsApp.authentication.ui.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.nGoodsApp.neighborGoodsApp.R
 import androidx.navigation.fragment.findNavController
+import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
-import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
 import com.nGoodsApp.neighborGoodsApp.Utils.isValidEmail
 import com.nGoodsApp.neighborGoodsApp.Utils.isValidPassword
 import com.nGoodsApp.neighborGoodsApp.Utils.isValidPhone
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.authentication.viewmodels.SignUpFragmentViewModel
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentSignUpBinding
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -58,42 +56,19 @@ class SignUpFragment : Fragment() {
             } else if (!phone.text.isValidPhone()) {
                 phoneLayer.error = "Please Enter 10 Digit Number"
             }else {
-//                if(isConnected(requireContext())) {
-//                    val filter = Gson().toJson(mapOf("where" to mapOf("email" to email.text.toString()))).toString()
-//                    viewModel.ifEmailExists(filter)
-//                } else {
-//                    showLongToast("No Network Connection!! Unable To Verify If Email Already Exists Or Not")
-//                }
-                findNavController().navigate(
-                    SignUpFragmentDirections.actionSignUpFragmentToCreateProfileFragment(
-                        email.text.toString(),
-                        password.text.toString(),
-                        resources.getStringArray(R.array.countryCodes)[binding.countryCodesSpinner.selectedItemPosition] + phone.text.toString()
-                    )
-                )
+                viewModel.signUpUser(email.text.toString(), password.text.toString(), phone.text.toString(), resources.getStringArray(R.array.countryCodes)[binding.countryCodesSpinner.selectedItemPosition],"User")
             }
         }
-        viewModel.ifEmailExistsStatus.observe(this) {
+        viewModel.signUpStatus.observe(this) {
             when(it) {
                 is State.Loading -> handleStatesUI(binding.signUpPB, binding.signUpRoot, true)
-                is State.Success -> {
-                    if(it.data!="Exists") {
-                        findNavController().navigate(
-                            SignUpFragmentDirections.actionSignUpFragmentToCreateProfileFragment(
-                                email.text.toString(),
-                                password.text.toString(),
-                                resources.getStringArray(R.array.countryCodes)[binding.countryCodesSpinner.selectedItemPosition] + phone.text.toString()
-                            )
-                        )
-                        handleStatesUI(binding.signUpPB, binding.signUpRoot, false)
-                    } else {
-                        showLongToast("Email Id Already Exists!")
-                        handleStatesUI(binding.signUpPB, binding.signUpRoot, false)
-                    }
-                }
                 is State.Failure -> {
-                    showLongToast("Unable To Verify If Email Already Exists Or Not")
+                    showLongToast(it.message)
                     handleStatesUI(binding.signUpPB, binding.signUpRoot, false)
+                }
+                is State.Success -> {
+                    showLongToast("SignUp Successful")
+                    findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
                 }
             }
         }

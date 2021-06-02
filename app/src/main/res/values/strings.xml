@@ -6,6 +6,8 @@
     <string name="appName">NeighborGoods App</string>
     <string name="logoAllScreens">The Logo Of NeighborHoods</string>
 
+
+    <string name="signIn">Sign In</string>
     <string name="loginEnterEmail">Enter Email-Address</string>
 
     <string name="loginEnterPassword">Enter Password</string>
@@ -36,7 +38,7 @@
 
     <string name="iAmVendor">I am a vendor</string>
 
-    <string name="basicProfile">Basic Profile</string>
+    <string name="basicProfile">Basic Detail</string>
 
     <string name="profileEnterName">Enter Name</string>
 
@@ -169,4 +171,22 @@
 
     <string name="noOfResults">%s Results</string>
     <string name="Stores">Stores</string>
+
+    <string name="storeDetail">Store Detail</string>
+
+    <string name="deliveryRange">Delivery Range</string>
+    <string name="minOrderFreeDelivery">Minimum Order For Free Delivery</string>
+    <string name="minOrderAmount">Minimum Order Amount</string>
+
+    <string name="standardDeliveryCharges">Standard Delivery Charges</string>
+
+    <string name="deliveryService">Delivery Service</string>
+    <string name="pickupService">Pickup Service</string>
+
+    <string name="categories">Categories</string>
+    <string name="totalOrders">Total Orders</string>
+    <string name="totalProducts">Total Products</string>
+    <string name="totalEarnings">Total Earnings</string>
+
+    <string name="offering">Offering</string>
 </resources>

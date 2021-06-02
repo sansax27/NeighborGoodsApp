@@ -16,42 +16,38 @@ object AppRepository {
         return
     }
 
-    suspend fun createUser(
+    suspend fun signUpUser(
         email: String,
         password: String,
         phone: String,
-        name: String,
-        profilePicId: Int,
-        role: String
+        countryCode:String,
+        role: String,
     ) = withContext(Dispatchers.IO) {
-        retrofitInstance.createUser(email, password, phone, name, profilePicId, role)
+        retrofitInstance.signUpUser(email, password, phone,countryCode, role)
     }
 
     suspend fun loginUser(email: String, password: String) =
         withContext(Dispatchers.IO) { retrofitInstance.loginUser(email, password) }
 
-    suspend fun ifEmailExists(filter: String) = withContext(Dispatchers.IO) {
-        retrofitInstance.ifEmailExists(filter)
-    }
 
     suspend fun getCities(filter: String) = withContext(Dispatchers.IO) {
-        retrofitInstance.getCities(filter)
+        retrofitAuthorizedInstance!!.getCities(filter)
     }
 
     suspend fun uploadImage(image: MultipartBody.Part) = withContext(Dispatchers.IO) {
-        retrofitInstance.uploadProfilePic(image)
+        retrofitAuthorizedInstance!!.uploadProfilePic(image)
     }
 
     suspend fun logout(accessToken: String) = withContext(Dispatchers.IO) {
-        retrofitInstance.logout(accessToken)
+        retrofitAuthorizedInstance!!.logout(accessToken)
     }
 
     suspend fun getStates(filter: String) = withContext(Dispatchers.IO) {
-        retrofitInstance.getStates(filter)
+        retrofitAuthorizedInstance!!.getStates(filter)
     }
 
     suspend fun getCountries() = withContext(Dispatchers.IO) {
-        retrofitInstance.getCountries()
+        retrofitAuthorizedInstance!!.getCountries()
     }
 
     suspend fun createAddress(
@@ -62,7 +58,7 @@ object AppRepository {
         created: Boolean
     ) =
         withContext(Dispatchers.IO) {
-            return@withContext retrofitInstance.createAddress(
+            return@withContext retrofitAuthorizedInstance!!.createAddress(
                 cityId,
                 address,
                 userId,
@@ -104,6 +100,9 @@ object AppRepository {
         )
     }
 
+    suspend fun createUserDetails(userId: Int, name: String, profilePicId:Int, profileCreated: Boolean) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.createUserDetails(userId, name, profilePicId, profileCreated)
+    }
     suspend fun deleteAddress(addressId: Int) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.deleteAddress(addressId)
     }
@@ -132,6 +131,10 @@ object AppRepository {
 
     suspend fun verifyOtp(accessToken: String, code:String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.verifyOtp(accessToken, code)
+    }
+
+    suspend fun getProductsBasic(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getProductsBasic(filter)
     }
 
 }

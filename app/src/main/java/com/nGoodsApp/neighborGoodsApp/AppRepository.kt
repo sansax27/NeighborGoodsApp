@@ -137,4 +137,19 @@ object AppRepository {
         retrofitAuthorizedInstance!!.getProductsBasic(filter)
     }
 
+    suspend fun getFavoriteVendors(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getFavoriteVendors(filter)
+    }
+
+    suspend fun addFavoriteVendor(userId:Int, vendorsId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.addFavoriteVendor(userId, vendorsId)
+    }
+
+    suspend fun removeFavoriteVendor(id:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.removeFavoriteVendor(id)
+    }
+
+    suspend fun getFavoriteVendorId(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getFavoriteVendorId(filter)
+    }
 }

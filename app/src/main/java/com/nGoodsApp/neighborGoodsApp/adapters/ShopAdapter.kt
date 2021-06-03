@@ -2,6 +2,7 @@ package com.nGoodsApp.neighborGoodsApp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nGoodsApp.neighborGoodsApp.Constants
@@ -9,13 +10,23 @@ import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.databinding.StoreItemBinding
 import com.nGoodsApp.neighborGoodsApp.models.Shop
 
-class ShopAdapter(private val shopList: List<Shop>, private val move: (shop: Shop) -> Unit) :
+class ShopAdapter(private val favoriteShopList:List<Shop>,private val shopList: List<Shop>, private val addFavorite:(favoriteImage: ImageView, favoriteShop:Shop) -> Unit, private val removeFavorite:(favoriteImage:ImageView, favoriteShop:Shop) -> Unit,private val move: (shop: Shop) -> Unit) :
     RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val itemBinding: StoreItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: Shop) {
             itemBinding.shopName.text = data.shopName
+            if (favoriteShopList.contains(data)) {
+                itemBinding.likeShop.setImageResource(R.drawable.ic_favorite_red)
+                itemBinding.likeShop.setOnClickListener {
+                    removeFavorite(itemBinding.likeShop, data)
+                }
+            } else {
+                itemBinding.likeShop.setOnClickListener {
+                    addFavorite(itemBinding.shopLogo, data)
+                }
+            }
             itemBinding.shopRatings.text = if (data.ratings == null) {
                 "NA"
             } else {

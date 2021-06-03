@@ -70,7 +70,6 @@ class LoginFragment : Fragment() {
                     val data = it.data.userDetails
                     putStringIntoSharedPreferences("ttl", it.data.ttl)
                     putStringIntoSharedPreferences("email", data.email)
-                    putStringIntoSharedPreferences("name", data.name)
                     putStringIntoSharedPreferences("role", data.role)
                     putStringIntoSharedPreferences("phone", "data.phone")
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply {
@@ -80,13 +79,18 @@ class LoginFragment : Fragment() {
                     User.id = data.id
                     User.ttl = it.data.ttl
                     User.email = data.email
-                    User.name = data.name
                     User.phone = "data.phone"
                     User.role = data.role
                     User.isEmailVerified = data.isEmailVerified
                     if (it.data.profileCreated) {
                         User.profilePicId = data.profilePicId
                         User.profileCreated = true
+                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply{
+                            putInt("profilePicId", data.profilePicId)
+                            putBoolean("profileCreated", true)
+                        }.apply()
+                        putStringIntoSharedPreferences("name", data.name)
+                        User.name = data.name
                     }
                     AppRepository.setRetrofitAuthorizedInstance(it.data.id)
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment(it.data.profileCreated, it.data.id))

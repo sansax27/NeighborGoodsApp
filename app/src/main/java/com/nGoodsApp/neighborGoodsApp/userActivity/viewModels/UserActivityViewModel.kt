@@ -39,13 +39,16 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     var shopLogo: String? = ""
         private set
 
+    private val favoriteVendorsListPrivate = mutableListOf<Shop>()
+    val favoriteVendorsList: List<Shop> get() = favoriteVendorsListPrivate
+
     private val categoriesMapPrivate = mutableMapOf<Int, MutableList<Int>>()
     val categoriesMap: Map<Int, MutableList<Int>> get() = categoriesMapPrivate
 
     private val productsMapPrivate = mutableMapOf<String, MutableList<Int>>()
     val productsMap: Map<String, MutableList<Int>> get() = productsMapPrivate
 
-    var searchResultVendorPolicy = mutableListOf<Int>()
+    val searchResultVendorPolicy = mutableListOf<Int>()
 
 
     private val addressListPrivate = mutableListOf<Address>()
@@ -61,7 +64,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     private val prepareHomeScreenStatusPrivate = MutableLiveData<State<String>>()
     val prepareHomeScreenStatus: LiveData<State<String>> get() = prepareHomeScreenStatusPrivate
 
-    fun prepareHomeScreen(userId: Int) = viewModelScope.launch {
+    fun prepareHomeScreen() = viewModelScope.launch {
         prepareHomeScreenStatusPrivate.postValue(State.Loading())
         val response1 = async {
             val filter =
@@ -86,12 +89,30 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         val response2 = async {
             val filter = Gson().toJson(
                 mapOf(
-                    "where" to mapOf("userId" to userId), "include" to listOf(
+                    "where" to mapOf("userId" to User.id), "include" to listOf(
                         mapOf("relation" to "city")
                     )
                 )
             ).toString()
             AppRepository.getUserAddresses(filter)
+        }
+        val response3 = async {
+            val filter = Gson().toJson(
+                mapOf(
+                    "where" to mapOf("userId" to User.id), "include" to listOf(
+                        mapOf("relation" to "categories"),
+                        mapOf("relation" to "logoImage"),
+                        mapOf(
+                            "relation" to "bannerImage", "scope" to mapOf(
+                                "include" to listOf(
+                                    mapOf("relation" to "bannerImage")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+            AppRepository.getFavoriteVendors(filter)
         }
         if (response1.await().isSuccessful && response2.await().isSuccessful) {
             val orList = mutableListOf<Map<String, Int>>()
@@ -99,11 +120,11 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 orList.add(mapOf("vendorsId" to shop.id))
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("or" to orList)))
-            val response3 = AppRepository.getProductsBasic(filter)
-            if (response3.isSuccessful) {
-                if (response3.body() != null) {
+            val response4 = AppRepository.getProductsBasic(filter)
+            if (response4.isSuccessful) {
+                if (response4.body() != null) {
                     productsMapPrivate.clear()
-                    for (item in response3.body()!!) {
+                    for (item in response4.body()!!) {
                         if (productsMapPrivate.containsKey(item.productName)) {
                             productsMapPrivate[item.productName]!!.add(item.vendorsId)
                         } else {
@@ -115,10 +136,12 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                     shopListPrivate.clear()
                     addressListPrivate.clear()
                     categoriesMapPrivate.clear()
+                    favoriteVendorsListPrivate.clear()
+                    favoriteVendorsListPrivate.addAll(response3.await().body()!!)
                     addressListPrivate.addAll(response2.await().body()!!)
                     shopListPrivate.addAll(response1.await().body()!!)
                     for (item in shopListPrivate) {
-                        if (item.shopCategory!=null) {
+                        if (item.shopCategory != null) {
                             if (categoriesMapPrivate.containsKey(item.shopCategory.id)) {
                                 categoriesMapPrivate[item.shopCategory.id]!!.add(item.id)
                             } else {
@@ -139,7 +162,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                         State.Failure(
                             "${response1.await().message() ?: ""}\n${
                                 response2.await().message() ?: ""
-                            }\n${response3.message()}"
+                            }\n${response4.message()}"
                         )
                     )
                 }
@@ -148,7 +171,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                     State.Failure(
                         "${response1.await().message() ?: ""}\n${
                             response2.await().message() ?: ""
-                        }\n${response3.message()}"
+                        }\n${response4.message()}"
                     )
                 )
             }
@@ -218,6 +241,15 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             items[item] = quantity
         }
 
+    }
+
+
+    fun addFavorite(favorite:Shop) {
+        favoriteVendorsListPrivate.add(favorite)
+    }
+
+    fun removeFavorite(favorite: Shop) {
+        favoriteVendorsListPrivate.remove(favorite)
     }
 
     fun getItems(): Map<ShopMenuItem, Int> {

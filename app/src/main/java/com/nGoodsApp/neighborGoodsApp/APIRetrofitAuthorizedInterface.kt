@@ -109,4 +109,18 @@ interface APIRetrofitAuthorizedInterface {
 
     @GET("Products")
     suspend fun getProductsBasic(@Query("filter") filter: String):Response<List<ProductsBasic>>
+
+
+    @GET("FavoriteVendors")
+    suspend fun getFavoriteVendors(@Query("filter") filter: String):Response<List<Shop>>
+
+    @POST("FavoriteVendors")
+    suspend fun addFavoriteVendor(@Field("userId") userId:Int, @Field("vendorsId") vendorsId:Int):Response<Id>
+
+    @DELETE("FavoriteVendors/{id}")
+    suspend fun removeFavoriteVendor(@Path("id") id:Int):Response<Id>
+
+
+    @GET("FavoriteVendors")
+    suspend fun getFavoriteVendorId(@Query("filter") filter: String):Response<List<Id>>
 }

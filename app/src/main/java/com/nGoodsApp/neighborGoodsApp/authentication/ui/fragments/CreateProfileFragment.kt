@@ -100,6 +100,8 @@ class CreateProfileFragment : Fragment() {
                 }
                 is State.Success -> {
                     putStringIntoSharedPreferences("accessToken", requireArguments().getString("accessToken",""))
+                    putStringIntoSharedPreferences("name", name.text.toString())
+                    User.name = name.text.toString()
                     User.accessToken = requireArguments().getString("accessToken","")
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply {
                         putBoolean("profileCreated", true)

@@ -156,10 +156,9 @@
                     android:text="@string/favourites"
                     android:textColor="@color/black"
                     android:textSize="24sp"
-                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/ic_favorite"
-                    app:layout_constraintEnd_toEndOf="@id/divider3"
-                    app:layout_constraintStart_toStartOf="@id/divider3"
+                    app:layout_constraintEnd_toEndOf="@id/manageAddress"
+                    app:layout_constraintStart_toStartOf="@id/manageAddress"
                     app:layout_constraintTop_toBottomOf="@id/divider3" />
 
                 <View

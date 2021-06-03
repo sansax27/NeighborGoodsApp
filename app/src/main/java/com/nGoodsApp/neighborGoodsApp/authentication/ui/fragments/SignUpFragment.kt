@@ -63,7 +63,11 @@ class SignUpFragment : Fragment() {
             when(it) {
                 is State.Loading -> handleStatesUI(binding.signUpPB, binding.signUpRoot, true)
                 is State.Failure -> {
-                    showLongToast(it.message)
+                    if (it.message.contains("Entity")) {
+                        showLongToast("Email Id Already Exists!!")
+                    } else {
+                        showLongToast(it.message)
+                    }
                     handleStatesUI(binding.signUpPB, binding.signUpRoot, false)
                 }
                 is State.Success -> {

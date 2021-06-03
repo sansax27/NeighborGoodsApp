@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.databinding.ActivityUserBinding
 import com.nGoodsApp.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
@@ -25,15 +26,7 @@ class UserActivity : AppCompatActivity() {
         _binding = ActivityUserBinding.inflate(layoutInflater)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.userNavigationHost) as NavHostFragment
         navController = navHostFragment.navController
-        binding.userNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.navMenuHome -> navController.navigate(R.id.navMenuHome)
-                R.id.navMenuCart -> navController.navigate(R.id.navMenuCart)
-                R.id.navMenuProfile -> navController.navigate(R.id.navMenuProfile)
-                R.id.navMenuSearch -> navController.navigate(R.id.navMenuSearch)
-            }
-            true
-        }
+        binding.userNavigation.setupWithNavController(navController)
         setContentView(binding.root)
     }
 

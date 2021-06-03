@@ -2,15 +2,15 @@ package com.nGoodsApp.neighborGoodsApp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nGoodsApp.neighborGoodsApp.Constants
 import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.databinding.FilterRvItemBinding
 import com.nGoodsApp.neighborGoodsApp.models.Shop
-import timber.log.Timber
 
-class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(private val favoritesList:List<Shop>,private val addFavorite:(favoriteImage: ImageView, favoriteShop:Shop) -> Unit, private val removeFavorite:(favoriteImage: ImageView, favoriteShop:Shop) -> Unit, private val move:(shop:Shop) -> Unit ):RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     private val shopListPrivate = mutableListOf<Shop>()
     val shopList:List<Shop> get() = shopListPrivate
@@ -24,6 +24,16 @@ class SearchResultAdapter(private val move:(shop:Shop) -> Unit):RecyclerView.Ada
             itemBinding.root.setOnClickListener {
                 if (it!=itemBinding.likeShop) {
                     move(data)
+                }
+            }
+            if (favoritesList.contains(data)) {
+                itemBinding.likeShop.setImageResource(R.drawable.ic_favorite_red)
+                itemBinding.likeShop.setOnClickListener {
+                    addFavorite(itemBinding.likeShop,data)
+                }
+            } else {
+                itemBinding.likeShop.setOnClickListener {
+                    removeFavorite(itemBinding.likeShop, data)
                 }
             }
             itemBinding.shopRatings.text = if (data.ratings==null) {

@@ -152,4 +152,24 @@ object AppRepository {
     suspend fun getFavoriteVendorId(filter: String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getFavoriteVendorId(filter)
     }
+
+    suspend fun addCard(userName:String, cardNumber:String, expiryMonth:String, expiryYear:Int, userId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.addCard(userName, cardNumber, expiryMonth, expiryYear, userId)
+    }
+
+    suspend fun getCards() = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getCards(User.id)
+    }
+
+    suspend fun addCartItem(vendorsId: Int, productsId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.addCartItem(User.id,vendorsId, productsId, "1")
+    }
+
+    suspend fun updateCartItem(cartItemId:Int, quantity:String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.updateCartItem(cartItemId, quantity)
+    }
+
+    suspend fun deleteCartItem(cartItemId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.deleteCartItem(cartItemId)
+    }
 }

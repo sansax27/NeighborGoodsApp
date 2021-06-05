@@ -37,6 +37,9 @@ class SearchResultFragment : Fragment() {
                 is State.Success -> {
                     favoriteImage.setImageResource(R.drawable.ic_favorite_red)
                     userActivityViewModel.addFavorite(shop)
+                    rvAdapter.submitList(userActivityViewModel.favoriteVendorsList)
+                    rvAdapter.notifyDataSetChanged()
+                    binding.noOfResults.text = getString(R.string.noOfResults).format(rvAdapter.itemCount)
                     setImageViewOnClickListener(favoriteImage, shop, true)
                     showLongToast("Favorite Vendor Successfully Added!!")
                     handleStatesUI(binding.searchResultPB, binding.searchResultRoot,false)
@@ -60,6 +63,8 @@ class SearchResultFragment : Fragment() {
                     favoriteImage.setImageResource(R.drawable.ic_favorite)
                     userActivityViewModel.removeFavorite(favoriteShop)
                     setImageViewOnClickListener(favoriteImage, favoriteShop, false)
+                    rvAdapter.submitList(userActivityViewModel.favoriteVendorsList)
+                    rvAdapter.notifyDataSetChanged()
                     showLongToast("Favorite Vendor Successfully Removed!!")
                     handleStatesUI(binding.searchResultPB, binding.searchResultRoot,false)
                 }
@@ -67,24 +72,24 @@ class SearchResultFragment : Fragment() {
             }
         }
     }
-    private val rvAdapter = SearchResultAdapter(userActivityViewModel.favoriteVendorsList, addFavorite, removeFavorite) {
-        findNavController().navigate(
-            SearchResultFragmentDirections.actionSearchResultFragmentToShopFragment(
-                it
-            )
-        )
-    }
+    private lateinit var rvAdapter:SearchResultAdapter
     private var isFirstTime = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentSearchResultBinding.inflate(layoutInflater)
+        rvAdapter = SearchResultAdapter(userActivityViewModel.favoriteVendorsList, addFavorite, removeFavorite) {
+            findNavController().navigate(
+                SearchResultFragmentDirections.actionSearchResultFragmentToShopFragment(
+                    it
+                )
+            )
+        }
         binding.filterResultsRV.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.VERTICAL
             }
         }
-
         if (requireArguments().getInt("Category") == -1) {
             handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
             rvAdapter.submitList(userActivityViewModel.favoriteVendorsList)
@@ -102,11 +107,11 @@ class SearchResultFragment : Fragment() {
                 userActivityViewModel.searchResultVendorPolicy
             )
             binding.noOfResults.text =
-                getString(R.string.noOfResults).format(userActivityViewModel.shopList.size)
+                getString(R.string.noOfResults).format(rvAdapter.itemCount)
             handleStatesUI(binding.searchResultPB, binding.searchResultRoot, false)
         }
         userActivityViewModel.searchResultCollectionPolicy = 0
-        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
+        userActivityViewModel.searchResultCategoryPolicy.clear()
         binding.filterViewOnMap.setOnClickListener {
             handleStatesUI(binding.searchResultPB, binding.searchResultRoot, true)
             userActivityViewModel.toShowOnMapList.apply {
@@ -180,8 +185,8 @@ class SearchResultFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         userActivityViewModel.searchResultCollectionPolicy = 0
-        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
-        userActivityViewModel.searchResultVendorPolicy = mutableListOf()
+        userActivityViewModel.searchResultCategoryPolicy.clear()
+        userActivityViewModel.searchResultVendorPolicy.clear()
     }
 
 }

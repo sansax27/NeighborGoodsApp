@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.nGoodsApp.neighborGoodsApp.adapters.SearchAdapter
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentSearchBinding
 import com.nGoodsApp.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -26,11 +28,12 @@ class SearchFragment : Fragment() {
     private val searchAdapter = SearchAdapter{
         userActivityViewModel.searchResultVendorPolicy.clear()
         userActivityViewModel.searchResultVendorPolicy.addAll(it)
-        findNavController().navigate(SearchFragmentDirections.actionNavMenuSearchToSearchResultFragment(-1))
+        findNavController().navigate(SearchFragmentDirections.actionNavMenuSearchToSearchResultFragment(1))
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentSearchBinding.inflate(layoutInflater)
+        Timber.i(userActivityViewModel.productsMap.size.toString()+"DDDD")
         binding.searchRV.apply {
             searchAdapter.submitMap(userActivityViewModel.productsMap)
             adapter = searchAdapter
@@ -39,7 +42,10 @@ class SearchFragment : Fragment() {
                 orientation = RecyclerView.VERTICAL
             }
         }
-        showLongToast("No Enough Items Matching Your Location!!")
+        binding.searchQueryText.doOnTextChanged { text, _, _, _ ->
+            searchAdapter.getFilter().filter(text)
+        }
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

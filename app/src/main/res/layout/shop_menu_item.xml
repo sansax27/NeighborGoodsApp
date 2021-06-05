@@ -68,10 +68,12 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:text="ADD"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/selectButtonColor"
             app:cornerRadius="5dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/shopItemPrice"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:strokeColor="@color/selectButtonColor"
+            app:strokeWidth="3dp" />
 
         <LinearLayout
             android:id="@+id/addItemLL"

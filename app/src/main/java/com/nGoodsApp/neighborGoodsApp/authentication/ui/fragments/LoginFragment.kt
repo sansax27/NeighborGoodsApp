@@ -82,7 +82,7 @@ class LoginFragment : Fragment() {
                     User.phone = "data.phone"
                     User.role = data.role
                     User.isEmailVerified = data.isEmailVerified
-                    if (it.data.profileCreated) {
+                    if (!data.isNewUser) {
                         User.profilePicId = data.profilePicId
                         User.profileCreated = true
                         PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().apply{
@@ -93,7 +93,7 @@ class LoginFragment : Fragment() {
                         User.name = data.name
                     }
                     AppRepository.setRetrofitAuthorizedInstance(it.data.id)
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment(it.data.profileCreated, it.data.id))
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToOtpFragment(!data.isNewUser, it.data.id))
                 }
                 is State.Failure -> {
                     showLongToast(it.message)

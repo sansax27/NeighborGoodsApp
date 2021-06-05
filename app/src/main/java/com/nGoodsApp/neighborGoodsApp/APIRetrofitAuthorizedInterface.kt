@@ -54,7 +54,6 @@ interface APIRetrofitAuthorizedInterface {
     suspend fun getStates(@Query("filter") filter: String): Response<List<Id>>
 
 
-
     @FormUrlEncoded
     @PUT("Addresses/{id}")
     suspend fun updateAddress(
@@ -94,8 +93,8 @@ interface APIRetrofitAuthorizedInterface {
     suspend fun createUserDetails(
         @Path("id") userId: Int,
         @Field("firstName") name: String,
-        @Field("profilePicId") profilePicId:Int,
-        @Field("isCreated") profileCreated:Boolean
+        @Field("profilePicId") profilePicId: Int,
+        @Field("isNewUser") profileCreated: Boolean
     ): Response<Id>
 
     @GET("Addresses")
@@ -104,23 +103,61 @@ interface APIRetrofitAuthorizedInterface {
     @GET("Products")
     suspend fun getProducts(@Query("filter") filter: String): Response<List<Products>>
 
+
+    @FormUrlEncoded
     @POST("users/emailOTPVerification")
-    suspend fun verifyOtp(@Field("token") accessToken: String, @Field("code") code:String):Response<Id>
+    suspend fun verifyOtp(
+        @Field("token") token: String,
+        @Field("code") code: String,
+    ): Response<Id>
 
     @GET("Products")
-    suspend fun getProductsBasic(@Query("filter") filter: String):Response<List<ProductsBasic>>
+    suspend fun getProductsBasic(@Query("filter") filter: String): Response<List<ProductsBasic>>
 
 
     @GET("FavoriteVendors")
-    suspend fun getFavoriteVendors(@Query("filter") filter: String):Response<List<Shop>>
+    suspend fun getFavoriteVendors(@Query("filter") filter: String): Response<List<FavoriteVendor>>
 
+    @FormUrlEncoded
     @POST("FavoriteVendors")
-    suspend fun addFavoriteVendor(@Field("userId") userId:Int, @Field("vendorsId") vendorsId:Int):Response<Id>
+    suspend fun addFavoriteVendor(
+        @Field("userId") userId: Int,
+        @Field("vendorsId") vendorsId: Int
+    ): Response<Id>
 
     @DELETE("FavoriteVendors/{id}")
-    suspend fun removeFavoriteVendor(@Path("id") id:Int):Response<Id>
+    suspend fun removeFavoriteVendor(@Path("id") id: Int): Response<Id>
 
 
     @GET("FavoriteVendors")
-    suspend fun getFavoriteVendorId(@Query("filter") filter: String):Response<List<Id>>
+    suspend fun getFavoriteVendorId(@Query("filter") filter: String): Response<List<Id>>
+
+
+    @FormUrlEncoded
+    @POST("StripePayments/createCustomerCard_stripe")
+    suspend fun addCard(
+        @Field("CardHolderName") userName: String,
+        @Field("CardNumber") cardNumber: String,
+        @Field("expMonth") expiryMonth: String,
+        @Field("expYear") expiryYear: Int,
+        @Field("userId") userId: Int
+    ): Response<Card>
+
+    @FormUrlEncoded
+    @POST("StripePayments/getStripeCustomerCard")
+    suspend fun getCards(@Field("userId") userId:Int):Response<AllCards>
+
+
+    @FormUrlEncoded
+    @POST("CartItems")
+    suspend fun addCartItem(@Field("userId") userId:Int, @Field("vendorsId") vendorsId:Int, @Field("productsId") productsId:Int, @Field("quantity") quantity: String):Response<CartItem>
+
+
+    @FormUrlEncoded
+    @PATCH("CartItems/{id}")
+    suspend fun updateCartItem(@Path("id") cartItemId:Int, @Field("quantity") quantity:String):Response<CartItem>
+
+
+    @DELETE("CartItems/{id}")
+    suspend fun deleteCartItem(@Path("id")cartItemId: Int):Response<Id>
 }

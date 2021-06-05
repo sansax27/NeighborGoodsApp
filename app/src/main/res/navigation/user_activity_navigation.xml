@@ -115,6 +115,9 @@
         <action
             android:id="@+id/action_navMenuProfile_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_navMenuProfile_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myOrdersFragment"
@@ -170,4 +173,21 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/paymentsFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.PaymentsFragment"
+        android:label="fragment_payments"
+        tools:layout="@layout/fragment_payments" >
+        <argument
+            android:name="pay"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_paymentsFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
 </navigation>

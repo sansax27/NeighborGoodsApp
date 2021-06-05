@@ -70,8 +70,7 @@
                     android:scaleType="fitXY"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/shopLogo"
-                    app:srcCompat="@drawable/ic_favorite"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/ic_favorite" />
 
                 <TextView
                     android:id="@+id/shopCategories"

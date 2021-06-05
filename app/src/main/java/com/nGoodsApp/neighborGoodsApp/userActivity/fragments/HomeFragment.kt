@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
             when (it) {
                 is State.Success -> {
                     favoriteImage.setImageResource(R.drawable.ic_favorite)
+                    favoriteImage.invalidate()
                     viewModel.removeFavorite(favoriteShop)
                     setImageViewOnClickListener(favoriteImage, favoriteShop,false)
                     showLongToast("Favorite Vendor Successfully Removed!!")
@@ -145,6 +146,7 @@ class HomeFragment : Fragment() {
                     } else {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         binding.homeRoot.visibility = View.GONE
+                        binding.homePB.visibility = View.GONE
                     }
                 }
             }

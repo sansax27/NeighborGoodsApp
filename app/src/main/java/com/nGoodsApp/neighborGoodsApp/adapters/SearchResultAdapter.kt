@@ -19,7 +19,7 @@ class SearchResultAdapter(private val favoritesList:List<Shop>,private val addFa
         shopListPrivate.addAll(list)
     }
 
-    inner class ViewHolder(private val itemBinding:FilterRvItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
+    inner class ViewHolder(private val itemBinding: FilterRvItemBinding):RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data:Shop) {
             itemBinding.root.setOnClickListener {
                 if (it!=itemBinding.likeShop) {
@@ -29,11 +29,11 @@ class SearchResultAdapter(private val favoritesList:List<Shop>,private val addFa
             if (favoritesList.contains(data)) {
                 itemBinding.likeShop.setImageResource(R.drawable.ic_favorite_red)
                 itemBinding.likeShop.setOnClickListener {
-                    addFavorite(itemBinding.likeShop,data)
+                    removeFavorite(itemBinding.likeShop,data)
                 }
             } else {
                 itemBinding.likeShop.setOnClickListener {
-                    removeFavorite(itemBinding.likeShop, data)
+                    addFavorite(itemBinding.likeShop, data)
                 }
             }
             itemBinding.shopRatings.text = if (data.ratings==null) {

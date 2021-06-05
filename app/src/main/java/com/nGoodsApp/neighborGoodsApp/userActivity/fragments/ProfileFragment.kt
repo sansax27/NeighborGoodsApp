@@ -84,6 +84,9 @@ class ProfileFragment : Fragment() {
         binding.favourites.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionNavMenuProfileToSearchResultFragment(-1))
         }
+        binding.payments.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionNavMenuProfileToPaymentsFragment(false))
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

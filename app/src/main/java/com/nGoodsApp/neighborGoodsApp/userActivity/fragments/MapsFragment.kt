@@ -57,7 +57,7 @@ class MapsFragment : Fragment() {
         binding.mapView.onCreate(savedInstanceState)
         handleStatesUI(binding.mapPB, binding.mapView, true)
         userActivityViewModel.searchResultCollectionPolicy = 0
-        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
+        userActivityViewModel.searchResultCategoryPolicy.clear()
         binding.mapView.getMapAsync { p0 ->
             map = p0
             map.uiSettings.isMyLocationButtonEnabled = true
@@ -189,7 +189,7 @@ class MapsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         userActivityViewModel.searchResultCollectionPolicy = 0
-        userActivityViewModel.searchResultCategoryPolicy = mutableListOf()
+        userActivityViewModel.searchResultCategoryPolicy.clear()
     }
 
     override fun onLowMemory() {

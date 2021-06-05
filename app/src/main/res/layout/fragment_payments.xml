@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".userActivity.fragments.PaymentsFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/paymentCardRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/paymentsBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_button_drawable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/paymentHeading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/paymentOptions"
+                android:textAlignment="gravity"
+                android:textColor="@color/logoScreen"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/paymentDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/paymentsBack"
+                app:layout_constraintTop_toTopOf="@id/paymentsBack" />
+
+            <TextView
+                android:id="@+id/paymentDetails"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:text="TextView"
+                android:textAlignment="gravity"
+                app:layout_constraintBottom_toBottomOf="@id/paymentsBack"
+                app:layout_constraintEnd_toEndOf="@id/paymentHeading"
+                app:layout_constraintStart_toStartOf="@id/paymentHeading"
+                app:layout_constraintTop_toBottomOf="@id/paymentHeading" />
+
+            <TextView
+                android:id="@+id/creditDebitCards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/creditDebit"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/paymentsBack"
+                app:layout_constraintTop_toBottomOf="@id/paymentsBack" />
+
+            <TextView
+                android:id="@+id/addNewCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addNew"
+                android:textSize="24sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/creditDebitCards"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/cardsRadioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:layout_constraintEnd_toEndOf="@id/addNewCard"
+                app:layout_constraintStart_toStartOf="@id/creditDebitCards"
+                app:layout_constraintTop_toBottomOf="@id/creditDebitCards" />
+
+            <Button
+                android:id="@+id/proceedToPay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/logoScreen"
+                android:text="@string/proceedToPay"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/cardsRadioGroup"
+                app:layout_constraintStart_toStartOf="@id/cardsRadioGroup"
+                app:layout_constraintTop_toBottomOf="@id/cardsRadioGroup" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>

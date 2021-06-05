@@ -22,7 +22,7 @@
             android:id="@+id/searchDividerView"
             android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/lightGrey"
             app:layout_constraintEnd_toEndOf="@id/searchItemName"
             app:layout_constraintStart_toStartOf="@id/searchItemName"
             app:layout_constraintTop_toBottomOf="@id/searchItemName" />

@@ -8,13 +8,12 @@ import com.google.gson.Gson
 import com.nGoodsApp.neighborGoodsApp.AppRepository
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.User
-import com.nGoodsApp.neighborGoodsApp.models.Address
-import com.nGoodsApp.neighborGoodsApp.models.Category
-import com.nGoodsApp.neighborGoodsApp.models.Shop
-import com.nGoodsApp.neighborGoodsApp.models.ShopMenuItem
+import com.nGoodsApp.neighborGoodsApp.models.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +29,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         private set
 
     var searchResultCollectionPolicy = 0
-    var searchResultCategoryPolicy = mutableListOf<Int>()
+    val searchResultCategoryPolicy = mutableListOf<Int>()
 
     val toShowOnMapList = mutableListOf<Shop>()
     private var shop: Shop? = null
@@ -38,6 +37,10 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
         private set
     var shopLogo: String? = ""
         private set
+
+    private val cardsListPrivate = mutableListOf<Card>()
+    val cardsList: List<Card> get() = cardsListPrivate
+
 
     private val favoriteVendorsListPrivate = mutableListOf<Shop>()
     val favoriteVendorsList: List<Shop> get() = favoriteVendorsListPrivate
@@ -100,12 +103,18 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             val filter = Gson().toJson(
                 mapOf(
                     "where" to mapOf("userId" to User.id), "include" to listOf(
-                        mapOf("relation" to "categories"),
-                        mapOf("relation" to "logoImage"),
                         mapOf(
-                            "relation" to "bannerImage", "scope" to mapOf(
+                            "relation" to "vendors", "scope" to mapOf(
                                 "include" to listOf(
-                                    mapOf("relation" to "bannerImage")
+                                    mapOf("relation" to "categories"),
+                                    mapOf("relation" to "logoImage"),
+                                    mapOf(
+                                        "relation" to "bannerImage", "scope" to mapOf(
+                                            "include" to listOf(
+                                                mapOf("relation" to "bannerImage")
+                                            )
+                                        )
+                                    )
                                 )
                             )
                         )
@@ -114,30 +123,36 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             )
             AppRepository.getFavoriteVendors(filter)
         }
-        if (response1.await().isSuccessful && response2.await().isSuccessful) {
+        val response4 = async {
+            AppRepository.getCards()
+        }
+        if (response1.await().isSuccessful && response2.await().isSuccessful && response3.await().isSuccessful && response4.await().isSuccessful) {
             val orList = mutableListOf<Map<String, Int>>()
             for (shop in response1.await().body()!!) {
                 orList.add(mapOf("vendorsId" to shop.id))
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("or" to orList)))
-            val response4 = AppRepository.getProductsBasic(filter)
-            if (response4.isSuccessful) {
-                if (response4.body() != null) {
+            val response5 = AppRepository.getProductsBasic(filter)
+            if (response5.isSuccessful) {
+                if (response5.body() != null) {
                     productsMapPrivate.clear()
-                    for (item in response4.body()!!) {
+                    for (item in response5.body()!!) {
                         if (productsMapPrivate.containsKey(item.productName)) {
                             productsMapPrivate[item.productName]!!.add(item.vendorsId)
                         } else {
                             productsMapPrivate[item.productName] = mutableListOf(item.vendorsId)
                         }
                     }
-                    productsMapPrivate.clear()
                     categoryListPrivate.clear()
                     shopListPrivate.clear()
                     addressListPrivate.clear()
                     categoriesMapPrivate.clear()
                     favoriteVendorsListPrivate.clear()
-                    favoriteVendorsListPrivate.addAll(response3.await().body()!!)
+                    cardsListPrivate.clear()
+                    cardsListPrivate.addAll(response4.await().body()!!.data)
+                    for(favorite in response3.await().body()!!) {
+                        favoriteVendorsListPrivate.add(favorite.vendors)
+                    }
                     addressListPrivate.addAll(response2.await().body()!!)
                     shopListPrivate.addAll(response1.await().body()!!)
                     for (item in shopListPrivate) {
@@ -145,6 +160,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                             if (categoriesMapPrivate.containsKey(item.shopCategory.id)) {
                                 categoriesMapPrivate[item.shopCategory.id]!!.add(item.id)
                             } else {
+                                categoryListPrivate.add(item.shopCategory)
                                 categoriesMapPrivate[item.shopCategory.id] = mutableListOf(item.id)
                             }
                         }
@@ -160,18 +176,14 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 } else {
                     prepareHomeScreenStatusPrivate.postValue(
                         State.Failure(
-                            "${response1.await().message() ?: ""}\n${
-                                response2.await().message() ?: ""
-                            }\n${response4.message()}"
+                            response5.message()
                         )
                     )
                 }
             } else {
                 prepareHomeScreenStatusPrivate.postValue(
                     State.Failure(
-                        "${response1.await().message() ?: ""}\n${
-                            response2.await().message() ?: ""
-                        }\n${response4.message()}"
+                        response5.message()
                     )
                 )
             }
@@ -181,7 +193,9 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 State.Failure(
                     "${
                         response1.await().message() ?: ""
-                    }\n${response2.await().message() ?: ""} "
+                    }\n${response2.await().message() ?: ""}\n${
+                        response3.await().message()
+                    }\n${response4.await().message()}"
                 )
             )
         }
@@ -244,7 +258,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     }
 
 
-    fun addFavorite(favorite:Shop) {
+    fun addFavorite(favorite: Shop) {
         favoriteVendorsListPrivate.add(favorite)
     }
 
@@ -295,5 +309,9 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             }
             newShop
         }
+    }
+
+    fun addCard(card: Card) {
+        cardsListPrivate.add(card)
     }
 }

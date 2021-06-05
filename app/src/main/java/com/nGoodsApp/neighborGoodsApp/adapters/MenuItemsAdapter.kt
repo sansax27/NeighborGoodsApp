@@ -3,25 +3,40 @@ package com.nGoodsApp.neighborGoodsApp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.nGoodsApp.neighborGoodsApp.AppRepository
 import com.nGoodsApp.neighborGoodsApp.Constants
 import com.nGoodsApp.neighborGoodsApp.R
+import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.databinding.ShopMenuItemBinding
 import com.nGoodsApp.neighborGoodsApp.models.Shop
 import com.nGoodsApp.neighborGoodsApp.models.ShopMenuItem
 import com.nGoodsApp.neighborGoodsApp.userActivity.viewModels.UserActivityViewModel
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivityViewModel) :
     RecyclerView.Adapter<MenuItemsAdapter.ViewHolder>() {
-    private val menuItemList = mutableListOf<ShopMenuItem>()
 
+    private val addItemStatusPrivate = MutableLiveData<State<String>>()
+    val addItemStatus:LiveData<State<String>> get() = addItemStatusPrivate
+
+    private val deleteItemStatusPrivate = MutableLiveData<State<String>>()
+    val deleteItemStatus:LiveData<State<String>> get() = deleteItemStatusPrivate
+
+    private val menuItemList = mutableListOf<ShopMenuItem>()
     fun submitList(list: List<ShopMenuItem>) {
         menuItemList.clear()
         menuItemList.addAll(list)
     }
 
+    private val updateItemStatusPrivate = MutableLiveData<State<String>>()
+    val updateItemStatus:LiveData<State<String>> get() = updateItemStatusPrivate
+
+    private val addedItemMap = mutableMapOf<Int, Int>()
     inner class ViewHolder(private val itemBinding: ShopMenuItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: ShopMenuItem) {
@@ -40,28 +55,80 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                     .placeholder(R.drawable.ic_logo_placeholder).into(itemBinding.shopItemImage)
             }
             itemBinding.addItem.setOnClickListener {
-                if (viewModel.getShopId() != shop.id) {
-                    viewModel.giveShop(shop)
+                addItemStatusPrivate.postValue(State.Loading())
+                viewModel.viewModelScope.launch {
+                    val response = AppRepository.addCartItem(data.vendorsId, data.id)
+                    if (response.isSuccessful) {
+                        if (response.body()!=null) {
+                            if (viewModel.getShopId() != shop.id) {
+                                viewModel.giveShop(shop)
+                            }
+                            it.visibility = View.GONE
+                            itemBinding.addItemLL.visibility = View.VISIBLE
+                            viewModel.addItem(data)
+                            addedItemMap[data.id] = response.body()!!.id
+                            addItemStatusPrivate.postValue(State.Success("Success"))
+                        } else {
+                            addItemStatusPrivate.postValue(State.Failure(response.message()))
+                        }
+                    } else {
+                        addItemStatusPrivate.postValue(State.Failure(response.message()))
+                    }
                 }
-                it.visibility = View.GONE
-                itemBinding.addItemLL.visibility = View.VISIBLE
-                viewModel.addItem(data)
+
             }
             itemBinding.addItemIcon.setOnClickListener {
+                updateItemStatusPrivate.postValue(State.Loading())
                 val quantity = itemBinding.noOfItems.text.toString().toInt()
-                viewModel.updateQuantity(data, quantity + 1)
-                itemBinding.noOfItems.text = (quantity + 1).toString()
+                viewModel.viewModelScope.launch {
+                    val response = AppRepository.updateCartItem(addedItemMap[data.id]!!,(quantity+1).toString())
+                    if (response.isSuccessful) {
+                        if (response.body()!=null) {
+                            viewModel.updateQuantity(data, quantity + 1)
+                            itemBinding.noOfItems.text = (quantity + 1).toString()
+                            updateItemStatusPrivate.postValue(State.Success("Success"))
+                        } else {
+                            updateItemStatusPrivate.postValue(State.Failure(response.message()))
+                        }
+                    } else {
+                        updateItemStatusPrivate.postValue(State.Failure(response.message()))
+                    }
+                }
             }
             itemBinding.removeItem.setOnClickListener {
                 val quantity = itemBinding.noOfItems.text.toString().toInt()
                 if (quantity == 1) {
-                    itemBinding.addItemLL.visibility = View.GONE
-                    itemBinding.addItem.visibility = View.VISIBLE
-                    viewModel.updateQuantity(data, 0)
-                    return@setOnClickListener
+                    viewModel.viewModelScope.launch {
+                        val response = AppRepository.deleteCartItem(addedItemMap[data.id]!!)
+                        if (response.isSuccessful) {
+                            if (response.body()!=null) {
+                                itemBinding.addItemLL.visibility = View.GONE
+                                itemBinding.addItem.visibility = View.VISIBLE
+                                viewModel.updateQuantity(data, 0)
+                                deleteItemStatusPrivate.postValue(State.Success("Success"))
+                            } else {
+                                deleteItemStatusPrivate.postValue(State.Failure(response.message()))
+                            }
+                        } else {
+                            deleteItemStatusPrivate.postValue(State.Failure(response.message()))
+                        }
+                    }
+                } else {
+                    viewModel.viewModelScope.launch {
+                        val response = AppRepository.updateCartItem(addedItemMap[data.id]!!, (quantity-1).toString())
+                        if (response.isSuccessful) {
+                            if (response.body()!=null) {
+                                viewModel.updateQuantity(data, quantity - 1)
+                                itemBinding.noOfItems.text = (quantity - 1).toString()
+                                updateItemStatusPrivate.postValue(State.Success("Success"))
+                            } else {
+                                updateItemStatusPrivate.postValue(State.Failure(response.message()))
+                            }
+                        } else {
+                            updateItemStatusPrivate.postValue(State.Failure(response.message()))
+                        }
+                    }
                 }
-                viewModel.updateQuantity(data, quantity - 1)
-                itemBinding.noOfItems.text = (quantity - 1).toString()
             }
         }
     }

@@ -24,7 +24,7 @@ class ShopAdapter(private val favoriteShopList:List<Shop>,private val shopList: 
                 }
             } else {
                 itemBinding.likeShop.setOnClickListener {
-                    addFavorite(itemBinding.shopLogo, data)
+                    addFavorite(itemBinding.likeShop, data)
                 }
             }
             itemBinding.shopRatings.text = if (data.ratings == null) {

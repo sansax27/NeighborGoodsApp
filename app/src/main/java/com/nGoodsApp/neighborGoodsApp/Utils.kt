@@ -156,4 +156,17 @@ object Utils {
         }
         return successLiveData
     }
+
+    fun Fragment.handleCommonUIStatus(liveData:LiveData<State<String>>, view: View, viewGroup: ViewGroup) {
+        liveData.observe(this) {
+            when(it) {
+                is State.Success -> handleStatesUI(view, viewGroup, false)
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(view,viewGroup, false)
+                }
+                is State.Loading -> handleStatesUI(view, viewGroup, true)
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,14 +84,15 @@
             app:layout_constraintStart_toEndOf="@+id/editAddress"
             app:layout_constraintTop_toBottomOf="@id/addressCity" />
 
-    <View
-        android:id="@+id/chooseAddressDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@id/deleteAddress"
-        app:layout_constraintStart_toStartOf="@id/editAddress"
-        app:layout_constraintTop_toBottomOf="@id/editAddress" />
+
+        <View
+            android:id="@+id/chooseAddressDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@id/deleteAddress"
+            app:layout_constraintStart_toStartOf="@id/editAddress"
+            app:layout_constraintTop_toBottomOf="@id/editAddress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

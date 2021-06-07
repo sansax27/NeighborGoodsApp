@@ -95,7 +95,7 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
             }
             if (response1.await().isSuccessful && response2.await().isSuccessful) {
                 profilePicId = response1.await().body()!![0].id
-                val response3 = AppRepository.createUserDetails(User.id, name, profilePicId, true)
+                val response3 = AppRepository.createUserDetails(User.id, name, profilePicId, false)
                 if (response3.isSuccessful) {
                     if (response3.body()!=null) {
                         createProfileStatusPrivate.postValue(State.Success("Success"))

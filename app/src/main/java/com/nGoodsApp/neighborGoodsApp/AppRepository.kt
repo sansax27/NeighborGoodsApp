@@ -1,5 +1,6 @@
 package com.nGoodsApp.neighborGoodsApp
 
+import com.nGoodsApp.neighborGoodsApp.models.PlaceOrderItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
@@ -67,8 +68,6 @@ object AppRepository {
             )
         }
 
-    suspend fun getCategories(filter: String) =
-        withContext(Dispatchers.IO) { retrofitAuthorizedInstance!!.getCategories(filter) }
 
     suspend fun getVendors(filter: String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getVendors(filter)
@@ -100,8 +99,8 @@ object AppRepository {
         )
     }
 
-    suspend fun createUserDetails(userId: Int, name: String, profilePicId:Int, profileCreated: Boolean) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.createUserDetails(userId, name, profilePicId, profileCreated)
+    suspend fun createUserDetails(userId: Int, name: String, profilePicId:Int, isNewUser: Boolean) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.createUserDetails(userId, name, profilePicId, isNewUser)
     }
     suspend fun deleteAddress(addressId: Int) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.deleteAddress(addressId)
@@ -117,9 +116,8 @@ object AppRepository {
         name: String,
         email: String,
         phone: String,
-        isVerified: Boolean
     ) = withContext(Dispatchers.IO) {
-        retrofitAuthorizedInstance!!.updateUserDetails(userId, name, email, phone, isVerified, User.accessToken)
+        retrofitAuthorizedInstance!!.updateUserDetails(userId, name, email, phone, User.accessToken)
     }
 
     suspend fun getUserAddresses(filter: String) = withContext(Dispatchers.IO) {
@@ -171,5 +169,13 @@ object AppRepository {
 
     suspend fun deleteCartItem(cartItemId:Int) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.deleteCartItem(cartItemId)
+    }
+
+    suspend fun placeOrder(userCardId:String, vendorId:Int, products:List<PlaceOrderItem>, addressId:Int) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.placeOrder(User.id.toString(),userCardId, vendorId, products, addressId)
+    }
+
+    suspend fun getUserCountByQuery(query:String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getUserCountByQuery(query)
     }
 }

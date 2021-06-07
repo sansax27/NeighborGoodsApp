@@ -206,7 +206,12 @@
     <string name="cvv">CVV</string>
 
     <string name="nameOnCard">Name On Card</string>
-    
+
     <string name="cardNumber">XXXX XXXX XXXX %s</string>
+
+    <string name="paymentSuccessful">Payment Successful And Order Placed. You can check the Status Of Orders in Manage Orders Section.</string>
+    <string name="selectAddress">Select Address</string>
+
+    <string name="euroAmount">%s €</string>
 
 </resources>

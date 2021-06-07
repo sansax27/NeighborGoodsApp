@@ -79,6 +79,7 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
             }
             itemBinding.addItemIcon.setOnClickListener {
                 updateItemStatusPrivate.postValue(State.Loading())
+                itemBinding.addItemIcon.isEnabled = false
                 val quantity = itemBinding.noOfItems.text.toString().toInt()
                 viewModel.viewModelScope.launch {
                     val response = AppRepository.updateCartItem(addedItemMap[data.id]!!,(quantity+1).toString())
@@ -86,45 +87,57 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                         if (response.body()!=null) {
                             viewModel.updateQuantity(data, quantity + 1)
                             itemBinding.noOfItems.text = (quantity + 1).toString()
+                            itemBinding.addItemIcon.isEnabled = true
                             updateItemStatusPrivate.postValue(State.Success("Success"))
                         } else {
+                            itemBinding.addItemIcon.isEnabled = false
                             updateItemStatusPrivate.postValue(State.Failure(response.message()))
                         }
                     } else {
+                        itemBinding.addItemIcon.isEnabled = false
                         updateItemStatusPrivate.postValue(State.Failure(response.message()))
                     }
                 }
             }
             itemBinding.removeItem.setOnClickListener {
                 val quantity = itemBinding.noOfItems.text.toString().toInt()
+                itemBinding.removeItem.isEnabled = false
                 if (quantity == 1) {
                     viewModel.viewModelScope.launch {
                         val response = AppRepository.deleteCartItem(addedItemMap[data.id]!!)
+                        deleteItemStatusPrivate.postValue(State.Loading())
                         if (response.isSuccessful) {
                             if (response.body()!=null) {
                                 itemBinding.addItemLL.visibility = View.GONE
                                 itemBinding.addItem.visibility = View.VISIBLE
                                 viewModel.updateQuantity(data, 0)
+                                itemBinding.removeItem.isEnabled = true
                                 deleteItemStatusPrivate.postValue(State.Success("Success"))
                             } else {
+                                itemBinding.removeItem.isEnabled = true
                                 deleteItemStatusPrivate.postValue(State.Failure(response.message()))
                             }
                         } else {
+                            itemBinding.removeItem.isEnabled = true
                             deleteItemStatusPrivate.postValue(State.Failure(response.message()))
                         }
                     }
                 } else {
                     viewModel.viewModelScope.launch {
                         val response = AppRepository.updateCartItem(addedItemMap[data.id]!!, (quantity-1).toString())
+                        updateItemStatusPrivate.postValue(State.Loading())
                         if (response.isSuccessful) {
                             if (response.body()!=null) {
                                 viewModel.updateQuantity(data, quantity - 1)
                                 itemBinding.noOfItems.text = (quantity - 1).toString()
+                                itemBinding.removeItem.isEnabled = true
                                 updateItemStatusPrivate.postValue(State.Success("Success"))
                             } else {
+                                itemBinding.removeItem.isEnabled = true
                                 updateItemStatusPrivate.postValue(State.Failure(response.message()))
                             }
                         } else {
+                            itemBinding.removeItem.isEnabled = true
                             updateItemStatusPrivate.postValue(State.Failure(response.message()))
                         }
                     }

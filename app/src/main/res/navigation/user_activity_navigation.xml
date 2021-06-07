@@ -85,6 +85,9 @@
         <action
             android:id="@+id/action_cartFragment_to_itemCustomizationFragment"
             app:destination="@id/itemCustomizationFragment" />
+        <action
+            android:id="@+id/action_navMenuCart_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/navMenuSearch"
@@ -151,6 +154,12 @@
         <action
             android:id="@+id/action_addressFragment_to_addAddressFragment"
             app:destination="@id/addAddressFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
+        <argument
+            android:name="select"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
@@ -184,10 +193,18 @@
         <action
             android:id="@+id/action_paymentsFragment_to_addCardFragment"
             app:destination="@id/addCardFragment" />
+        <action
+            android:id="@+id/action_paymentsFragment_to_paymentConfirmationFragment"
+            app:destination="@id/paymentConfirmationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
         android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.AddCardFragment"
         android:label="fragment_add_card"
         tools:layout="@layout/fragment_add_card" />
+    <fragment
+        android:id="@+id/paymentConfirmationFragment"
+        android:name="com.nGoodsApp.neighborGoodsApp.userActivity.fragments.PaymentConfirmationFragment"
+        android:label="fragment_payment_confirmation"
+        tools:layout="@layout/fragment_payment_confirmation" />
 </navigation>

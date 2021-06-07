@@ -11,10 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.User
 import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
+import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
 import com.nGoodsApp.neighborGoodsApp.Utils.logout
+import com.nGoodsApp.neighborGoodsApp.Utils.noNetwork
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.adapters.AddressAdapter
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentAddressBinding
@@ -33,29 +36,45 @@ class AddressFragment : Fragment() {
     private var newDefaultAddressId = -1
     private var deleteAddress: Address? = null
     private val updateDefaultAddress = fun(addressId: Int) {
-        newDefaultAddressId = addressId
-        viewModel.updateDefaultAddress(User.id, addressId)
-    }
-    private val deleteAddressFunction = fun(address: Address) {
-        deleteAddress = address
-        if (!address.default) {
-            viewModel.deleteAddress(address.id)
+        if (isConnected(requireContext())) {
+            newDefaultAddressId = addressId
+            viewModel.updateDefaultAddress(User.id, addressId)
         } else {
-            showLongToast("Can't Delete Default Address!!")
+            noNetwork()
         }
     }
-    private val addressAdapter = AddressAdapter(updateDefaultAddress, deleteAddressFunction) {
-        findNavController().navigate(
-            AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(
-                it,
-                true
-            )
-        )
+    private val deleteAddressFunction = fun(address: Address) {
+        if (isConnected(requireContext())) {
+            deleteAddress = address
+            if (!address.default) {
+                viewModel.deleteAddress(address.id)
+            } else {
+                showLongToast("Can't Delete Default Address!!")
+            }
+        }  else {
+            noNetwork()
+        }
     }
+    private val selectAddress = fun (data:Address) {
+        addressViewModel.selectedAddress = data
+        findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToPaymentsFragment(true))
+    }
+    private lateinit var addressAdapter:AddressAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentAddressBinding.inflate(layoutInflater)
+        addressAdapter = AddressAdapter(requireArguments().getBoolean("select"),selectAddress, updateDefaultAddress, deleteAddressFunction) {
+            findNavController().navigate(
+                AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(
+                    it,
+                    true
+                )
+            )
+        }
+        binding.addressBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.manageAddressRV.apply {
             addressAdapter.submitList(addressViewModel.addressList)
             addressAdapter.notifyDataSetChanged()
@@ -63,6 +82,9 @@ class AddressFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext()).apply {
                 orientation = RecyclerView.VERTICAL
             }
+        }
+        if (requireArguments().getBoolean("select")) {
+            binding.addressHeading.text = getString(R.string.selectAddress)
         }
         viewModel.updateDefaultAddressStatus.observe(this) {
             when (it) {

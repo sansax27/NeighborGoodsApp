@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,8 +47,11 @@ class CartFragment : Fragment() {
         }
         binding.cartShopName.text = manageCartViewModel.shopName
         manageCartViewModel.totalPrice.observe(this) {
-            binding.toPayAmount.text = it.toString()
-            binding.itemTotalAmount.text = it.toString()
+            binding.toPayAmount.text = getString(R.string.euroAmount).format(it)
+            binding.itemTotalAmount.text = getString(R.string.euroAmount).format(it)
+        }
+        binding.checkoutButton.setOnClickListener {
+            findNavController().navigate(CartFragmentDirections.actionNavMenuCartToAddressFragment(true))
         }
     }
 

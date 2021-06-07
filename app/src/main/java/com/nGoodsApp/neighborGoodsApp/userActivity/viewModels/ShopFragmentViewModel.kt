@@ -18,7 +18,7 @@ class ShopFragmentViewModel : ViewModel() {
     fun getProducts(vendorId: Int) = viewModelScope.launch {
         val filter = Gson().toJson(
             mapOf(
-                "where" to mapOf("vendorId" to vendorId), "include" to listOf(
+                "where" to mapOf("vendorsId" to vendorId), "include" to listOf(
                     mapOf("relation" to "categories"),
                     mapOf("relation" to "productPrices"),
                     mapOf("relation" to "productTags"),

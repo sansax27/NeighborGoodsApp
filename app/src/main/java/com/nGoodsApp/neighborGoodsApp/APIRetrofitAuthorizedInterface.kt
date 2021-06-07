@@ -8,8 +8,6 @@ import retrofit2.http.*
 interface APIRetrofitAuthorizedInterface {
 
 
-    @GET("Categories")
-    suspend fun getCategories(@Query("filter") filter: String): Response<List<Category>>
 
     @GET("Vendors")
     suspend fun getVendors(@Query("filter") filter: String): Response<List<Shop>>
@@ -84,7 +82,6 @@ interface APIRetrofitAuthorizedInterface {
         @Field("firstName") name: String,
         @Field("email") email: String,
         @Field("phone") phone: String,
-        @Field("isEmailVerified") isVerified: Boolean,
         @Query("access_token") accessToken: String
     ): Response<UserDetails>
 
@@ -94,7 +91,7 @@ interface APIRetrofitAuthorizedInterface {
         @Path("id") userId: Int,
         @Field("firstName") name: String,
         @Field("profilePicId") profilePicId: Int,
-        @Field("isNewUser") profileCreated: Boolean
+        @Field("isNewUser") isNewUser: Boolean
     ): Response<Id>
 
     @GET("Addresses")
@@ -160,4 +157,12 @@ interface APIRetrofitAuthorizedInterface {
 
     @DELETE("CartItems/{id}")
     suspend fun deleteCartItem(@Path("id")cartItemId: Int):Response<Id>
+
+
+    @FormUrlEncoded
+    @POST("StripePayments/customerPlaceOrder")
+    suspend fun placeOrder(@Field("userId") userId:String, @Field("userCardId") userCardId:String, @Field("vendorId") vendorId:Int, @Field("product") product:List<PlaceOrderItem>, @Field("addressId") addressId: Int):Response<PlaceOrderClientSecret>
+
+    @GET("users/count")
+    suspend fun getUserCountByQuery(@Query("where") query: String):Response<UserCount>
 }

@@ -39,6 +39,7 @@
                     android:id="@+id/shopLogo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toTopOf="@id/distanceBarrier"
                     app:layout_constraintStart_toStartOf="parent"

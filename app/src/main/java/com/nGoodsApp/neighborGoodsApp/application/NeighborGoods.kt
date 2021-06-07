@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.PreferenceManager
 import com.nGoodsApp.neighborGoodsApp.BuildConfig
+import com.stripe.android.PaymentConfiguration
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -27,6 +28,11 @@ class NeighborGoods: Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
+        PaymentConfiguration.init(
+            applicationContext,
+            "pk_test_51IdCiXE1e1bineRZmQBEy9nIRvX8O2rry6UsxQjvxLjS0EliBzUXy0eYuBboFlyL4WlyxfpqiZS8FhTBA8NxCMte005tOlGUUH"
+
+        )
     }
 
 }

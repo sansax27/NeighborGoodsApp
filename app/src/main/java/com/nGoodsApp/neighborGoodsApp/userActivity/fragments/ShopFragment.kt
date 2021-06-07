@@ -54,6 +54,7 @@ class ShopFragment : Fragment() {
         val shop = requireArguments().getSerializable("Shop") as Shop
         binding.shopFragmentName.text = shop.shopName
         handleStatesUI(binding.shopPB, binding.shopRoot, true)
+
         lifecycleScope.launch {
             if (isConnected(requireContext())) {
                 viewModel.getProducts(shop.id)
@@ -62,7 +63,15 @@ class ShopFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     findNavController().popBackStack()
                 }, 2000)
+                return@launch
             }
+            try {
+                binding.shopLocation.text =
+                    Geocoder(requireContext()).getFromLocation(27.0, 27.0, 1)[0].adminArea
+            } catch (e:Exception) {
+                binding.shopLocation.text = "Helsinki"
+            }
+
             val shopListId = shop.id
             rvAdapter = MenuItemsAdapter(shop, manageCartViewModel)
             handleCommonUIStatus(rvAdapter.addItemStatus, binding.shopPB, binding.shopRoot)
@@ -82,8 +91,6 @@ class ShopFragment : Fragment() {
             } else {
                 "100+"
             }
-            binding.shopLocation.text =
-                Geocoder(requireContext()).getFromLocation(27.0, 27.0, 1)[0].adminArea
             if (shop.delivery) {
                 binding.deliveryEligible.setTextColor("#FFFF88".toColorInt())
             }

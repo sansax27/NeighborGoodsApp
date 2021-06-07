@@ -38,6 +38,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
     var shopLogo: String? = ""
         private set
 
+    var selectedAddress:Address? = null
     private val cardsListPrivate = mutableListOf<Card>()
     val cardsList: List<Card> get() = cardsListPrivate
 
@@ -53,6 +54,8 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
 
     val searchResultVendorPolicy = mutableListOf<Int>()
 
+
+    var addedCard = false
 
     private val addressListPrivate = mutableListOf<Address>()
     val addressList: List<Address> get() = addressListPrivate
@@ -149,6 +152,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                     categoriesMapPrivate.clear()
                     favoriteVendorsListPrivate.clear()
                     cardsListPrivate.clear()
+                    Timber.i(response4.await().body()!!.data.size.toString()+"DDDDD")
                     cardsListPrivate.addAll(response4.await().body()!!.data)
                     for(favorite in response3.await().body()!!) {
                         favoriteVendorsListPrivate.add(favorite.vendors)
@@ -172,6 +176,8 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                             break
                         }
                     }
+                    Timber.i(cardsListPrivate.size.toString()+"FFFFF")
+                    Timber.i(cardsList.size.toString()+"PPPPP")
                     prepareHomeScreenStatusPrivate.postValue(State.Success("Success"))
                 } else {
                     prepareHomeScreenStatusPrivate.postValue(

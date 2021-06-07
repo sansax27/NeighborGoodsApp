@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
             }
         }
         binding.manageAddress.setOnClickListener {
-            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAddressFragment())
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAddressFragment(false))
         }
         binding.favourites.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionNavMenuProfileToSearchResultFragment(-1))

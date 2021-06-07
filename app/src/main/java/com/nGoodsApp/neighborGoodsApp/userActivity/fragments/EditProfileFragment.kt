@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.nGoodsApp.neighborGoodsApp.R
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.User
@@ -19,6 +21,7 @@ import com.nGoodsApp.neighborGoodsApp.Utils.isValidEmail
 import com.nGoodsApp.neighborGoodsApp.Utils.isValidPhone
 import com.nGoodsApp.neighborGoodsApp.Utils.logout
 import com.nGoodsApp.neighborGoodsApp.Utils.noNetwork
+import com.nGoodsApp.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.authentication.ui.activity.MainActivity
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentEditProfileBinding
@@ -32,7 +35,7 @@ class EditProfileFragment : Fragment() {
     private val binding: FragmentEditProfileBinding get() = _binding
 
     private val viewModel: EditProfileFragmentViewModel by viewModels()
-
+    private var requireLogin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentEditProfileBinding.inflate(layoutInflater)
@@ -54,21 +57,18 @@ class EditProfileFragment : Fragment() {
                 nameLayer.error = "Name must not be Blank or Empty Or Length < 5"
             } else {
                 if (isConnected(requireContext())) {
-                    if (email.text.toString() != User.email || phone.text.toString() != User.phone) {
-                        viewModel.updateUserDetails(
-                            userId,
-                            name.text.toString(),
-                            email.text.toString(),
-                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
-                            false
-                        )
+                    if (email.text.toString()!=User.email || phone.text.toString()!=User.phone) {
+                        requireLogin = true
+                    }
+                    if (email.text.toString()!=User.email) {
+                        val query = Gson().toJson(mapOf("email" to email.text.toString())).toString()
+                        viewModel.getUserCountByQuery(query)
                     } else {
                         viewModel.updateUserDetails(
                             userId,
                             name.text.toString(),
                             email.text.toString(),
-                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString(),
-                            true
+                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString()
                         )
                     }
                 } else {
@@ -76,16 +76,43 @@ class EditProfileFragment : Fragment() {
                 }
             }
         }
+        viewModel.getUserCountStatus.observe(this) {
+            when(it) {
+                is State.Loading -> handleStatesUI(binding.editProfilePB, binding.editProfileRoot, true)
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(binding.editProfilePB, binding.editProfileRoot, false)
+                }
+                is State.Success -> {
+                    if (it.data.count>0) {
+                        showLongToast("Email Id Already Exists!!")
+                        handleStatesUI(binding.editProfilePB, binding.editProfileRoot, false)
+                    } else {
+                        viewModel.updateUserDetails(
+                            userId,
+                            name.text.toString(),
+                            email.text.toString(),
+                            resources.getStringArray(R.array.countryCodes)[binding.editProfileCountryCode.selectedItemPosition] + phone.text.toString()
+                        )
+                    }
+                }
+            }
+        }
         viewModel.editProfileStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    showLongToast("Successfully Edited Details, Now Login Again!!")
-                    requireActivity().startActivityFromFragment(
-                        this,
-                        Intent(requireActivity(), MainActivity::class.java),
-                        140
-                    )
-                    requireActivity().finish()
+                    if (requireLogin) {
+                        showLongToast("Successfully Edited Details, Now Login Again!!")
+                        requireActivity().startActivityFromFragment(
+                            this,
+                            Intent(requireActivity(), MainActivity::class.java),
+                            140
+                        )
+                        requireActivity().finish()
+                    } else {
+                        showLongToast("Profile Successfully Updated!!")
+                        findNavController().popBackStack()
+                    }
                 }
                 is State.Loading -> handleStatesUI(
                     binding.editProfilePB,

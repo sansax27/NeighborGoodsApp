@@ -1,6 +1,6 @@
 package com.nGoodsApp.neighborGoodsApp
 
 object Constants {
-    const val BASE_URL = "http://54.237.210.1:3000/api/"
-    const val BASE_IMG_URL = "http://54.237.210.1:3000"
+    const val BASE_URL = "https://www.test.conceptx.fi/api/"
+    const val BASE_IMG_URL = "https://www.test.conceptx.fi"
 }

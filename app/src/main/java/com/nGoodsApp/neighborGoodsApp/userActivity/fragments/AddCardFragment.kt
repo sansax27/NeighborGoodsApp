@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.forEach
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nGoodsApp.neighborGoodsApp.R
@@ -25,7 +26,7 @@ class AddCardFragment : Fragment() {
     private lateinit var _binding:FragmentAddCardBinding
     private val binding:FragmentAddCardBinding get() = _binding
     private val viewModel:AddCardFragmentViewModel by viewModels()
-    private val userActivityViewModel:UserActivityViewModel by viewModels()
+    private val userActivityViewModel:UserActivityViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentAddCardBinding.inflate(layoutInflater)
@@ -83,9 +84,9 @@ class AddCardFragment : Fragment() {
                     }
                 }
             }
-            binding.addCardBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
+        }
+        binding.addCardBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

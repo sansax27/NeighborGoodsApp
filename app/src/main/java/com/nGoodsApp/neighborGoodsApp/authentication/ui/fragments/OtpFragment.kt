@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,6 +38,21 @@ class OtpFragment : Fragment() {
                 val otp =
                     binding.otp1.text.toString() + binding.otp2.text.toString() + binding.otp3.text.toString() + binding.otp4.text.toString()
                 viewModel.verifyOtp(requireArguments().getString("accessToken", ""), otp)
+            }
+        }
+        binding.otp1.doOnTextChanged { text, _, _, _ ->
+            if (text!!.length==1) {
+                binding.otp2.requestFocus()
+            }
+        }
+        binding.otp2.doOnTextChanged { text, _, _, _ ->
+            if (text!!.length==1) {
+                binding.otp3.requestFocus()
+            }
+        }
+        binding.otp3.doOnTextChanged { text, _, _, _ ->
+            if (text!!.length==1) {
+                binding.otp4.requestFocus()
             }
         }
         viewModel.verifyOtpStatus.observe(this) {

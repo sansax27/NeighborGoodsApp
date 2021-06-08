@@ -54,7 +54,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
 
     val searchResultVendorPolicy = mutableListOf<Int>()
 
-
+    val addedItemMap = mutableMapOf<Int, Int>()
     var addedCard = false
 
     private val addressListPrivate = mutableListOf<Address>()
@@ -77,7 +77,8 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
                 Gson().toJson(
                     mapOf(
                         "include" to listOf(
-                            mapOf("relation" to "categories"),
+                            mapOf("relation" to "categories", "scope" to mapOf("include" to listOf(
+                                mapOf("relation" to "images")))),
                             mapOf("relation" to "logoImage"),
                             mapOf(
                                 "relation" to "bannerImage", "scope" to mapOf(
@@ -315,6 +316,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             }
             newShop
         }
+        addedItemMap.clear()
     }
 
     fun addCard(card: Card) {

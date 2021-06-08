@@ -8,24 +8,17 @@
         android:layout_marginBottom="16dp">
 
         <RadioButton
-            android:id="@+id/itemCustomizationDetailsRadioButton"
+            android:id="@+id/paymentRadioButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="RadioButton"
+            android:buttonTint="@color/selectButtonColor"
+            android:drawableEnd="@drawable/ic_mastercard"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@id/itemCustomizationPrice"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/itemCustomizationPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/itemCustomizationDetailsRadioButton"
-            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

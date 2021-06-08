@@ -36,7 +36,6 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
     private val updateItemStatusPrivate = MutableLiveData<State<String>>()
     val updateItemStatus:LiveData<State<String>> get() = updateItemStatusPrivate
 
-    private val addedItemMap = mutableMapOf<Int, Int>()
     inner class ViewHolder(private val itemBinding: ShopMenuItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(data: ShopMenuItem) {
@@ -66,7 +65,7 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                             it.visibility = View.GONE
                             itemBinding.addItemLL.visibility = View.VISIBLE
                             viewModel.addItem(data)
-                            addedItemMap[data.id] = response.body()!!.id
+                            viewModel.addedItemMap[data.id] = response.body()!!.id
                             addItemStatusPrivate.postValue(State.Success("Success"))
                         } else {
                             addItemStatusPrivate.postValue(State.Failure(response.message()))
@@ -82,7 +81,7 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                 itemBinding.addItemIcon.isEnabled = false
                 val quantity = itemBinding.noOfItems.text.toString().toInt()
                 viewModel.viewModelScope.launch {
-                    val response = AppRepository.updateCartItem(addedItemMap[data.id]!!,(quantity+1).toString())
+                    val response = AppRepository.updateCartItem(viewModel.addedItemMap[data.id]!!,(quantity+1).toString())
                     if (response.isSuccessful) {
                         if (response.body()!=null) {
                             viewModel.updateQuantity(data, quantity + 1)
@@ -104,7 +103,7 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                 itemBinding.removeItem.isEnabled = false
                 if (quantity == 1) {
                     viewModel.viewModelScope.launch {
-                        val response = AppRepository.deleteCartItem(addedItemMap[data.id]!!)
+                        val response = AppRepository.deleteCartItem(viewModel.addedItemMap[data.id]!!)
                         deleteItemStatusPrivate.postValue(State.Loading())
                         if (response.isSuccessful) {
                             if (response.body()!=null) {
@@ -124,7 +123,7 @@ class MenuItemsAdapter(private val shop: Shop, private val viewModel: UserActivi
                     }
                 } else {
                     viewModel.viewModelScope.launch {
-                        val response = AppRepository.updateCartItem(addedItemMap[data.id]!!, (quantity-1).toString())
+                        val response = AppRepository.updateCartItem(viewModel.addedItemMap[data.id]!!, (quantity-1).toString())
                         updateItemStatusPrivate.postValue(State.Loading())
                         if (response.isSuccessful) {
                             if (response.body()!=null) {

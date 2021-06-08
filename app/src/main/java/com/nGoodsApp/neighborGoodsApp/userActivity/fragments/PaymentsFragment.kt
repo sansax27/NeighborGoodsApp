@@ -19,6 +19,7 @@ import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
 import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
 import com.nGoodsApp.neighborGoodsApp.Utils.noNetwork
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
+import com.nGoodsApp.neighborGoodsApp.databinding.CustomRadioButtonLayoutBinding
 import com.nGoodsApp.neighborGoodsApp.databinding.FragmentPaymentsBinding
 import com.nGoodsApp.neighborGoodsApp.models.PlaceOrderItem
 import com.nGoodsApp.neighborGoodsApp.userActivity.viewModels.PaymentFragmentViewModel
@@ -39,9 +40,9 @@ class PaymentsFragment : Fragment() {
     private lateinit var _binding: FragmentPaymentsBinding
     private val binding: FragmentPaymentsBinding get() = _binding
     private val userActivityViewModel: UserActivityViewModel by activityViewModels()
-    val viewModel:PaymentFragmentViewModel by viewModels()
+    val viewModel: PaymentFragmentViewModel by viewModels()
     private var isFirstTime = true
-    private lateinit var stripe:Stripe
+    private lateinit var stripe: Stripe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentPaymentsBinding.inflate(layoutInflater)
@@ -50,13 +51,16 @@ class PaymentsFragment : Fragment() {
             binding.cardsRadioGroup.addView(RadioButton(requireContext()).apply {
                 text =
                     getString(R.string.cardNumber).format(userActivityViewModel.cardsList[i].last4)
+                minWidth = 10000
                 buttonDrawable!!.setTint(resources.getColor(R.color.selectButtonColor))
-                setCompoundDrawables(
+                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                setCompoundDrawablesWithIntrinsicBounds(
                     null,
                     null,
                     resources.getDrawable(R.drawable.ic_mastercard),
                     null
                 )
+                setPadding(10, 10, 10, 10)
                 tag = i
             })
         }
@@ -65,7 +69,8 @@ class PaymentsFragment : Fragment() {
             binding.paymentDetails.visibility = View.GONE
             binding.cardInputWidget.visibility = View.GONE
         } else {
-            binding.paymentDetails.text = getString(R.string.euroAmount).format(userActivityViewModel.totalPrice.value)
+            binding.paymentDetails.text =
+                getString(R.string.euroAmount).format(userActivityViewModel.totalPrice.value)
         }
         if (userActivityViewModel.cardsList.isEmpty()) {
             showLongToast("There are No Added Cards!!")
@@ -113,14 +118,18 @@ class PaymentsFragment : Fragment() {
                 noNetwork()
             }
         }
-        binding.cardsRadioGroup.setOnCheckedChangeListener{ _, _ ->
-            val index = binding.cardsRadioGroup.findViewById<RadioButton>(binding.cardsRadioGroup.checkedRadioButtonId).tag as Int
-            binding.cardInputWidget.setExpiryDate(userActivityViewModel.cardsList[index].expiryMonth, userActivityViewModel.cardsList[index].expiryYear)
+        binding.cardsRadioGroup.setOnCheckedChangeListener { _, _ ->
+            val index =
+                binding.cardsRadioGroup.findViewById<RadioButton>(binding.cardsRadioGroup.checkedRadioButtonId).tag as Int
+            binding.cardInputWidget.setExpiryDate(
+                userActivityViewModel.cardsList[index].expiryMonth,
+                userActivityViewModel.cardsList[index].expiryYear
+            )
 
         }
 
-        viewModel.placeOrderStatus.observe(this){
-            when(it) {
+        viewModel.placeOrderStatus.observe(this) {
+            when (it) {
                 is State.Success -> {
                     val params = binding.cardInputWidget.paymentMethodCreateParams
                     val confirmParams =
@@ -148,7 +157,6 @@ class PaymentsFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val weakActivity = WeakReference<Activity>(requireActivity())
 
         // Handle the result of stripe.confirmPayment
         if (stripe.isPaymentResult(requestCode, data)) {
@@ -159,7 +167,6 @@ class PaymentsFragment : Fragment() {
                     onSuccess = { paymentIntent ->
                         val status = paymentIntent.status
                         if (status == StripeIntent.Status.Succeeded) {
-                            val gson = GsonBuilder().setPrettyPrinting().create()
                             showLongToast("Payment SuccessFull!!")
                             findNavController().navigate(PaymentsFragmentDirections.actionPaymentsFragmentToPaymentConfirmationFragment())
                             handleStatesUI(binding.paymentsPB, binding.paymentCardRoot, false)
@@ -185,13 +192,14 @@ class PaymentsFragment : Fragment() {
                     text =
                         getString(R.string.cardNumber).format(userActivityViewModel.cardsList[index].last4)
                     buttonDrawable!!.setTint(resources.getColor(R.color.selectButtonColor))
-                    setCompoundDrawables(
+                    layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    setCompoundDrawablesWithIntrinsicBounds(
                         null,
                         null,
                         resources.getDrawable(R.drawable.ic_mastercard),
                         null
                     )
-                    compoundDrawablePadding = 10
+                    setPadding(10, 10, 10, 10)
                     tag = index
                 })
                 userActivityViewModel.addedCard = false

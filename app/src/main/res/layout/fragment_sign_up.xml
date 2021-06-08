@@ -21,7 +21,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:layout_editor_absoluteX="-35dp"
+            tools:layout_editor_absoluteY="-16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/signUpRoot"
@@ -51,9 +53,11 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/input_color_state_list"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
+                    app:hintTextColor="@color/logoScreen"
                     app:layout_constraintEnd_toEndOf="@id/signUpHeading"
                     app:layout_constraintStart_toStartOf="@id/signUpHeading"
                     app:layout_constraintTop_toBottomOf="@id/signUpHeading">
@@ -76,9 +80,11 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/input_color_state_list"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
+                    app:hintTextColor="@color/logoScreen"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_weight="8"
@@ -115,9 +121,11 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/input_color_state_list"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
+                    app:hintTextColor="@color/logoScreen"
                     app:layout_constraintEnd_toEndOf="@id/enterPhoneNumber"
                     app:layout_constraintStart_toStartOf="@id/countryCodesSpinner"
                     app:layout_constraintTop_toBottomOf="@id/enterPhoneNumber">
@@ -139,9 +147,11 @@
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
                     app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/input_color_state_list"
                     app:errorEnabled="true"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
+                    app:hintTextColor="@color/logoScreen"
                     app:layout_constraintEnd_toEndOf="@id/enterPasswordSignUp"
                     app:layout_constraintStart_toStartOf="@id/enterPasswordSignUp"
                     app:layout_constraintTop_toBottomOf="@id/enterPasswordSignUp"
@@ -157,12 +167,14 @@
 
                 <TextView
                     android:id="@+id/signUpAgreement"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:text="@string/signUpAgreement"
+                    android:textAlignment="viewEnd"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@id/termsAndPrivacyPolicy"
-                    app:layout_constraintEnd_toStartOf="@id/termsAndPrivacyPolicy"
+                    app:layout_constraintEnd_toStartOf="@+id/termsAndPrivacyPolicy"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/termsAndPrivacyPolicy" />
 
@@ -171,10 +183,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/termsAndPrivacyPolicy"
-                    android:textAlignment="center"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/termsPrivacy"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="@id/enterConfirmPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/signUpAgreement"
                     app:layout_constraintTop_toBottomOf="@id/enterConfirmPassword" />
 
                 <Button

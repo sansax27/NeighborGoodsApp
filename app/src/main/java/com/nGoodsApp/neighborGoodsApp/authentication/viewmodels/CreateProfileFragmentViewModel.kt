@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
 import java.io.File
 import javax.inject.Inject
 
@@ -66,49 +67,96 @@ class CreateProfileFragmentViewModel @Inject constructor() : ViewModel() {
         handleResponse(AppRepository.getCountries(), getCountriesStatusPrivate)
     }
 
+    private val getCountryIdStatusPrivate = MutableLiveData<State<List<Id>>>()
+    val getCountryIdStatus:LiveData<State<List<Id>>> get() = getCountryIdStatusPrivate
 
     fun createProfile(
         activity: Activity,
-        uri: Uri,
         name:String,
         cityId: Int,
         address: String,
     ) = viewModelScope.launch {
         createProfileStatusPrivate.postValue(State.Loading())
-        val imageProjection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = activity.contentResolver.query(uri, imageProjection, null, null, null)
-
-        if (cursor != null) {
-            val response1 = async {
-                cursor.moveToFirst()
-                val indexImage = cursor.getColumnIndex(imageProjection[0])
-                val partImage = cursor.getString(indexImage)
-                val imageFile = File(partImage)
-                val dummyFile = File(imageFile.parent!! +User.name + "_" + User.email + "_" + "profilePic")
-                imageFile.renameTo(dummyFile)
-                val reqBody = imageFile.asRequestBody("multipart/form-file".toMediaTypeOrNull())
-                val uploadImage = MultipartBody.Part.createFormData("file", imageFile.name, reqBody)
-                AppRepository.uploadImage(uploadImage)
-            }
-            val response2 = async {
-                AppRepository.createAddress(cityId, address, User.id,default = true, created = true)
-            }
-            if (response1.await().isSuccessful && response2.await().isSuccessful) {
-                profilePicId = response1.await().body()!![0].id
-                val response3 = AppRepository.createUserDetails(User.id, name, profilePicId, false)
-                if (response3.isSuccessful) {
-                    if (response3.body()!=null) {
-                        createProfileStatusPrivate.postValue(State.Success("Success"))
+//        val imageProjection = arrayOf(MediaStore.Images.Media.DATA)
+//        val cursor = activity.contentResolver.query(uri, imageProjection, null, null, null)
+//
+//        if (cursor != null) {
+//            try {
+//                val response1 = async {
+//                    cursor.moveToFirst()
+//                    val indexImage = cursor.getColumnIndex(imageProjection[0])
+//                    val partImage = cursor.getString(indexImage)
+//                    val imageFile = File(partImage)
+//                    val dummyFile =
+//                        File(imageFile.parent!! + User.name + "_" + User.email + "_" + "profilePic")
+//                    imageFile.renameTo(dummyFile)
+//                    val reqBody = imageFile.asRequestBody("multipart/form-file".toMediaTypeOrNull())
+//                    val uploadImage =
+//                        MultipartBody.Part.createFormData("file", imageFile.name, reqBody)
+//                    AppRepository.uploadImage(uploadImage)
+//                }
+//                val response2 = async {
+//                    AppRepository.createAddress(
+//                        cityId,
+//                        address,
+//                        User.id,
+//                        default = true,
+//                        created = true
+//                    )
+//                }
+//                if (response1.await().isSuccessful && response2.await().isSuccessful) {
+//                    profilePicId = response1.await().body()!![0].id
+//                    val response3 =
+//                        AppRepository.createUserDetails(User.id, name, profilePicId, false)
+//                    if (response3.isSuccessful) {
+//                        if (response3.body() != null) {
+//                            createProfileStatusPrivate.postValue(State.Success("Success"))
+//                        } else {
+//                            createProfileStatusPrivate.postValue(State.Failure(response3.message()))
+//                        }
+//                    } else {
+//                        createProfileStatusPrivate.postValue(
+//                            State.Failure(
+//                                JSONObject(
+//                                    response3.errorBody()!!.string()
+//                                ).getJSONObject("error").getString("message")
+//                            )
+//                        )
+//                    }
+//                }
+//                cursor.close()
+//            } catch (e:Exception) {
+                val response2 =
+                    AppRepository.createAddress(
+                        cityId,
+                        address,
+                        User.id,
+                        default = true,
+                        created = true
+                    )
+                if (response2.isSuccessful) {
+                    profilePicId = 0
+                    val response3 =
+                        AppRepository.createUserDetails(User.id, name, profilePicId, false)
+                    if (response3.isSuccessful) {
+                        if (response3.body() != null) {
+                            createProfileStatusPrivate.postValue(State.Success("Success"))
+                        } else {
+                            createProfileStatusPrivate.postValue(State.Failure(response3.message()))
+                        }
                     } else {
-                        createProfileStatusPrivate.postValue(State.Failure(response3.message()))
+                        createProfileStatusPrivate.postValue(
+                            State.Failure(
+                                JSONObject(
+                                    response3.errorBody()!!.string()
+                                ).getJSONObject("error").getString("message")
+                            )
+                        )
                     }
-                } else {
-                    createProfileStatusPrivate.postValue(State.Failure(response3.message()))
                 }
             }
-            cursor.close()
-        } else {
-            createProfileStatusPrivate.postValue(State.Failure("Failure"))
-        }
+
+    fun getCountryId(filter: String) = viewModelScope.launch {
+        handleResponse(AppRepository.getCountryId(filter),getCountryIdStatusPrivate)
     }
 }

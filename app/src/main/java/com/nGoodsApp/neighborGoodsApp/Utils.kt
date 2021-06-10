@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.nGoodsApp.neighborGoodsApp.authentication.ui.activity.MainActivity
 import com.nGoodsApp.neighborGoodsApp.models.Id
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Response
 import java.util.regex.Pattern
 
@@ -77,7 +78,8 @@ object Utils {
                 liveData.postValue(State.Failure(response.message()))
             }
         } else {
-            liveData.postValue(State.Failure(response.message()))
+            val jsonObj = JSONObject(response.errorBody()!!.string())
+            liveData.postValue(State.Failure(jsonObj.getJSONObject("error").getString("message")))
         }
     }
     fun logout(lifecycleScope:LifecycleCoroutineScope, activity: Activity) = lifecycleScope.launch {

@@ -178,4 +178,8 @@ object AppRepository {
     suspend fun getUserCountByQuery(query:String) = withContext(Dispatchers.IO) {
         retrofitAuthorizedInstance!!.getUserCountByQuery(query)
     }
+
+    suspend fun getCountryId(filter: String) = withContext(Dispatchers.IO) {
+        retrofitAuthorizedInstance!!.getCountryId(filter)
+    }
 }

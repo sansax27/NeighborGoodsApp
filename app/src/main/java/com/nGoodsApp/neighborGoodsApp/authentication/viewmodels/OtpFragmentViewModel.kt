@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.nGoodsApp.neighborGoodsApp.AppRepository
 import com.nGoodsApp.neighborGoodsApp.State
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class OtpFragmentViewModel:ViewModel() {
     private val verifyOtpStatusPrivate = MutableLiveData<State<String>>()
@@ -21,7 +22,7 @@ class OtpFragmentViewModel:ViewModel() {
                 verifyOtpStatusPrivate.postValue(State.Failure(response.message()))
             }
         } else {
-            verifyOtpStatusPrivate.postValue(State.Failure(response.message()))
+            verifyOtpStatusPrivate.postValue(State.Failure(JSONObject(response.errorBody()!!.string()).getJSONObject("error").getString("message")))
         }
     }
 }

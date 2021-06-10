@@ -8,6 +8,7 @@ import com.nGoodsApp.neighborGoodsApp.AppRepository
 import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.Utils.handleResponse
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class AddressFragmentViewModel:ViewModel() {
 
@@ -29,7 +30,7 @@ class AddressFragmentViewModel:ViewModel() {
                 deleteAddressStatusPrivate.postValue(State.Failure(response.message()))
             }
         } else {
-            deleteAddressStatusPrivate.postValue(State.Failure(response.message()))
+            deleteAddressStatusPrivate.postValue(State.Failure(JSONObject(response.errorBody()!!.string()).getJSONObject("error").getString("message")))
         }
     }
 }

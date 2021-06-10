@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -190,7 +191,7 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             } else {
                 prepareHomeScreenStatusPrivate.postValue(
                     State.Failure(
-                        response5.message()
+                        JSONObject(response5.errorBody()!!.string()).getJSONObject("error").getString("message")
                     )
                 )
             }
@@ -199,10 +200,10 @@ class UserActivityViewModel @Inject constructor() : ViewModel() {
             prepareHomeScreenStatusPrivate.postValue(
                 State.Failure(
                     "${
-                        response1.await().message() ?: ""
-                    }\n${response2.await().message() ?: ""}\n${
-                        response3.await().message()
-                    }\n${response4.await().message()}"
+                        JSONObject(response1.await().errorBody()!!.string()).getJSONObject("error").getString("message") ?: ""
+                    }\n${JSONObject(response2.await().errorBody()!!.string()).getJSONObject("error").getString("message") ?: ""}\n${
+                        JSONObject(response3.await().errorBody()!!.string()).getJSONObject("error").getString("message")
+                    }\n${JSONObject(response4.await().errorBody()!!.string()).getJSONObject("error").getString("message")}"
                 )
             )
         }

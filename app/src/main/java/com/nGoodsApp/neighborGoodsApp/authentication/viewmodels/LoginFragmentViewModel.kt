@@ -9,6 +9,7 @@ import com.nGoodsApp.neighborGoodsApp.State
 import com.nGoodsApp.neighborGoodsApp.models.LoginUserResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 
@@ -30,7 +31,7 @@ class LoginFragmentViewModel @Inject constructor() : ViewModel() {
                     loginStatusPrivate.postValue(State.Failure(response.message()))
                 }
             } else {
-                loginStatusPrivate.postValue(State.Failure(response.message()))
+                loginStatusPrivate.postValue(State.Failure(JSONObject(response.errorBody()!!.string()).getJSONObject("error").getString("message")))
             }
         }
     }

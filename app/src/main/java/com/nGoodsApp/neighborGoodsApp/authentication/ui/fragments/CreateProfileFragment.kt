@@ -27,6 +27,7 @@ import com.nGoodsApp.neighborGoodsApp.User
 import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
 import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
 import com.nGoodsApp.neighborGoodsApp.Utils.isGPSAvailable
+import com.nGoodsApp.neighborGoodsApp.Utils.noNetwork
 import com.nGoodsApp.neighborGoodsApp.Utils.putStringIntoSharedPreferences
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
 import com.nGoodsApp.neighborGoodsApp.authentication.viewmodels.CreateProfileFragmentViewModel
@@ -35,6 +36,7 @@ import com.nGoodsApp.neighborGoodsApp.models.City
 import com.nGoodsApp.neighborGoodsApp.models.Id
 import com.nGoodsApp.neighborGoodsApp.userActivity.activity.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CreateProfileFragment : Fragment() {
@@ -56,6 +58,9 @@ class CreateProfileFragment : Fragment() {
     private var cityList = listOf<City>()
     private var cityId = -1
     private var detectedState = ""
+    private val countryMap = mutableMapOf<String, Int>()
+    private val stateMap = mutableMapOf<String, Int>()
+    private val cityMap = mutableMapOf<String, City>()
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -133,8 +138,10 @@ class CreateProfileFragment : Fragment() {
                 is State.Success -> {
                     countryList = it.data
                     val list = mutableListOf<String>()
+                    countryMap.clear()
                     for (p in it.data) {
                         list.add(p.name)
+                        countryMap[p.name]= p.id
                     }
                     val adapter = ArrayAdapter(
                         requireContext(),
@@ -156,15 +163,38 @@ class CreateProfileFragment : Fragment() {
         viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    if(it.data.isNotEmpty()) {
+                    if (it.data.isNotEmpty()) {
                         val filter =
                             Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
                                 .toString()
-                        viewModel.getCities(filter)
+                        if (isConnected(requireContext())) {
+                            viewModel.getCities(filter)
+                        } else {
+                            noNetwork()
+                        }
                     } else {
-                        showLongToast("We don't serve in your state!!")
-                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
-
+                        if (ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                            return@observe
+                        }
+                        fusedLocationClient.lastLocation.addOnSuccessListener {
+                            val geocoder = Geocoder(requireContext())
+                            val detectedCountry =
+                                geocoder.getFromLocation(it.latitude, it.longitude, 1)[0].countryName
+                            val filter = Gson().toJson(mapOf("where" to mapOf("name" to detectedCountry))).toString()
+                            if (isConnected(requireContext())) {
+                                viewModel.getCountryId(filter)
+                            } else {
+                                noNetwork()
+                            }
+                        }
                     }
                 }
                 is State.Failure -> {
@@ -173,6 +203,23 @@ class CreateProfileFragment : Fragment() {
                     showLongToast(it.message)
                 }
                 is State.Loading -> {
+                }
+            }
+        }
+        viewModel.getCountryIdStatus.observe(this) {
+            when(it) {
+                is State.Loading -> {}
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                }
+                is State.Success -> {
+                    val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to it.data[0].id))).toString()
+                    if (isConnected(requireContext())) {
+                        viewModel.getCities(filter)
+                    } else {
+                        noNetwork()
+                    }
                 }
             }
         }
@@ -189,8 +236,10 @@ class CreateProfileFragment : Fragment() {
                 is State.Success -> {
                     val list = mutableListOf<String>()
                     cityList = it.data
+                    cityMap.clear()
                     for (g in it.data) {
                         list.add(g.name)
+                        cityMap[g.name] = g
                     }
                     val adapter = ArrayAdapter(
                         requireContext(),
@@ -211,15 +260,18 @@ class CreateProfileFragment : Fragment() {
             }
         }
         binding.profileCityInput.setOnItemClickListener { _, _, position, _ ->
-            cityId = cityList[position].id
+            val cityName = binding.profileCityInput.adapter.getItem(position) as String
+            cityId = cityMap[cityName]!!.id
         }
         binding.profileCountryInput.setOnItemClickListener { _, _, position, _ ->
-            countryId = countryList[position].id
+            val countryName = binding.profileCountryInput.adapter.getItem(position) as String
+            countryId = countryMap[countryName]!!
             binding.profileState.apply {
                 binding.profileStateInput.setText("")
                 visibility = View.GONE
                 stateId = -1
             }
+            Timber.i(countryId.toString()+"PPPP")
             binding.profileCity.apply {
                 binding.profileCityInput.setText("")
                 visibility = View.GONE
@@ -236,19 +288,26 @@ class CreateProfileFragment : Fragment() {
         viewModel.getStatesStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    val list = mutableListOf<String>()
-                    stateList = it.data
-                    for (g in it.data) {
-                        list.add(g.name)
+                    if (it.data.isNotEmpty() && countryId!=74) {
+                        val list = mutableListOf<String>()
+                        stateList = it.data
+                        stateMap.clear()
+                        for (g in it.data) {
+                            list.add(g.name)
+                            stateMap[g.name]= g.id
+                        }
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_list_item_1,
+                            list
+                        )
+                        binding.profileStateInput.setAdapter(adapter)
+                        binding.profileState.visibility = View.VISIBLE
+                        handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
+                    } else {
+                        val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to countryId))).toString()
+                        viewModel.getCities(filter)
                     }
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        list
-                    )
-                    binding.profileStateInput.setAdapter(adapter)
-                    binding.profileState.visibility = View.VISIBLE
-                    handleStatesUI(binding.profilePB, binding.createProfileRoot, false)
                 }
                 is State.Loading -> {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
@@ -260,7 +319,8 @@ class CreateProfileFragment : Fragment() {
             }
         }
         binding.profileStateInput.setOnItemClickListener { _, _, position, _ ->
-            stateId = stateList[position].id
+            val stateName = binding.profileStateInput.adapter.getItem(position) as String
+            stateId = stateMap[stateName]!!
             binding.profileCity.apply {
                 binding.profileCityInput.setText("")
                 visibility = View.GONE
@@ -280,14 +340,12 @@ class CreateProfileFragment : Fragment() {
                 showLongToast("Please Select City")
             } else if (!detectLocation && countryId == -1) {
                 showLongToast("Please Select Country")
-            } else if (!detectLocation && stateId == -1) {
-                showLongToast("Please Select State")
             } else if (!detectLocation && cityId == -1) {
                 showLongToast("Please Select City")
             } else {
                 if (isConnected(requireContext())) {
                     handleStatesUI(binding.profilePB, binding.createProfileRoot, true)
-                    viewModel.createProfile(requireActivity(), imageUri!!, name.text.toString(), cityId, address.text.toString())
+                    viewModel.createProfile(requireActivity(),name.text.toString(), cityId, address.text.toString())
                 } else {
                     showLongToast("No Internet Connection!!")
                 }

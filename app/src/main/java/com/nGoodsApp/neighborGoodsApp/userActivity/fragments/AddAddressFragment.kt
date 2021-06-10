@@ -25,7 +25,6 @@ import com.nGoodsApp.neighborGoodsApp.Utils
 import com.nGoodsApp.neighborGoodsApp.Utils.handleStatesUI
 import com.nGoodsApp.neighborGoodsApp.Utils.logout
 import com.nGoodsApp.neighborGoodsApp.Utils.showLongToast
-import com.nGoodsApp.neighborGoodsApp.databinding.FragmentAddAddressBinding
 import com.nGoodsApp.neighborGoodsApp.models.Address
 import com.nGoodsApp.neighborGoodsApp.models.City
 import com.nGoodsApp.neighborGoodsApp.models.Id
@@ -34,6 +33,10 @@ import com.nGoodsApp.neighborGoodsApp.userActivity.viewModels.UserActivityViewMo
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
+import com.nGoodsApp.neighborGoodsApp.Utils.isConnected
+import com.nGoodsApp.neighborGoodsApp.Utils.noNetwork
+import com.nGoodsApp.neighborGoodsApp.databinding.FragmentAddAddressBinding
+import timber.log.Timber
 
 
 class AddAddressFragment : Fragment() {
@@ -51,6 +54,9 @@ class AddAddressFragment : Fragment() {
     private var city:City? = null
     private var detectedState = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val countryMap = mutableMapOf<String, Int>()
+    private val stateMap = mutableMapOf<String, Int>()
+    private val cityMap = mutableMapOf<String, City>()
     private val requestLocationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -77,7 +83,7 @@ class AddAddressFragment : Fragment() {
                 showLongToast("Please Enable GPS!!")
             }
         }
-        if (Utils.isConnected(requireContext())) {
+        if (isConnected(requireContext())) {
             viewModel.getCountries()
         } else {
             showLongToast("No Network Connection, Can't Fetch Required Details Of Sign Up")
@@ -95,8 +101,10 @@ class AddAddressFragment : Fragment() {
                 is State.Success -> {
                     countryList = it.data
                     val list = mutableListOf<String>()
+                    countryMap.clear()
                     for (p in it.data) {
                         list.add(p.name)
+                        countryMap[p.name] = p.id
                     }
                     val adapter = ArrayAdapter(
                         requireContext(),
@@ -141,10 +149,39 @@ class AddAddressFragment : Fragment() {
         viewModel.getStateIdStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    val filter =
-                        Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
-                            .toString()
-                    viewModel.getCities(filter)
+                    if (it.data.isNotEmpty()) {
+                        val filter =
+                            Gson().toJson(mapOf("where" to mapOf("stateId" to it.data[0].id)))
+                                .toString()
+                        if (isConnected(requireContext())) {
+                            viewModel.getCities(filter)
+                        } else {
+                            noNetwork()
+                        }
+                    } else {
+                        if (ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                            return@observe
+                        }
+                        fusedLocationClient.lastLocation.addOnSuccessListener {
+                            val geocoder = Geocoder(requireContext())
+                            val detectedCountry =
+                                geocoder.getFromLocation(it.latitude, it.longitude, 1)[0].countryName
+                            val filter = Gson().toJson(mapOf("where" to mapOf("name" to detectedCountry))).toString()
+                            if (isConnected(requireContext())) {
+                                viewModel.getCountryId(filter)
+                            } else {
+                                noNetwork()
+                            }
+                        }
+                    }
                 }
                 is State.Failure -> {
                     handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
@@ -152,6 +189,23 @@ class AddAddressFragment : Fragment() {
                     showLongToast(it.message)
                 }
                 is State.Loading -> {
+                }
+            }
+        }
+        viewModel.getCountryIdStatus.observe(this) {
+            when(it) {
+                is State.Loading -> {}
+                is State.Failure -> {
+                    showLongToast(it.message)
+                    handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
+                }
+                is State.Success -> {
+                    val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to it.data[0].id))).toString()
+                    if (isConnected(requireContext())) {
+                        viewModel.getCities(filter)
+                    } else {
+                        noNetwork()
+                    }
                 }
             }
         }
@@ -170,8 +224,10 @@ class AddAddressFragment : Fragment() {
                 is State.Success -> {
                     val list = mutableListOf<String>()
                     cityList = it.data
+                    cityMap.clear()
                     for (g in it.data) {
                         list.add(g.name)
+                        cityMap[g.name] = g
                     }
                     val adapter = ArrayAdapter(
                         requireContext(),
@@ -192,10 +248,13 @@ class AddAddressFragment : Fragment() {
             }
         }
         binding.addAddressCityInput.setOnItemClickListener { _, _, position, _ ->
-            city = cityList[position]
+            val cityName = binding.addAddressCityInput.adapter.getItem(position) as String
+            city = cityMap[cityName]
         }
         binding.addAddressCountryInput.setOnItemClickListener { _, _, position, _ ->
-            countryId = countryList[position].id
+            val countryName = binding.addAddressCountryInput.adapter.getItem(position) as String
+            countryId = countryMap[countryName]!!
+            Timber.i(countryId.toString()+"PPPP")
             binding.addAddressState.apply {
                 binding.addAddressStateInput.setText("")
                 visibility = View.GONE
@@ -207,29 +266,41 @@ class AddAddressFragment : Fragment() {
                 city = null
             }
             val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to countryId))).toString()
-            if (Utils.isConnected(requireContext())) {
+            if (isConnected(requireContext())) {
                 viewModel.getStates(filter)
             } else {
                 showLongToast("No Network!!, Unable to Fetch Location Related Data!!. Retry By Selecting the Option Again!!")
             }
         }
 
+
         viewModel.getStatesStatus.observe(this) {
             when (it) {
                 is State.Success -> {
-                    val list = mutableListOf<String>()
-                    stateList = it.data
-                    for (g in it.data) {
-                        list.add(g.name)
+                    if (it.data.isNotEmpty() && countryId!=74) {
+                        val list = mutableListOf<String>()
+                        stateList = it.data
+                        stateMap.clear()
+                        for (g in it.data) {
+                            list.add(g.name)
+                            stateMap[g.name] = g.id
+                        }
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_list_item_1,
+                            list
+                        )
+                        binding.addAddressStateInput.setAdapter(adapter)
+                        binding.addAddressState.visibility = View.VISIBLE
+                        handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
+                    } else {
+                        val filter = Gson().toJson(mapOf("where" to mapOf("countryId" to countryId))).toString()
+                        if (isConnected(requireContext())) {
+                            viewModel.getCities(filter)
+                        } else {
+                            noNetwork()
+                        }
                     }
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        list
-                    )
-                    binding.addAddressStateInput.setAdapter(adapter)
-                    binding.addAddressState.visibility = View.VISIBLE
-                    handleStatesUI(binding.addAddressPB, binding.addAddressRoot, false)
                 }
                 is State.Loading -> handleStatesUI(
                     binding.addAddressPB,
@@ -244,7 +315,8 @@ class AddAddressFragment : Fragment() {
             }
         }
         binding.addAddressStateInput.setOnItemClickListener { _, _, position, _ ->
-            stateId = stateList[position].id
+            val stateName = binding.addAddressStateInput.adapter.getItem(position) as String
+            stateId = stateMap[stateName]!!
             binding.addAddressCity.apply {
                 binding.addAddressCityInput.setText("")
                 visibility = View.GONE
@@ -286,12 +358,10 @@ class AddAddressFragment : Fragment() {
                 showLongToast("Please Select City")
             } else if (!detectLocation && countryId == -1) {
                 showLongToast("Please Select Country")
-            } else if (!detectLocation && stateId == -1) {
-                showLongToast("Please Select State")
             } else if (!detectLocation && city == null) {
                 showLongToast("Please Select City")
             } else {
-                if (Utils.isConnected(requireContext())) {
+                if (isConnected(requireContext())) {
                     if (edit) {
                         viewModel.updateAddress(
                             updateAddressId, city!!.id,
@@ -360,7 +430,7 @@ class AddAddressFragment : Fragment() {
 
     private fun getStateId(stateName: String) {
         val filter = Gson().toJson(mapOf("where" to mapOf("name" to stateName))).toString()
-        if (Utils.isConnected(requireContext())) {
+        if (isConnected(requireContext())) {
             viewModel.getStateId(filter)
         } else {
             detectLocation = false

@@ -165,4 +165,7 @@ interface APIRetrofitAuthorizedInterface {
 
     @GET("users/count")
     suspend fun getUserCountByQuery(@Query("where") query: String):Response<UserCount>
+
+    @GET("countries")
+    fun getCountryId(@Query("filter") filter: String):Response<List<Id>>
 }

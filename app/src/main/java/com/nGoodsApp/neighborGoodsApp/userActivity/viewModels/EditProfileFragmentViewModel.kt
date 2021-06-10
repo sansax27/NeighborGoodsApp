@@ -10,6 +10,7 @@ import com.nGoodsApp.neighborGoodsApp.Utils.handleResponse
 import com.nGoodsApp.neighborGoodsApp.models.UserCount
 import com.nGoodsApp.neighborGoodsApp.models.UserDetails
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class EditProfileFragmentViewModel:ViewModel() {
     private val editProfileStatusPrivate = MutableLiveData<State<String>>()
@@ -28,7 +29,7 @@ class EditProfileFragmentViewModel:ViewModel() {
                 editProfileStatusPrivate.postValue(State.Failure(response.message()))
             }
         } else {
-            editProfileStatusPrivate.postValue(State.Failure(response.message()))
+            editProfileStatusPrivate.postValue(State.Failure(JSONObject(response.errorBody()!!.string()).getJSONObject("error").getString("message")))
         }
     }
 

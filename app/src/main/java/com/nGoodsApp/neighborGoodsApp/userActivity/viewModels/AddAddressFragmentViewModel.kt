@@ -36,6 +36,9 @@ class AddAddressFragmentViewModel: ViewModel() {
     private val updateAddressStatusPrivate = MutableLiveData<State<Address>>()
     val updateAddressStatus:LiveData<State<Address>> get() = updateAddressStatusPrivate
 
+    private val getCountryIdStatusPrivate = MutableLiveData<State<List<Id>>>()
+    val getCountryIdStatus:LiveData<State<List<Id>>> get() = getCountryIdStatusPrivate
+
     fun createAddress(cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) =
         viewModelScope.launch {
             handleResponse(
@@ -67,5 +70,10 @@ class AddAddressFragmentViewModel: ViewModel() {
 
     fun updateAddress(addressId:Int, cityId: Int, address: String, userId:Int, default: Boolean, created: Boolean) = viewModelScope.launch {
         handleResponse(AppRepository.updateAddress(addressId, cityId, address, userId, default, created), updateAddressStatusPrivate)
+    }
+
+
+    fun getCountryId(filter: String) = viewModelScope.launch {
+        handleResponse(AppRepository.getCountryId(filter),getCountryIdStatusPrivate)
     }
 }

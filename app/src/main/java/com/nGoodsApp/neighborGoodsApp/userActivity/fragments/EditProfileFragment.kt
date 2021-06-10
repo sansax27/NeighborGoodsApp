@@ -103,12 +103,7 @@ class EditProfileFragment : Fragment() {
                 is State.Success -> {
                     if (requireLogin) {
                         showLongToast("Successfully Edited Details, Now Login Again!!")
-                        requireActivity().startActivityFromFragment(
-                            this,
-                            Intent(requireActivity(), MainActivity::class.java),
-                            140
-                        )
-                        requireActivity().finish()
+                        logout(lifecycleScope,requireActivity())
                     } else {
                         showLongToast("Profile Successfully Updated!!")
                         findNavController().popBackStack()
